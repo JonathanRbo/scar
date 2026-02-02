@@ -64,21 +64,11 @@ Inspirado no universo de **Chainsaw Man**, o jogo coloca os jogadores em um mund
 - [Manual (Markdown)](MANUAL_SCAR.md)
 - [Site do Projeto](site/index.html)
 
-## Estrutura do Projeto
-
-```
-scarn/
-├── MANUAL_SCAR.md      # Manual completo do sistema
-├── README.md           # Este arquivo
-└── site/
-    ├── index.html      # Site interativo
-    ├── MANUAL_SCAR.pdf # Manual em PDF
-    └── imagens/        # Assets visuais
 ```
 
 ## Licença
 
-Este é um projeto de fã não oficial, criado para fins de entretenimento e sem fins lucrativos. **Chainsaw Man** é propriedade de Tatsuki Fujimoto e Shueisha.
+Este é um projeto de fã, criado para fins de entretenimento e sem fins lucrativos. **Chainsaw Man** é propriedade de Tatsuki Fujimoto e Shueisha.
 
 ---
 
