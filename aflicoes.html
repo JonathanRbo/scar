@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aflições - SCAR RPG</title>
+    <link rel="stylesheet" href="https://cdn.squeleton.dev/squeleton.v4.min.css">
+    <script src="https://cdn.squeleton.dev/squeleton-main.v4.min.js"></script>
+
+    <!-- Google Fonts (igual ao index.html) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Cores base do index.html */
+            --cor-principal: #8B0000;
+            --cor-secundaria: #DC143C;
+            --cor-accent: #FF4444;
+            --cor-fundo: #0a0a0a;
+            --cor-card: #141414;
+            --cor-card-hover: #1a1a1a;
+            --cor-texto: #f5f5f5;
+            --cor-texto-soft: #999;
+            --cor-borda: #333;
+            --cor-gold: #D4AF37;
+
+            /* Cores específicas para aflições */
+            --cor-fisico: #DC143C;
+            --cor-fisico-soft: rgba(220, 20, 60, 0.12);
+            --cor-mental: #9B59B6;
+            --cor-mental-soft: rgba(155, 89, 182, 0.12);
+
+            /* Gradientes e sombras */
+            --gradient-blood: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #5a0000 100%);
+            --shadow-glow: 0 0 30px rgba(220,20,60,0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: var(--cor-principal) var(--cor-fundo);
+        }
+
+        body {
+            background: var(--cor-fundo);
+            color: var(--cor-texto);
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        /* Header */
+        .site-header {
+            background: rgba(10,10,10,0.95);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--cor-borda);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            color: var(--cor-secundaria);
+            text-decoration: none;
+            font-size: 1.6rem;
+            letter-spacing: 4px;
+        }
+        .nav a {
+            color: var(--cor-texto-soft);
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        .nav a:hover, .nav a.active { color: var(--cor-accent); }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            background:
+                radial-gradient(ellipse at center top, rgba(139,0,0,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 50%, rgba(220,20,60,0.08) 0%, transparent 50%);
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            letter-spacing: 10px;
+            margin-bottom: 20px;
+            color: var(--cor-secundaria);
+            text-shadow: 0 0 40px rgba(220,20,60,0.4);
+        }
+
+        .hero p {
+            color: var(--cor-texto-soft);
+            max-width: 500px;
+            margin: 0 auto;
+            font-size: 1rem;
+        }
+
+        /* Dice Roller */
+        .dice-section {
+            background: var(--cor-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 600px;
+            margin: 0 auto 60px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        .dice-section h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--cor-gold);
+            margin-bottom: 25px;
+            letter-spacing: 3px;
+        }
+
+        .dice-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .dice-btn {
+            padding: 15px 35px;
+            border: 2px solid var(--cor-borda);
+            background: transparent;
+            color: var(--cor-texto);
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dice-btn.fisico:hover,
+        .dice-btn.fisico.active {
+            border-color: var(--cor-fisico);
+            background: var(--cor-fisico-soft);
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.2);
+        }
+        .dice-btn.mental:hover,
+        .dice-btn.mental.active {
+            border-color: var(--cor-mental);
+            background: var(--cor-mental-soft);
+            box-shadow: 0 0 20px rgba(155, 89, 182, 0.2);
+        }
+
+        .dice-btn .icon { font-size: 1.3rem; }
+
+        /* Categories hidden by default */
+        .categories-wrapper {
+            display: none;
+            margin-top: 40px;
+            animation: fadeIn 0.4s ease;
+        }
+        .categories-wrapper.active { display: block; }
+
+        /* Result Card */
+        .result-card {
+            margin-top: 30px;
+            padding: 30px;
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .result-card.fisico { background: var(--cor-fisico-soft); border: 1px solid var(--cor-fisico); }
+        .result-card.mental { background: var(--cor-mental-soft); border: 1px solid var(--cor-mental); }
+
+        .result-card.active { display: block; }
+
+        .result-number {
+            font-size: 3rem;
+            font-weight: 200;
+            opacity: 0.5;
+            margin-bottom: 10px;
+        }
+
+        .result-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .result-desc {
+            color: var(--cor-texto-soft);
+            margin-bottom: 15px;
+        }
+
+        .result-debuff {
+            background: rgba(0,0,0,0.3);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--cor-gold);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tabs */
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            padding: 12px 30px;
+            border: 1px solid var(--cor-borda);
+            background: transparent;
+            color: var(--cor-texto-soft);
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: 'Roboto', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover { border-color: var(--cor-texto-soft); color: var(--cor-texto); }
+        .tab-btn.active.fisico {
+            background: var(--cor-fisico-soft);
+            border-color: var(--cor-fisico);
+            color: var(--cor-fisico);
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.2);
+        }
+        .tab-btn.active.mental {
+            background: var(--cor-mental-soft);
+            border-color: var(--cor-mental);
+            color: var(--cor-mental);
+            box-shadow: 0 0 15px rgba(155, 89, 182, 0.2);
+        }
+
+        /* Search */
+        .search-container {
+            max-width: 400px;
+            margin: 0 auto 40px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 1px solid var(--cor-borda);
+            border-radius: 10px;
+            background: var(--cor-card);
+            color: var(--cor-texto);
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus { outline: none; border-color: var(--cor-secundaria); box-shadow: 0 0 15px rgba(220, 20, 60, 0.15); }
+        .search-input::placeholder { color: var(--cor-texto-soft); }
+
+        /* Categories */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .category {
+            margin-bottom: 20px;
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--cor-card);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: border-color 0.3s;
+        }
+
+        .category.fisico:hover { border-color: rgba(220, 20, 60, 0.4); }
+        .category.mental:hover { border-color: rgba(155, 89, 182, 0.4); }
+
+        .category-header {
+            padding: 18px 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.3s;
+        }
+
+        .category-header:hover { background: var(--cor-card-hover); }
+
+        .category-header .left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .category-header .icon { font-size: 1.3rem; }
+        .category-header .title { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 1px; }
+        .category-header .range { color: var(--cor-texto-soft); font-size: 0.85rem; margin-left: 10px; }
+        .category-header .arrow { transition: transform 0.3s; color: var(--cor-texto-soft); }
+        .category.open .category-header .arrow { transform: rotate(180deg); }
+
+        /* Affliction Table */
+        .affliction-table {
+            display: none;
+            padding: 0 24px 24px;
+        }
+
+        .category.open .affliction-table { display: block; }
+
+        .affliction-row {
+            display: grid;
+            grid-template-columns: 50px 1fr;
+            gap: 15px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--cor-borda);
+            transition: background 0.2s;
+        }
+
+        .affliction-row:last-child { border-bottom: none; }
+        .affliction-row:hover { background: rgba(255,255,255,0.02); margin: 0 -10px; padding-left: 10px; padding-right: 10px; border-radius: 8px; }
+
+        .affliction-num {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .fisico .affliction-num { background: var(--cor-fisico-soft); color: var(--cor-fisico); }
+        .mental .affliction-num { background: var(--cor-mental-soft); color: var(--cor-mental); }
+
+        .affliction-content { min-width: 0; }
+        .affliction-name { font-weight: 600; margin-bottom: 6px; font-size: 1.05rem; }
+        .affliction-desc { color: var(--cor-texto-soft); font-size: 0.9rem; margin-bottom: 8px; }
+
+        .affliction-effect {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--cor-gold);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: var(--cor-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 50px;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .info-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .info-item h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            color: var(--cor-gold);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .info-item p {
+            color: var(--cor-texto-soft);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Footer */
+        .site-footer {
+            text-align: center;
+            padding: 50px 20px;
+            border-top: 1px solid var(--cor-borda);
+            margin-top: 80px;
+            color: var(--cor-texto-soft);
+        }
+
+        .site-footer a { color: var(--cor-secundaria); text-decoration: none; transition: color 0.3s; }
+        .site-footer a:hover { color: var(--cor-accent); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; letter-spacing: 4px; }
+            .dice-section { padding: 30px 20px; }
+            .affliction-row { grid-template-columns: 40px 1fr; gap: 12px; }
+            .info-box { flex-direction: column; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">SCAR</a>
+                <nav class="nav">
+                    <a href="index.html">Inicio</a>
+                    <a href="index.html#criacao">Criacao</a>
+                    <a href="habilidades.html">Habilidades</a>
+                    <a href="aflicoes.html" class="active">Aflicoes</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>AFLICOES</h1>
+            <p>Traumas fisicos e mentais que marcam seu personagem alem do dano puro. Role d100 para descobrir seu destino.</p>
+        </section>
+
+        <div class="container">
+
+            <!-- Dice Roller -->
+            <div class="dice-section">
+                <h2>ROLAR AFLIÇÃO (D100)</h2>
+                <div class="dice-buttons">
+                    <button class="dice-btn fisico" id="btn-fisico" onclick="rollAffliction('fisico')">
+                        <span class="icon">💔</span>
+                        <span>Físicas</span>
+                    </button>
+                    <button class="dice-btn mental" id="btn-mental" onclick="rollAffliction('mental')">
+                        <span class="icon">🧠</span>
+                        <span>Mentais</span>
+                    </button>
+                </div>
+                <p style="color: var(--cor-texto-soft); margin-top: 20px; font-size: 0.9rem;">
+                    Clique para rolar d100 e descobrir sua aflição
+                </p>
+
+                <!-- Result Card -->
+                <div class="result-card" id="resultCard">
+                    <div class="result-number" id="resultNumber">00</div>
+                    <div class="result-name" id="resultName">-</div>
+                    <div class="result-desc" id="resultDesc">-</div>
+                    <div class="result-debuff" id="resultDebuff">-</div>
+                </div>
+            </div>
+
+            <!-- Info -->
+            <div class="info-box">
+                <div class="info-item">
+                    <h4>DURACAO</h4>
+                    <p>1d3 rodadas (ou ate tratamento/recuperar Stress)</p>
+                </div>
+                <div class="info-item">
+                    <h4>GATILHOS</h4>
+                    <p>Injuria Grave, Stress +40%, horror extremo, falha critica</p>
+                </div>
+                <div class="info-item">
+                    <h4>ROLAGEM</h4>
+                    <p>d100 para determinar a aflicao especifica</p>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Buscar por numero ou nome..." onkeyup="filterAfflictions()">
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs-container">
+                <button class="tab-btn fisico active" onclick="showTab('fisico')">Fisicas</button>
+                <button class="tab-btn mental" onclick="showTab('mental')">Mentais</button>
+            </div>
+
+            <!-- Tab Fisico -->
+            <div id="tab-fisico" class="tab-content active">
+
+                <div class="category fisico" id="cat-f1">
+                    <div class="category-header" onclick="toggleCategory('cat-f1')">
+                        <div class="left">
+                            <span class="icon">💔</span>
+                            <span class="title">Colapso Corporal</span>
+                            <span class="range">01-15</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">01</div><div class="affliction-content"><div class="affliction-name">Desmaio Subito</div><div class="affliction-desc">Desmaia imediatamente, corpo cede</div><div class="affliction-effect">Inconsciente por 1 rodada</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">02</div><div class="affliction-content"><div class="affliction-name">Grito Paralisante</div><div class="affliction-desc">Grita sem parar, imobilizado</div><div class="affliction-effect">-3d10 Coordenacao, revela posicao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">03</div><div class="affliction-content"><div class="affliction-name">Posicao Fetal</div><div class="affliction-desc">Cai no chao em posicao fetal</div><div class="affliction-effect">Nao ataca, -2d10 defesa</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">04</div><div class="affliction-content"><div class="affliction-name">Tremores Violentos</div><div class="affliction-desc">Corpo treme incontrolavelmente</div><div class="affliction-effect">-4d10 Coordenacao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">05</div><div class="affliction-content"><div class="affliction-name">Convulsao</div><div class="affliction-desc">Ataque epileptico, cai no chao</div><div class="affliction-effect">Incapacitado, 1 Injuria Leve</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">06</div><div class="affliction-content"><div class="affliction-name">Rigidez Cadaverica</div><div class="affliction-desc">Corpo fica rigido como estatua</div><div class="affliction-effect">Imobilizado, -4d10 Coord</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">07</div><div class="affliction-content"><div class="affliction-name">Colapso Muscular</div><div class="affliction-desc">Musculos cedem completamente</div><div class="affliction-effect">Cai, -3d10 Forca</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">08</div><div class="affliction-content"><div class="affliction-name">Espasmos</div><div class="affliction-desc">Musculos contraem violentamente</div><div class="affliction-effect">-3d10 Coord/Forca</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">09</div><div class="affliction-content"><div class="affliction-name">Caimbras Generalizadas</div><div class="affliction-desc">Caimbras em todo o corpo</div><div class="affliction-effect">-2d10 fisicos, +1 Stress/rodada</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">10</div><div class="affliction-content"><div class="affliction-name">Letargia Extrema</div><div class="affliction-desc">Corpo pesa toneladas</div><div class="affliction-effect">Perde 2 acoes, -3d10 Vigor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">11</div><div class="affliction-content"><div class="affliction-name">Hiperventilacao</div><div class="affliction-desc">Respira descontroladamente</div><div class="affliction-effect">-2d10 Vigor/Coord</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">12</div><div class="affliction-content"><div class="affliction-name">Apneia</div><div class="affliction-desc">Para de respirar</div><div class="affliction-effect">+2 Stress, -3d10 todos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">13</div><div class="affliction-content"><div class="affliction-name">Taquicardia</div><div class="affliction-desc">Coracao dispara perigosamente</div><div class="affliction-effect">-2d10 Vigor, +1 Stress/rodada</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">14</div><div class="affliction-content"><div class="affliction-name">Bradicardia</div><div class="affliction-desc">Coracao desacelera</div><div class="affliction-effect">-3d10 Coordenacao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">15</div><div class="affliction-content"><div class="affliction-name">Choque Corporal</div><div class="affliction-desc">Corpo entra em choque</div><div class="affliction-effect">-3d10 fisicos, +2 Stress</div></div></div>
+                    </div>
+                </div>
+
+                <div class="category fisico" id="cat-f2">
+                    <div class="category-header" onclick="toggleCategory('cat-f2')">
+                        <div class="left">
+                            <span class="icon">👁️</span>
+                            <span class="title">Perda Sensorial</span>
+                            <span class="range">16-30</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">16</div><div class="affliction-content"><div class="affliction-name">Mudez Total</div><div class="affliction-desc">Perde completamente a fala</div><div class="affliction-effect">-3d10 Negociacao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">17</div><div class="affliction-content"><div class="affliction-name">Surdez Subita</div><div class="affliction-desc">Perde a audicao</div><div class="affliction-effect">-4d10 Percepcao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">18</div><div class="affliction-content"><div class="affliction-name">Cegueira Temporaria</div><div class="affliction-desc">Perde a visao</div><div class="affliction-effect">-5d10 Coord/Percepcao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">19</div><div class="affliction-content"><div class="affliction-name">Anestesia Corporal</div><div class="affliction-desc">Corpo anestesiado</div><div class="affliction-effect">-3d10 Coord, ignora dor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">20</div><div class="affliction-content"><div class="affliction-name">Paralisia dos Bracos</div><div class="affliction-desc">Perde movimento dos bracos</div><div class="affliction-effect">-5d10 Forca</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">21</div><div class="affliction-content"><div class="affliction-name">Paralisia das Pernas</div><div class="affliction-desc">Perde movimento das pernas</div><div class="affliction-effect">Imobilizado, -5d10 Vigor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">22</div><div class="affliction-content"><div class="affliction-name">Hemiplegia Direita</div><div class="affliction-desc">Lado direito paralisado</div><div class="affliction-effect">-4d10 fisicos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">23</div><div class="affliction-content"><div class="affliction-name">Hemiplegia Esquerda</div><div class="affliction-desc">Lado esquerdo paralisado</div><div class="affliction-effect">-4d10 fisicos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">24</div><div class="affliction-content"><div class="affliction-name">Perda de Equilibrio</div><div class="affliction-desc">Incapaz de ficar em pe</div><div class="affliction-effect">Cai, -3d10 Coord</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">25</div><div class="affliction-content"><div class="affliction-name">Perda de Tato</div><div class="affliction-desc">Nao sente nada ao tocar</div><div class="affliction-effect">-3d10 Coord delicada</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">26</div><div class="affliction-content"><div class="affliction-name">Perda de Olfato</div><div class="affliction-desc">Nao sente cheiros</div><div class="affliction-effect">-2d10 Percepcao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">27</div><div class="affliction-content"><div class="affliction-name">Perda de Paladar</div><div class="affliction-desc">Nao sente sabores</div><div class="affliction-effect">-1d10 Percepcao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">28</div><div class="affliction-content"><div class="affliction-name">Perda de Propriocepcao</div><div class="affliction-desc">Nao sabe onde membros estao</div><div class="affliction-effect">-4d10 Coordenacao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">29</div><div class="affliction-content"><div class="affliction-name">Perda de Temperatura</div><div class="affliction-desc">Nao sente frio/calor</div><div class="affliction-effect">-2d10 Percepcao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">30</div><div class="affliction-content"><div class="affliction-name">Dormencia Total</div><div class="affliction-desc">Todo corpo dormente</div><div class="affliction-effect">-3d10 fisicos</div></div></div>
+                    </div>
+                </div>
+
+                <div class="category fisico" id="cat-f3">
+                    <div class="category-header" onclick="toggleCategory('cat-f3')">
+                        <div class="left">
+                            <span class="icon">🔥</span>
+                            <span class="title">Dor e Tormento</span>
+                            <span class="range">31-45</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">31</div><div class="affliction-content"><div class="affliction-name">Dor Cerebral</div><div class="affliction-desc">Dores de cabeca enlouquecedoras</div><div class="affliction-effect">-3d10 Invest/Perc, +2 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">32</div><div class="affliction-content"><div class="affliction-name">Choque Neural</div><div class="affliction-desc">Choques eletricos pelo corpo</div><div class="affliction-effect">-2d10 Coord, espasmos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">33</div><div class="affliction-content"><div class="affliction-name">Queimadura Fantasma</div><div class="affliction-desc">Sente corpo pegando fogo</div><div class="affliction-effect">-3d10 Vigor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">34</div><div class="affliction-content"><div class="affliction-name">Infestacao Subcutanea</div><div class="affliction-desc">Sente insetos sob a pele</div><div class="affliction-effect">-2d10 todos, se arranha</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">35</div><div class="affliction-content"><div class="affliction-name">Calafrios Extremos</div><div class="affliction-desc">Calafrios violentos</div><div class="affliction-effect">-2d10 Coord, +1 Stress/rodada</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">36</div><div class="affliction-content"><div class="affliction-name">Dor Muscular</div><div class="affliction-desc">Musculos doem como se rasgassem</div><div class="affliction-effect">-3d10 Forca/Vigor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">37</div><div class="affliction-content"><div class="affliction-name">Dor Ossea</div><div class="affliction-desc">Ossos doem profundamente</div><div class="affliction-effect">-2d10 fisicos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">38</div><div class="affliction-content"><div class="affliction-name">Dor Visceral</div><div class="affliction-desc">Orgaos internos doem</div><div class="affliction-effect">-3d10 Vigor, pode vomitar</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">39</div><div class="affliction-content"><div class="affliction-name">Dor Fantasma</div><div class="affliction-desc">Dor em partes inexistentes</div><div class="affliction-effect">-2d10 Coord, +1 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">40</div><div class="affliction-content"><div class="affliction-name">Neuralgia</div><div class="affliction-desc">Dor nos nervos, lancinante</div><div class="affliction-effect">-3d10 Coord, +2 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">41</div><div class="affliction-content"><div class="affliction-name">Enxaqueca</div><div class="affliction-desc">Dor pulsante e cegante</div><div class="affliction-effect">-4d10 Perc/Invest</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">42</div><div class="affliction-content"><div class="affliction-name">Dor Ocular</div><div class="affliction-desc">Olhos doem intensamente</div><div class="affliction-effect">-4d10 Percepcao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">43</div><div class="affliction-content"><div class="affliction-name">Dor Dentaria</div><div class="affliction-desc">Todos dentes doem</div><div class="affliction-effect">-2d10 todos, +1 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">44</div><div class="affliction-content"><div class="affliction-name">Dor Articular</div><div class="affliction-desc">Juntas doem e rangem</div><div class="affliction-effect">-3d10 Coord/Forca</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">45</div><div class="affliction-content"><div class="affliction-name">Dor Total</div><div class="affliction-desc">Cada celula em agonia</div><div class="affliction-effect">-4d10 fisicos, +3 Stress/rodada</div></div></div>
+                    </div>
+                </div>
+
+                <div class="category fisico" id="cat-f4">
+                    <div class="category-header" onclick="toggleCategory('cat-f4')">
+                        <div class="left">
+                            <span class="icon">🦴</span>
+                            <span class="title">Deformacao Temporaria</span>
+                            <span class="range">46-60</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">46</div><div class="affliction-content"><div class="affliction-name">Lingua Enrolada</div><div class="affliction-desc">Lingua se enrosca</div><div class="affliction-effect">-2d10 Vigor, nao fala</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">47</div><div class="affliction-content"><div class="affliction-name">Mandibula Trancada</div><div class="affliction-desc">Trava os dentes</div><div class="affliction-effect">Nao fala, -1d10 Vigor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">48</div><div class="affliction-content"><div class="affliction-name">Pescoco Rigido</div><div class="affliction-desc">Pescoco trava</div><div class="affliction-effect">-3d10 Perc/Coord</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">49</div><div class="affliction-content"><div class="affliction-name">Dedos Retorcidos</div><div class="affliction-desc">Dedos em angulos estranhos</div><div class="affliction-effect">-4d10 maos, -3d10 Coord</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">50</div><div class="affliction-content"><div class="affliction-name">Coluna Curvada</div><div class="affliction-desc">Coluna se curva</div><div class="affliction-effect">-3d10 Forca/Coord</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">51</div><div class="affliction-content"><div class="affliction-name">Ombros Deslocados</div><div class="affliction-desc">Ombros saem do lugar</div><div class="affliction-effect">-4d10 bracos, +2 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">52</div><div class="affliction-content"><div class="affliction-name">Joelhos Invertidos</div><div class="affliction-desc">Joelhos dobram para tras</div><div class="affliction-effect">-5d10 movimento, 1 Injuria Leve</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">53</div><div class="affliction-content"><div class="affliction-name">Tornozelos Torcidos</div><div class="affliction-desc">Tornozelos viram</div><div class="affliction-effect">-4d10 Coord andar</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">54</div><div class="affliction-content"><div class="affliction-name">Cotovelos Travados</div><div class="affliction-desc">Cotovelos presos</div><div class="affliction-effect">-3d10 bracos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">55</div><div class="affliction-content"><div class="affliction-name">Pulsos Quebrados</div><div class="affliction-desc">Pulsos em angulos errados</div><div class="affliction-effect">-4d10 maos, +2 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">56</div><div class="affliction-content"><div class="affliction-name">Costelas Rachadas</div><div class="affliction-desc">Sente costelas partindo</div><div class="affliction-effect">-3d10 Vigor, +1 Stress/rodada</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">57</div><div class="affliction-content"><div class="affliction-name">Quadril Deslocado</div><div class="affliction-desc">Quadril sai do lugar</div><div class="affliction-effect">-4d10 Coord, -2d10 Vigor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">58</div><div class="affliction-content"><div class="affliction-name">Face Distorcida</div><div class="affliction-desc">Musculos faciais contorcem</div><div class="affliction-effect">-3d10 Nego/Vinculo</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">59</div><div class="affliction-content"><div class="affliction-name">Olhos Giratorios</div><div class="affliction-desc">Olhos giram</div><div class="affliction-effect">-4d10 Perc/Coord</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">60</div><div class="affliction-content"><div class="affliction-name">Palpebras Invertidas</div><div class="affliction-desc">Palpebras viram</div><div class="affliction-effect">-3d10 Perc, +1 Stress/rodada</div></div></div>
+                    </div>
+                </div>
+
+                <div class="category fisico" id="cat-f5">
+                    <div class="category-header" onclick="toggleCategory('cat-f5')">
+                        <div class="left">
+                            <span class="icon">🩸</span>
+                            <span class="title">Auto-Lesao</span>
+                            <span class="range">61-75</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">61</div><div class="affliction-content"><div class="affliction-name">Arranhar Face</div><div class="affliction-desc">Arranha face ate sangrar</div><div class="affliction-effect">1 Injuria Leve, -1d10 Nego</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">62</div><div class="affliction-content"><div class="affliction-name">Arrancar Cabelos</div><div class="affliction-desc">Arranca cabelos</div><div class="affliction-effect">-2d10 Coord, +1 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">63</div><div class="affliction-content"><div class="affliction-name">Arrancar Olhos</div><div class="affliction-desc">Tenta arrancar os olhos</div><div class="affliction-effect">1 Injuria Grave se conseguir</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">64</div><div class="affliction-content"><div class="affliction-name">Automutilar Mao</div><div class="affliction-desc">Tenta arrancar a mao</div><div class="affliction-effect">1 Injuria Grave, -5d10 Coord</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">65</div><div class="affliction-content"><div class="affliction-name">Morder Lingua</div><div class="affliction-desc">Morde lingua ate sangrar</div><div class="affliction-effect">1 Injuria Leve, -2d10 Nego</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">66</div><div class="affliction-content"><div class="affliction-name">Morder Labios</div><div class="affliction-desc">Morde labios ate rasgar</div><div class="affliction-effect">1 Injuria Leve</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">67</div><div class="affliction-content"><div class="affliction-name">Morder Maos</div><div class="affliction-desc">Morde as proprias maos</div><div class="affliction-effect">1 Injuria Leve, -2d10 maos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">68</div><div class="affliction-content"><div class="affliction-name">Bater Cabeca</div><div class="affliction-desc">Bate cabeca na parede</div><div class="affliction-effect">1 Injuria Grave, -3d10 Perc/Invest</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">69</div><div class="affliction-content"><div class="affliction-name">Socar Peito</div><div class="affliction-desc">Soca o proprio peito</div><div class="affliction-effect">1 Injuria Leve, -2d10 Vigor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">70</div><div class="affliction-content"><div class="affliction-name">Estrangular-se</div><div class="affliction-desc">Tenta estrangular a si</div><div class="affliction-effect">+2 Stress, -3d10 todos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">71</div><div class="affliction-content"><div class="affliction-name">Arranhar Corpo</div><div class="affliction-desc">Arranha todo o corpo</div><div class="affliction-effect">1 Injuria Leve, -1d10 fisicos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">72</div><div class="affliction-content"><div class="affliction-name">Puxar Orelhas</div><div class="affliction-desc">Puxa orelhas com forca</div><div class="affliction-effect">-2d10 Percepcao, +1 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">73</div><div class="affliction-content"><div class="affliction-name">Bater no Rosto</div><div class="affliction-desc">Bate no proprio rosto</div><div class="affliction-effect">1 Injuria Leve, -2d10 Perc</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">74</div><div class="affliction-content"><div class="affliction-name">Torcer Membros</div><div class="affliction-desc">Torce bracos e pernas</div><div class="affliction-effect">-3d10 membros, +2 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">75</div><div class="affliction-content"><div class="affliction-name">Rasgar Pele</div><div class="affliction-desc">Tenta rasgar a pele</div><div class="affliction-effect">1 Injuria Grave, -3d10 Vigor</div></div></div>
+                    </div>
+                </div>
+
+                <div class="category fisico" id="cat-f6">
+                    <div class="category-header" onclick="toggleCategory('cat-f6')">
+                        <div class="left">
+                            <span class="icon">💉</span>
+                            <span class="title">Reacoes Violentas</span>
+                            <span class="range">76-90</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">76</div><div class="affliction-content"><div class="affliction-name">Vomito Incontrolavel</div><div class="affliction-desc">Vomita tudo</div><div class="affliction-effect">Perde 1 acao, -2d10 Vigor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">77</div><div class="affliction-content"><div class="affliction-name">Sangramento Nasal</div><div class="affliction-desc">Sangra pelo nariz</div><div class="affliction-effect">-1d10 Perc, +1 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">78</div><div class="affliction-content"><div class="affliction-name">Sangramento Ocular</div><div class="affliction-desc">Lagrimas de sangue</div><div class="affliction-effect">-3d10 Perc, +2 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">79</div><div class="affliction-content"><div class="affliction-name">Sangramento Auricular</div><div class="affliction-desc">Sangra pelos ouvidos</div><div class="affliction-effect">-2d10 Perc, +1 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">80</div><div class="affliction-content"><div class="affliction-name">Tosse de Sangue</div><div class="affliction-desc">Tosse sangue</div><div class="affliction-effect">-2d10 Vigor, +2 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">81</div><div class="affliction-content"><div class="affliction-name">Suor de Sangue</div><div class="affliction-desc">Poros suam sangue</div><div class="affliction-effect">-2d10 todos, +2 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">82</div><div class="affliction-content"><div class="affliction-name">Urinar Involuntariamente</div><div class="affliction-desc">Perde controle da bexiga</div><div class="affliction-effect">-2d10 Autoridade, +1 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">83</div><div class="affliction-content"><div class="affliction-name">Defecar Involuntariamente</div><div class="affliction-desc">Perde controle intestinal</div><div class="affliction-effect">-3d10 Autorid/Vinculo, +2 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">84</div><div class="affliction-content"><div class="affliction-name">Espumar</div><div class="affliction-desc">Espuma sai da boca</div><div class="affliction-effect">-2d10 Vigor, +1 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">85</div><div class="affliction-content"><div class="affliction-name">Babar</div><div class="affliction-desc">Baba escorre</div><div class="affliction-effect">-1d10 Negociacao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">86</div><div class="affliction-content"><div class="affliction-name">Lagrimas Continuas</div><div class="affliction-desc">Chora sem parar</div><div class="affliction-effect">-2d10 Percepcao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">87</div><div class="affliction-content"><div class="affliction-name">Suor Frio</div><div class="affliction-desc">Sua frio copiosamente</div><div class="affliction-effect">-1d10 Coord, +1 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">88</div><div class="affliction-content"><div class="affliction-name">Febre Subita</div><div class="affliction-desc">Temperatura dispara</div><div class="affliction-effect">-3d10 fisicos, +2 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">89</div><div class="affliction-content"><div class="affliction-name">Hipotermia</div><div class="affliction-desc">Temperatura cai</div><div class="affliction-effect">-3d10 Coord/Vigor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">90</div><div class="affliction-content"><div class="affliction-name">Pulso Ausente</div><div class="affliction-desc">Pulso quase desaparece</div><div class="affliction-effect">-4d10 Vigor, +3 Stress</div></div></div>
+                    </div>
+                </div>
+
+                <div class="category fisico" id="cat-f7">
+                    <div class="category-header" onclick="toggleCategory('cat-f7')">
+                        <div class="left">
+                            <span class="icon">💀</span>
+                            <span class="title">Colapso Final</span>
+                            <span class="range">91-100</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">91</div><div class="affliction-content"><div class="affliction-name">Tique Facial</div><div class="affliction-desc">Tique nervoso na face</div><div class="affliction-effect">-2d10 Nego/Perc</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">92</div><div class="affliction-content"><div class="affliction-name">Tremor Generalizado</div><div class="affliction-desc">Sua, pisca, treme</div><div class="affliction-effect">-3d10 Coord, +1 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">93</div><div class="affliction-content"><div class="affliction-name">Agarra Orelhas</div><div class="affliction-desc">Aperta orelhas, grita</div><div class="affliction-effect">-3d10 Perc, nao usa maos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">94</div><div class="affliction-content"><div class="affliction-name">Grito Silencioso</div><div class="affliction-desc">Grita sem som</div><div class="affliction-effect">-2d10 Vigor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">95</div><div class="affliction-content"><div class="affliction-name">Cegueira Parcial</div><div class="affliction-desc">Visao turva</div><div class="affliction-effect">-4d10 Perc/Coord</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">96</div><div class="affliction-content"><div class="affliction-name">Paralisia Facial</div><div class="affliction-desc">Metade do rosto paralisa</div><div class="affliction-effect">-3d10 Negociacao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">97</div><div class="affliction-content"><div class="affliction-name">Ataque Animal</div><div class="affliction-desc">Urra, morde quem tocar</div><div class="affliction-effect">+2d10 ataque, -3d10 defesa</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">98</div><div class="affliction-content"><div class="affliction-name">Frenesi Fisico</div><div class="affliction-desc">Ataca tudo</div><div class="affliction-effect">+3d10 Forca, -4d10 defesa</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">99</div><div class="affliction-content"><div class="affliction-name">Catalepsia</div><div class="affliction-desc">Corpo congela</div><div class="affliction-effect">Imovel, consciente</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">100</div><div class="affliction-content"><div class="affliction-name">Aflicao Unica</div><div class="affliction-desc">Mestre cria aflicao</div><div class="affliction-effect">Definido pelo Mestre</div></div></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Tab Mental -->
+            <div id="tab-mental" class="tab-content">
+
+                <div class="category mental" id="cat-m1">
+                    <div class="category-header" onclick="toggleCategory('cat-m1')">
+                        <div class="left">
+                            <span class="icon">🧠</span>
+                            <span class="title">Colapso Psicologico</span>
+                            <span class="range">01-15</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">01</div><div class="affliction-content"><div class="affliction-name">Negacao Total</div><div class="affliction-desc">"Isso e so um sonho!"</div><div class="affliction-effect">-3d10 Perc, so defende</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">02</div><div class="affliction-content"><div class="affliction-name">Fuga da Realidade</div><div class="affliction-desc">Foge em panico</div><div class="affliction-effect">Deve fugir, -2d10 todos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">03</div><div class="affliction-content"><div class="affliction-name">Riso Histerico</div><div class="affliction-desc">Gargalha de desespero</div><div class="affliction-effect">-2d10 Malan, revela posicao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">04</div><div class="affliction-content"><div class="affliction-name">Congelamento Mental</div><div class="affliction-desc">Mente paralisa</div><div class="affliction-effect">Perde 1 acao, -2d10 mentais</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">05</div><div class="affliction-content"><div class="affliction-name">Amnesia Subita</div><div class="affliction-desc">Esquece quem e</div><div class="affliction-effect">-3d10 Invest/Vinculo</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">06</div><div class="affliction-content"><div class="affliction-name">Regressao Infantil</div><div class="affliction-desc">Reverte para crianca</div><div class="affliction-effect">-2d10 mentais</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">07</div><div class="affliction-content"><div class="affliction-name">Apatia Mortal</div><div class="affliction-desc">Depressao subita</div><div class="affliction-effect">Nao gasta Stress, -2d10 ataques</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">08</div><div class="affliction-content"><div class="affliction-name">Lamento Infinito</div><div class="affliction-desc">Chora incapaz de agir</div><div class="affliction-effect">Perde acoes, metade defesa</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">09</div><div class="affliction-content"><div class="affliction-name">Desespero Absoluto</div><div class="affliction-desc">"Tudo esta perdido!"</div><div class="affliction-effect">-2d10 Autorid, aliados +1 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">10</div><div class="affliction-content"><div class="affliction-name">Memoria Traumatica</div><div class="affliction-desc">Revive cena dolorosa</div><div class="affliction-effect">-2d10 todos, +2 Stress/rodada</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">11</div><div class="affliction-content"><div class="affliction-name">Sugestionavel</div><div class="affliction-desc">Perde vontade propria</div><div class="affliction-effect">Obedece qualquer ordem</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">12</div><div class="affliction-content"><div class="affliction-name">Dissociacao</div><div class="affliction-desc">Desliga do presente</div><div class="affliction-effect">Age aleatoriamente</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">13</div><div class="affliction-content"><div class="affliction-name">Fuga Mental Divina</div><div class="affliction-desc">Ve luz, sorri, imovel</div><div class="affliction-effect">Nao age, imune a dor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">14</div><div class="affliction-content"><div class="affliction-name">Amnesia de Identidade</div><div class="affliction-desc">Esquece completamente</div><div class="affliction-effect">-3d10 mentais, sem poderes</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">15</div><div class="affliction-content"><div class="affliction-name">Terror Existencial</div><div class="affliction-desc">Certeza da morte</div><div class="affliction-effect">-3d10 Vigor/Vinculo</div></div></div>
+                    </div>
+                </div>
+
+                <div class="category mental" id="cat-m2">
+                    <div class="category-header" onclick="toggleCategory('cat-m2')">
+                        <div class="left">
+                            <span class="icon">👁️‍🗨️</span>
+                            <span class="title">Visoes e Alucinacoes</span>
+                            <span class="range">16-30</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">16</div><div class="affliction-content"><div class="affliction-name">Marca Fantasma</div><div class="affliction-desc">Ve correntes queimando</div><div class="affliction-effect">-2d10 Coord, +1 Stress/rodada</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">17</div><div class="affliction-content"><div class="affliction-name">Presenca dos Mortos</div><div class="affliction-desc">Ve ente falecido</div><div class="affliction-effect">-2d10 Vinculo</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">18</div><div class="affliction-content"><div class="affliction-name">Transformacao Corporal</div><div class="affliction-desc">Ve bracos como tentaculos</div><div class="affliction-effect">-3d10 bracos, pode atacar aliados</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">19</div><div class="affliction-content"><div class="affliction-name">Aliados Mortos-Vivos</div><div class="affliction-desc">Ve aliados como cadaveres</div><div class="affliction-effect">-2d10 ajudar aliados</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">20</div><div class="affliction-content"><div class="affliction-name">Aliados Demoniacos</div><div class="affliction-desc">Ve aliados como demonios</div><div class="affliction-effect">Pode atacar aliados</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">21</div><div class="affliction-content"><div class="affliction-name">Autopsia Viva</div><div class="affliction-desc">Ve tripas saindo</div><div class="affliction-effect">-3d10 Vigor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">22</div><div class="affliction-content"><div class="affliction-name">Pele Derretendo</div><div class="affliction-desc">Ve pele caindo</div><div class="affliction-effect">-2d10 fisicos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">23</div><div class="affliction-content"><div class="affliction-name">Sangramento Fantasma</div><div class="affliction-desc">Ve sangue dos olhos</div><div class="affliction-effect">-3d10 Percepcao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">24</div><div class="affliction-content"><div class="affliction-name">Infestacao Visual</div><div class="affliction-desc">Ve insetos saindo</div><div class="affliction-effect">-2d10 Malandragem</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">25</div><div class="affliction-content"><div class="affliction-name">Possessao Demoniaca</div><div class="affliction-desc">Mao possuida</div><div class="affliction-effect">Nao usa uma mao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">26</div><div class="affliction-content"><div class="affliction-name">Decomposicao</div><div class="affliction-desc">Visao da morte</div><div class="affliction-effect">-3d10 todos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">27</div><div class="affliction-content"><div class="affliction-name">Premonicao do Apocalipse</div><div class="affliction-desc">Fim do mundo em chamas</div><div class="affliction-effect">-2d10 mentais, paralisado</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">28</div><div class="affliction-content"><div class="affliction-name">Leviatas Emergindo</div><div class="affliction-desc">Ve criaturas gigantes</div><div class="affliction-effect">-3d10 Autoridade</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">29</div><div class="affliction-content"><div class="affliction-name">Porta do Inferno</div><div class="affliction-desc">Ve porta se abrindo</div><div class="affliction-effect">-2d10 todos, +2 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">30</div><div class="affliction-content"><div class="affliction-name">Revelacao do Medo</div><div class="affliction-desc">Ve seu medo materializado</div><div class="affliction-effect">Teste de Medo adicional</div></div></div>
+                    </div>
+                </div>
+
+                <div class="category mental" id="cat-m3">
+                    <div class="category-header" onclick="toggleCategory('cat-m3')">
+                        <div class="left">
+                            <span class="icon">🌀</span>
+                            <span class="title">Distorcao de Percepcao</span>
+                            <span class="range">31-45</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">31</div><div class="affliction-content"><div class="affliction-name">Hiperacusia</div><div class="affliction-desc">Sons ensurdecedores</div><div class="affliction-effect">-3d10 Perc, +1 Stress/som</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">32</div><div class="affliction-content"><div class="affliction-name">Hiperosmia</div><div class="affliction-desc">Cheiros nauseantes</div><div class="affliction-effect">-2d10 Perc/Vigor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">33</div><div class="affliction-content"><div class="affliction-name">Saturacao Visual</div><div class="affliction-desc">Cores fortissimas</div><div class="affliction-effect">-4d10 Perc/Coord</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">34</div><div class="affliction-content"><div class="affliction-name">Monocromia</div><div class="affliction-desc">Tudo preto e branco</div><div class="affliction-effect">-2d10 Percepcao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">35</div><div class="affliction-content"><div class="affliction-name">Neblina Mental</div><div class="affliction-desc">Visao enevoada</div><div class="affliction-effect">-3d10 Perc/Coord</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">36</div><div class="affliction-content"><div class="affliction-name">Batidas Cardiacas</div><div class="affliction-desc">Coracao como trovoes</div><div class="affliction-effect">-2d10 Perc, +1 Stress/rodada</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">37</div><div class="affliction-content"><div class="affliction-name">Mundo Liquido</div><div class="affliction-desc">Chao derretendo</div><div class="affliction-effect">-3d10 Coord, perde movimento</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">38</div><div class="affliction-content"><div class="affliction-name">Devoracao Fantasma</div><div class="affliction-desc">Algo devora seu corpo</div><div class="affliction-effect">-2d10 todos, +2 Stress/rodada</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">39</div><div class="affliction-content"><div class="affliction-name">Marimbondos Cerebrais</div><div class="affliction-desc">Insetos na cabeca</div><div class="affliction-effect">-3d10 Investigacao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">40</div><div class="affliction-content"><div class="affliction-name">Pes Colados</div><div class="affliction-desc">Preso ao chao</div><div class="affliction-effect">Imobilizado, -2d10 fisicos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">41</div><div class="affliction-content"><div class="affliction-name">Vertigem Mental</div><div class="affliction-desc">Mundo gira</div><div class="affliction-effect">-3d10 Coord, cai se mover rapido</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">42</div><div class="affliction-content"><div class="affliction-name">Sinestesia Caotica</div><div class="affliction-desc">Sentidos trocam</div><div class="affliction-effect">-2d10 Perc/Invest</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">43</div><div class="affliction-content"><div class="affliction-name">Eco Mental</div><div class="affliction-desc">Pensamentos repetem</div><div class="affliction-effect">-2d10 Invest/Tecno</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">44</div><div class="affliction-content"><div class="affliction-name">Dupla Visao</div><div class="affliction-desc">Tudo duplicado</div><div class="affliction-effect">-3d10 Coord/Perc</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">45</div><div class="affliction-content"><div class="affliction-name">Tempo Congelado</div><div class="affliction-desc">Tempo parou</div><div class="affliction-effect">Perde 1 acao, -2d10 iniciativa</div></div></div>
+                    </div>
+                </div>
+
+                <div class="category mental" id="cat-m4">
+                    <div class="category-header" onclick="toggleCategory('cat-m4')">
+                        <div class="left">
+                            <span class="icon">🎭</span>
+                            <span class="title">Delirios e Mania</span>
+                            <span class="range">46-60</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">46</div><div class="affliction-content"><div class="affliction-name">Onipotencia</div><div class="affliction-desc">Sou imortal!</div><div class="affliction-effect">Nao defende, +2 Stress ao falhar</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">47</div><div class="affliction-content"><div class="affliction-name">Confusao de Identidade</div><div class="affliction-desc">Nao reconhece aliados</div><div class="affliction-effect">-3d10 Vinculo, pode atacar aliados</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">48</div><div class="affliction-content"><div class="affliction-name">Familia Fantasma</div><div class="affliction-desc">Aliados sao familia</div><div class="affliction-effect">-2d10 Autorid, protege obsessivamente</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">49</div><div class="affliction-content"><div class="affliction-name">Inversao de Aliancas</div><div class="affliction-desc">Inimigo e amigo</div><div class="affliction-effect">Pode ajudar inimigos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">50</div><div class="affliction-content"><div class="affliction-name">Possessao Mental</div><div class="affliction-desc">Sou um demonio</div><div class="affliction-effect">Ataca tudo como presa</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">51</div><div class="affliction-content"><div class="affliction-name">Messias Delirante</div><div class="affliction-desc">Devo salvar o mundo</div><div class="affliction-effect">Age imprudentemente</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">52</div><div class="affliction-content"><div class="affliction-name">Perseguicao Paranoica</div><div class="affliction-desc">Todos querem me matar</div><div class="affliction-effect">-3d10 Vinculo, ataca quem aproxima</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">53</div><div class="affliction-content"><div class="affliction-name">Controle Remoto</div><div class="affliction-desc">Estou sendo controlado</div><div class="affliction-effect">Resiste ordens, -2d10 Autorid</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">54</div><div class="affliction-content"><div class="affliction-name">Realidade Simulada</div><div class="affliction-desc">Isso e uma ilusao</div><div class="affliction-effect">Ignora perigos, -2d10 Vigor</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">55</div><div class="affliction-content"><div class="affliction-name">Profecia Falsa</div><div class="affliction-desc">Tenho visoes do futuro</div><div class="affliction-effect">-2d10 Investigacao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">56</div><div class="affliction-content"><div class="affliction-name">Transmutacao</div><div class="affliction-desc">Estou virando demonio</div><div class="affliction-effect">-2d10 todos, +1 Stress/rodada</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">57</div><div class="affliction-content"><div class="affliction-name">Corpo Estranho</div><div class="affliction-desc">Nao reconhece corpo</div><div class="affliction-effect">-3d10 Coordenacao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">58</div><div class="affliction-content"><div class="affliction-name">Morte Iminente</div><div class="affliction-desc">Vou morrer agora</div><div class="affliction-effect">-3d10 todos, acao suicida</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">59</div><div class="affliction-content"><div class="affliction-name">Imortalidade Ilusoria</div><div class="affliction-desc">Nao posso morrer</div><div class="affliction-effect">Nao defende, Injurias faceis</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">60</div><div class="affliction-content"><div class="affliction-name">Dualidade</div><div class="affliction-desc">Duas consciencias</div><div class="affliction-effect">Acoes aleatorias, -2d10 Invest</div></div></div>
+                    </div>
+                </div>
+
+                <div class="category mental" id="cat-m5">
+                    <div class="category-header" onclick="toggleCategory('cat-m5')">
+                        <div class="left">
+                            <span class="icon">🔓</span>
+                            <span class="title">Perda de Controle</span>
+                            <span class="range">61-75</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">61</div><div class="affliction-content"><div class="affliction-name">Logorreia</div><div class="affliction-desc">Fala sem parar</div><div class="affliction-effect">-2d10 Malan, revela posicao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">62</div><div class="affliction-content"><div class="affliction-name">Glossolalia</div><div class="affliction-desc">Lingua inventada</div><div class="affliction-effect">-3d10 Negociacao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">63</div><div class="affliction-content"><div class="affliction-name">Amnesia Linguistica</div><div class="affliction-desc">Esquece idioma</div><div class="affliction-effect">Nao comunica, -2d10 Invest</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">64</div><div class="affliction-content"><div class="affliction-name">Conversa Interna</div><div class="affliction-desc">Fala consigo mesmo</div><div class="affliction-effect">-2d10 Perc, aliados +1 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">65</div><div class="affliction-content"><div class="affliction-name">Oracao Compulsiva</div><div class="affliction-desc">Reza sem parar</div><div class="affliction-effect">Perde 1 acao, -2d10 ofensivos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">66</div><div class="affliction-content"><div class="affliction-name">Oracao Desesperada</div><div class="affliction-desc">Implora perdao</div><div class="affliction-effect">Imobilizado, metade defesa</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">67</div><div class="affliction-content"><div class="affliction-name">Cancao Infantil</div><div class="affliction-desc">Canta chorando</div><div class="affliction-effect">-2d10 Malan/Autorid</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">68</div><div class="affliction-content"><div class="affliction-name">Movimento Circular</div><div class="affliction-desc">Anda em circulos</div><div class="affliction-effect">-2d10 Coord, sem controle direcao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">69</div><div class="affliction-content"><div class="affliction-name">Abraco Protetor</div><div class="affliction-desc">Abraca aliado</div><div class="affliction-effect">Imobiliza ambos, -3d10</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">70</div><div class="affliction-content"><div class="affliction-name">Abraco Pesadelo</div><div class="affliction-desc">Abraca-se gritando</div><div class="affliction-effect">Nao age, +1 Stress/rodada</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">71</div><div class="affliction-content"><div class="affliction-name">Impulso Suicida</div><div class="affliction-desc">Vontade de se matar</div><div class="affliction-effect">Teste Vinculo ou se fere</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">72</div><div class="affliction-content"><div class="affliction-name">Impulso Homicida</div><div class="affliction-desc">Quer matar aliados</div><div class="affliction-effect">Teste Vinculo, -2d10 resistir</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">73</div><div class="affliction-content"><div class="affliction-name">Frenesi Mental</div><div class="affliction-desc">Raiva descontrolada</div><div class="affliction-effect">+2d10 ataque, -3d10 defesa</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">74</div><div class="affliction-content"><div class="affliction-name">Catatonia</div><div class="affliction-desc">Imovel, olhar vazio</div><div class="affliction-effect">Nao age, nao reage</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">75</div><div class="affliction-content"><div class="affliction-name">Ecolalia</div><div class="affliction-desc">Repete palavras</div><div class="affliction-effect">-2d10 Negociacao</div></div></div>
+                    </div>
+                </div>
+
+                <div class="category mental" id="cat-m6">
+                    <div class="category-header" onclick="toggleCategory('cat-m6')">
+                        <div class="left">
+                            <span class="icon">⚡</span>
+                            <span class="title">Transtornos Extremos</span>
+                            <span class="range">76-90</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">76</div><div class="affliction-content"><div class="affliction-name">Fobia Instantanea</div><div class="affliction-desc">Medo paralisante</div><div class="affliction-effect">-3d10 vs gatilho, +2 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">77</div><div class="affliction-content"><div class="affliction-name">Claustrofobia Aguda</div><div class="affliction-desc">Esmagado</div><div class="affliction-effect">-2d10 todos, foge de fechados</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">78</div><div class="affliction-content"><div class="affliction-name">Agorafobia</div><div class="affliction-desc">Terror de abertos</div><div class="affliction-effect">-3d10 abertos, busca cobertura</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">79</div><div class="affliction-content"><div class="affliction-name">Hemofobia</div><div class="affliction-desc">Panico de sangue</div><div class="affliction-effect">Teste Vigor ou +2 Stress</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">80</div><div class="affliction-content"><div class="affliction-name">Espelhamento</div><div class="affliction-desc">Imita outros</div><div class="affliction-effect">Copia acoes proximas</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">81</div><div class="affliction-content"><div class="affliction-name">Fixacao</div><div class="affliction-desc">Obsessao em algo</div><div class="affliction-effect">-3d10 nao relacionados</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">82</div><div class="affliction-content"><div class="affliction-name">Compulsao de Contagem</div><div class="affliction-desc">Conta tudo</div><div class="affliction-effect">-2d10 Perc/Coord</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">83</div><div class="affliction-content"><div class="affliction-name">Ritual Obsessivo</div><div class="affliction-desc">Repete acao</div><div class="affliction-effect">Perde 1 acao para ritual</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">84</div><div class="affliction-content"><div class="affliction-name">Pensamento Magico</div><div class="affliction-desc">Pensamentos alteram realidade</div><div class="affliction-effect">-2d10 Investigacao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">85</div><div class="affliction-content"><div class="affliction-name">Despersonalizacao</div><div class="affliction-desc">Desconectado de si</div><div class="affliction-effect">-2d10 todos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">86</div><div class="affliction-content"><div class="affliction-name">Desrealizacao</div><div class="affliction-desc">Mundo irreal</div><div class="affliction-effect">-3d10 Perc, ignora perigos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">87</div><div class="affliction-content"><div class="affliction-name">Transe</div><div class="affliction-desc">Estado alterado</div><div class="affliction-effect">Mestre controla acoes</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">88</div><div class="affliction-content"><div class="affliction-name">Sonambulismo</div><div class="affliction-desc">Age dormindo</div><div class="affliction-effect">-3d10 todos, movimentos lentos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">89</div><div class="affliction-content"><div class="affliction-name">Estupor</div><div class="affliction-desc">Nao responde</div><div class="affliction-effect">Nao age, -4d10 defesa</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">90</div><div class="affliction-content"><div class="affliction-name">Alucinacao Contextual</div><div class="affliction-desc">Alucinacao do trauma</div><div class="affliction-effect">-2d10 Perc</div></div></div>
+                    </div>
+                </div>
+
+                <div class="category mental" id="cat-m7">
+                    <div class="category-header" onclick="toggleCategory('cat-m7')">
+                        <div class="left">
+                            <span class="icon">💀</span>
+                            <span class="title">Colapso Final</span>
+                            <span class="range">91-100</span>
+                        </div>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="affliction-table">
+                        <div class="affliction-row"><div class="affliction-num">91</div><div class="affliction-content"><div class="affliction-name">Mutismo Seletivo</div><div class="affliction-desc">Nao fala com certos</div><div class="affliction-effect">-2d10 Vinculo</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">92</div><div class="affliction-content"><div class="affliction-name">Bloqueio Mental</div><div class="affliction-desc">Mente desliga</div><div class="affliction-effect">-4d10 mentais</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">93</div><div class="affliction-content"><div class="affliction-name">Esquizofrenia Temporaria</div><div class="affliction-desc">Ouve vozes</div><div class="affliction-effect">Pode obedecer vozes hostis</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">94</div><div class="affliction-content"><div class="affliction-name">Bipolaridade Aguda</div><div class="affliction-desc">Euforia e desespero</div><div class="affliction-effect">Alterna +2d10/-2d10 por rodada</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">95</div><div class="affliction-content"><div class="affliction-name">Anedonia Total</div><div class="affliction-desc">Sem emocoes</div><div class="affliction-effect">Nao gasta Stress, -3d10 Vinculo</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">96</div><div class="affliction-content"><div class="affliction-name">Empatia Extrema</div><div class="affliction-desc">Sente dor de todos</div><div class="affliction-effect">+1 Stress por Injuria de aliados</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">97</div><div class="affliction-content"><div class="affliction-name">Solidao Absoluta</div><div class="affliction-desc">Completamente so</div><div class="affliction-effect">-3d10 Vinculo, ignora aliados</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">98</div><div class="affliction-content"><div class="affliction-name">Fusao Mental</div><div class="affliction-desc">Confunde mentes</div><div class="affliction-effect">-3d10 Investigacao</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">99</div><div class="affliction-content"><div class="affliction-name">Fragmentacao</div><div class="affliction-desc">Personalidade dividida</div><div class="affliction-effect">-2d10 todos</div></div></div>
+                        <div class="affliction-row"><div class="affliction-num">100</div><div class="affliction-content"><div class="affliction-name">Aflicao Unica</div><div class="affliction-desc">Mestre cria aflicao</div><div class="affliction-effect">Definido pelo Mestre</div></div></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>SCAR - Sacrificial Contract & Risk</p>
+        <p><a href="index.html">Voltar ao Inicio</a></p>
+    </footer>
+
+    <script src="https://cdn.squeleton.dev/squeleton-scripts.v4.min.js"></script>
+    <script>
+        // Affliction data for dice roller
+        const afflictions = {
+            fisico: [
+                {num: 1, name: "Desmaio Subito", desc: "Desmaia imediatamente, corpo cede", debuff: "Inconsciente por 1 rodada, perde todas as acoes"},
+                {num: 2, name: "Grito Paralisante", desc: "Grita sem parar, imobilizado", debuff: "-3d10 em Coordenacao, revela posicao"},
+                {num: 3, name: "Posicao Fetal", desc: "Cai no chao em posicao fetal", debuff: "Nao pode atacar, -2d10 em defesa"},
+                {num: 4, name: "Tremores Violentos", desc: "Corpo treme incontrolavelmente", debuff: "-4d10 em Coordenacao"},
+                {num: 5, name: "Convulsao", desc: "Ataque epileptico, cai no chao", debuff: "Incapacitado, sofre 1 Injuria Leve"},
+                {num: 6, name: "Rigidez Cadaverica", desc: "Corpo fica rigido como estatua", debuff: "Imobilizado, -4d10 em Coordenacao"},
+                {num: 7, name: "Colapso Muscular", desc: "Musculos cedem completamente", debuff: "Cai, -3d10 em Forca"},
+                {num: 8, name: "Espasmos", desc: "Musculos contraem violentamente", debuff: "-3d10 em Coordenacao e Forca"},
+                {num: 9, name: "Caimbras Generalizadas", desc: "Caimbras em todo o corpo", debuff: "-2d10 fisicos, +1 Stress/rodada"},
+                {num: 10, name: "Letargia Extrema", desc: "Corpo pesa toneladas", debuff: "Perde 2 acoes, -3d10 em Vigor"},
+                {num: 11, name: "Hiperventilacao", desc: "Respira descontroladamente", debuff: "-2d10 em Vigor e Coordenacao"},
+                {num: 12, name: "Apneia", desc: "Para de respirar", debuff: "+2 Stress, -3d10 em todos os testes"},
+                {num: 13, name: "Taquicardia", desc: "Coracao dispara perigosamente", debuff: "-2d10 em Vigor, +1 Stress/rodada"},
+                {num: 14, name: "Bradicardia", desc: "Coracao desacelera", debuff: "-3d10 em Coordenacao"},
+                {num: 15, name: "Choque Corporal", desc: "Corpo entra em choque", debuff: "-3d10 fisicos, +2 Stress"},
+                // ... continuaria com todos os 100
+            ],
+            mental: [
+                {num: 1, name: "Negacao Total", desc: "Fecha olhos gritando 'isso e so um sonho!'", debuff: "-3d10 em Percepcao, so defende"},
+                {num: 2, name: "Fuga da Realidade", desc: "Foge em panico descontrolado", debuff: "Deve fugir, -2d10 em todos os testes"},
+                // ... continuaria com todos os 100
+            ]
+        };
+
+        // Roll random affliction
+        function rollAffliction(type) {
+            const roll = Math.floor(Math.random() * 100) + 1;
+            const card = document.getElementById('resultCard');
+
+            card.className = 'result-card ' + type + ' active';
+            document.getElementById('resultNumber').textContent = String(roll).padStart(2, '0');
+
+            // Find the affliction in the DOM
+            const tabContent = document.getElementById('tab-' + type);
+            const allRows = tabContent.querySelectorAll('.affliction-row');
+            const targetRow = allRows[roll - 1];
+
+            if (targetRow) {
+                document.getElementById('resultName').textContent = targetRow.querySelector('.affliction-name').textContent;
+                document.getElementById('resultDesc').textContent = targetRow.querySelector('.affliction-desc').textContent;
+                document.getElementById('resultDebuff').textContent = targetRow.querySelector('.affliction-effect').textContent;
+            }
+
+            // Scroll to result
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Tab switching
+        function showTab(type) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById('tab-' + type).classList.add('active');
+            document.querySelector('.tab-btn.' + type).classList.add('active');
+        }
+
+        // Category toggle
+        function toggleCategory(id) {
+            document.getElementById(id).classList.toggle('open');
+        }
+
+        // Search filter
+        function filterAfflictions() {
+            const term = document.getElementById('searchInput').value.toLowerCase().trim();
+            const categories = document.querySelectorAll('.category');
+
+            // Se não há termo, mostrar tudo e fechar categorias
+            if (!term) {
+                document.querySelectorAll('.affliction-row').forEach(row => row.style.display = '');
+                categories.forEach(c => {
+                    c.style.display = '';
+                    c.classList.remove('open');
+                });
+                return;
+            }
+
+            // Filtrar cada categoria
+            categories.forEach(category => {
+                const rows = category.querySelectorAll('.affliction-row');
+                let hasVisibleRows = false;
+
+                rows.forEach(row => {
+                    const num = row.querySelector('.affliction-num').textContent;
+                    const name = row.querySelector('.affliction-name').textContent.toLowerCase();
+                    const desc = row.querySelector('.affliction-desc').textContent.toLowerCase();
+                    const effect = row.querySelector('.affliction-effect').textContent.toLowerCase();
+
+                    const matches = num.includes(term) || name.includes(term) || desc.includes(term) || effect.includes(term);
+                    row.style.display = matches ? '' : 'none';
+
+                    if (matches) hasVisibleRows = true;
+                });
+
+                // Esconder categoria se não tem resultados, senão abrir
+                if (hasVisibleRows) {
+                    category.style.display = '';
+                    category.classList.add('open');
+                } else {
+                    category.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
