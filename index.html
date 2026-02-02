@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCAR - Sacrificial Contract & Risk</title>
+
+    <!-- Squeleton CSS -->
+    <link rel="stylesheet" href="https://cdn.squeleton.dev/squeleton.v4.min.css">
+
+    <!-- Squeleton JS (Head) -->
+    <script src="https://cdn.squeleton.dev/squeleton-main.v4.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cor-principal: #8B0000;
+            --cor-secundaria: #DC143C;
+            --cor-accent: #FF4444;
+            --cor-fundo: #0a0a0a;
+            --cor-fundo-card: #141414;
+            --cor-fundo-card-hover: #1a1a1a;
+            --cor-texto: #f5f5f5;
+            --cor-texto-secundario: #999;
+            --cor-borda: #333;
+            --cor-gold: #D4AF37;
+            --gradient-blood: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #5a0000 100%);
+            --gradient-dark: linear-gradient(180deg, #0a0a0a 0%, #1a0a0a 100%);
+            --shadow-glow: 0 0 30px rgba(220,20,60,0.3);
+            --shadow-card: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--cor-principal) var(--cor-fundo);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        /* Header */
+        .site-header {
+            background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            transition: background 0.3s ease;
+        }
+
+        .site-header.scrolled {
+            background: rgba(10,10,10,0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--cor-secundaria);
+            text-decoration: none;
+            letter-spacing: 4px;
+        }
+
+        .nav-link {
+            color: var(--cor-texto);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 15px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--cor-accent);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--cor-accent);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(139,0,0,0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(90,0,0,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at center top, rgba(220,20,60,0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: clamp(5rem, 18vw, 12rem);
+            color: var(--cor-secundaria);
+            text-shadow:
+                0 0 60px rgba(220,20,60,0.6),
+                0 0 120px rgba(220,20,60,0.4),
+                0 4px 0 #5a0000,
+                0 8px 20px rgba(0,0,0,0.8);
+            line-height: 0.85;
+            letter-spacing: -2px;
+            animation: title-glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes title-glow {
+            from { text-shadow: 0 0 60px rgba(220,20,60,0.4), 0 0 120px rgba(220,20,60,0.2), 0 4px 0 #5a0000; }
+            to { text-shadow: 0 0 80px rgba(220,20,60,0.7), 0 0 160px rgba(220,20,60,0.4), 0 4px 0 #5a0000; }
+        }
+
+        .hero-subtitle {
+            font-family: 'Roboto', sans-serif;
+            font-size: clamp(0.7rem, 1.8vw, 1rem);
+            letter-spacing: 12px;
+            color: var(--cor-texto-secundario);
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .hero-tagline {
+            font-style: italic;
+            color: var(--cor-accent);
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-tagline::before,
+        .hero-tagline::after {
+            content: '—';
+            margin: 0 15px;
+            color: var(--cor-principal);
+        }
+
+        /* Decorative chains */
+        .hero-decor {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.1;
+            color: var(--cor-secundaria);
+        }
+        .hero-decor.left { left: 5%; top: 20%; }
+        .hero-decor.right { right: 5%; bottom: 20%; }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: var(--cor-texto-secundario);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator span {
+            width: 24px;
+            height: 40px;
+            border: 2px solid var(--cor-borda);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .scroll-indicator span::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: var(--cor-secundaria);
+            border-radius: 2px;
+            animation: scroll-dot 2s infinite;
+        }
+
+        @keyframes scroll-dot {
+            0%, 100% { opacity: 1; top: 8px; }
+            50% { opacity: 0.3; top: 20px; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* Botões */
+        .btn {
+            display: inline-block;
+            padding: 16px 42px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-blood);
+            color: white;
+            border: 2px solid var(--cor-principal);
+            box-shadow: 0 4px 15px rgba(139,0,0,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(220,20,60,0.5);
+            border-color: var(--cor-secundaria);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--cor-texto);
+            border: 2px solid var(--cor-borda);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--cor-accent);
+            color: var(--cor-accent);
+            background: rgba(220,20,60,0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--cor-texto);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--cor-secundaria);
+        }
+
+        .section-title.centered::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Section Divider */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cor-principal), transparent);
+            margin: 0;
+            position: relative;
+        }
+
+        .section-divider::before {
+            content: '◆';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--cor-fundo);
+            padding: 0 20px;
+            color: var(--cor-principal);
+            font-size: 0.8rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-blood);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover {
+            background: var(--cor-fundo-card-hover);
+            border-color: var(--cor-principal);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-glow), var(--shadow-card);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-blood);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(139,0,0,0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: var(--cor-texto);
+        }
+
+        .card-text {
+            color: var(--cor-texto-secundario);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Tipo de Ser Cards */
+        .tipo-card {
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 16px;
+            padding: 40px 25px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tipo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--tipo-color, var(--gradient-blood));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .tipo-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center top, var(--tipo-glow, rgba(139,0,0,0.1)) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .tipo-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .tipo-card:hover::after {
+            opacity: 1;
+        }
+
+        .tipo-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4), var(--tipo-shadow, 0 0 30px rgba(139,0,0,0.2));
+            border-color: var(--tipo-border, var(--cor-principal));
+        }
+
+        .tipo-icon {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            display: block;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 5px 15px var(--tipo-glow, rgba(139,0,0,0.3)));
+            transition: transform 0.3s ease;
+        }
+
+        .tipo-card:hover .tipo-icon {
+            transform: scale(1.15);
+        }
+
+        .tipo-card.humano {
+            --tipo-color: linear-gradient(90deg, #3498DB, #5DADE2);
+            --tipo-glow: rgba(74,144,217,0.15);
+            --tipo-shadow: 0 0 30px rgba(74,144,217,0.2);
+            --tipo-border: #4A90D9;
+        }
+        .tipo-card.humano .tipo-icon { color: #5DADE2; }
+
+        .tipo-card.infernal {
+            --tipo-color: linear-gradient(90deg, #8E44AD, #9B59B6);
+            --tipo-glow: rgba(155,89,182,0.15);
+            --tipo-shadow: 0 0 30px rgba(155,89,182,0.2);
+            --tipo-border: #9B59B6;
+        }
+        .tipo-card.infernal .tipo-icon { color: #9B59B6; }
+
+        .tipo-card.hibrido {
+            --tipo-color: linear-gradient(90deg, #E67E22, #F39C12);
+            --tipo-glow: rgba(243,156,18,0.15);
+            --tipo-shadow: 0 0 30px rgba(243,156,18,0.2);
+            --tipo-border: #F39C12;
+        }
+        .tipo-card.hibrido .tipo-icon { color: #F39C12; }
+
+        .tipo-card.demonio {
+            --tipo-color: var(--gradient-blood);
+            --tipo-glow: rgba(220,20,60,0.2);
+            --tipo-shadow: 0 0 40px rgba(220,20,60,0.3);
+            --tipo-border: var(--cor-secundaria);
+        }
+        .tipo-card.demonio .tipo-icon { color: var(--cor-secundaria); }
+
+        .tipo-card h3 {
+            position: relative;
+            z-index: 1;
+        }
+
+        .tipo-card p {
+            position: relative;
+            z-index: 1;
+        }
+
+        .tipo-card .m-20-t {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Tabelas */
+        .table-scar {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--cor-borda);
+        }
+
+        .table-scar th,
+        .table-scar td {
+            padding: 18px 24px;
+            text-align: left;
+            border-bottom: 1px solid var(--cor-borda);
+        }
+
+        .table-scar th {
+            background: linear-gradient(135deg, var(--cor-fundo-card) 0%, #1a1a1a 100%);
+            color: var(--cor-secundaria);
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .table-scar th::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-blood);
+        }
+
+        .table-scar tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .table-scar tbody tr:hover td {
+            background: rgba(139,0,0,0.1);
+        }
+
+        .table-scar tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table-scar td:first-child {
+            font-weight: 600;
+            color: var(--cor-accent);
+        }
+
+        /* Atributos Grid */
+        .atributo-item {
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .atributo-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-blood);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .atributo-item:hover {
+            border-color: var(--cor-principal);
+            transform: translateX(5px);
+        }
+
+        .atributo-item:hover::after {
+            transform: scaleX(1);
+        }
+
+        .atributo-nome {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            color: var(--cor-secundaria);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .atributo-nome .attr-icon {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .atributo-desc {
+            color: var(--cor-texto-secundario);
+            font-size: 0.9rem;
+        }
+
+        /* Categoria header */
+        .categoria-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--cor-borda);
+        }
+
+        .categoria-header h4 {
+            margin: 0;
+        }
+
+        .categoria-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--gradient-blood);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: #1a1a1a;
+            border: 1px solid var(--cor-borda);
+            border-radius: 8px;
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            color: #ddd;
+        }
+
+        .code-block .highlight {
+            color: var(--cor-accent);
+        }
+
+        .code-block .comment {
+            color: #666;
+        }
+
+        /* Stress Meter */
+        .stress-meter {
+            display: flex;
+            gap: 6px;
+            margin: 25px 0;
+        }
+
+        .stress-bar {
+            width: 32px;
+            height: 45px;
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stress-bar:hover::before {
+            opacity: 1;
+        }
+
+        .stress-bar.filled {
+            background: linear-gradient(180deg, var(--cor-accent), var(--cor-secundaria), var(--cor-principal));
+            border-color: var(--cor-secundaria);
+            box-shadow: 0 0 15px rgba(220,20,60,0.5), inset 0 2px 4px rgba(255,255,255,0.2);
+            animation: stress-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes stress-pulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(220,20,60,0.4); }
+            50% { box-shadow: 0 0 25px rgba(220,20,60,0.7); }
+        }
+
+        .stress-bar:hover {
+            transform: scaleY(1.1);
+        }
+
+        /* Contrato Card */
+        .contrato-card {
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+        }
+
+        .contrato-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4), var(--shadow-glow);
+            border-color: var(--cor-principal);
+        }
+
+        .contrato-header {
+            background: var(--gradient-blood);
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contrato-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .contrato-categoria {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .contrato-nome {
+            font-size: 1.5rem;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contrato-body {
+            padding: 25px;
+        }
+
+        .contrato-item {
+            margin-bottom: 18px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .contrato-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .contrato-label {
+            color: var(--cor-secundaria);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contrato-item p {
+            color: var(--cor-texto-secundario);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Arma Card */
+        .arma-card {
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            padding: 22px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .arma-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--gradient-blood);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .arma-card:hover {
+            border-color: var(--cor-principal);
+            transform: translateX(5px);
+            box-shadow: -5px 0 20px rgba(139,0,0,0.2);
+        }
+
+        .arma-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .arma-nome {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            color: var(--cor-texto);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .arma-nome .arma-icon {
+            font-size: 1.2rem;
+        }
+
+        .arma-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .arma-stat {
+            background: rgba(139,0,0,0.15);
+            border: 1px solid rgba(139,0,0,0.3);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+
+        .arma-stat:hover {
+            background: rgba(139,0,0,0.3);
+        }
+
+        .arma-stat span {
+            color: var(--cor-accent);
+            font-weight: 600;
+        }
+
+        /* Estilo de Luta Card */
+        .estilo-card {
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 14px;
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .estilo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top right, rgba(139,0,0,0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .estilo-card:hover {
+            border-color: var(--cor-principal);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-glow), var(--shadow-card);
+        }
+
+        .estilo-card:hover::before {
+            opacity: 1;
+        }
+
+        .estilo-nome {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            color: var(--cor-secundaria);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .estilo-nome .estilo-icon {
+            font-size: 1.5rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .estilo-beneficio {
+            background: linear-gradient(135deg, rgba(139,0,0,0.1) 0%, rgba(139,0,0,0.05) 100%);
+            border-left: 3px solid var(--cor-principal);
+            border-radius: 0 8px 8px 0;
+            padding: 14px 18px;
+            margin: 12px 0;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.2s ease;
+        }
+
+        .estilo-beneficio:hover {
+            background: linear-gradient(135deg, rgba(139,0,0,0.2) 0%, rgba(139,0,0,0.1) 100%);
+            padding-left: 22px;
+        }
+
+        .estilo-beneficio strong {
+            color: var(--cor-accent);
+        }
+
+        /* Navegação por seções */
+        .nav-sections {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--cor-borda);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot:hover,
+        .nav-dot.active {
+            background: var(--cor-secundaria);
+            box-shadow: 0 0 10px rgba(220,20,60,0.5);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background:
+                radial-gradient(ellipse at center, rgba(139,0,0,0.2) 0%, transparent 70%),
+                var(--gradient-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23DC143C' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        /* Footer */
+        .site-footer {
+            background: linear-gradient(180deg, #080808 0%, #030303 100%);
+            border-top: 1px solid var(--cor-borda);
+            position: relative;
+        }
+
+        .site-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient-blood);
+        }
+
+        .footer-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            color: var(--cor-secundaria);
+            letter-spacing: 6px;
+            text-shadow: 0 0 30px rgba(220,20,60,0.3);
+        }
+
+        /* Animação de sangue */
+        @keyframes blood-drip {
+            0% { transform: translateY(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .blood-drip {
+            position: fixed;
+            top: 0;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(180deg, transparent, var(--cor-secundaria), transparent);
+            pointer-events: none;
+            animation: blood-drip 3s ease-in infinite;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--cor-texto);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 991px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-desktop {
+                display: none;
+            }
+
+            .nav-sections {
+                display: none;
+            }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--cor-principal);
+            color: white;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--cor-fundo);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--cor-principal);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--cor-secundaria);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header p-15-tb">
+        <div class="container">
+            <div class="d-flex f-items-center f-justify-between">
+                <a href="#" class="logo-text">SCAR</a>
+
+                <nav class="nav-desktop d-flex f-items-center f-gap-10">
+                    <a href="#sobre" class="nav-link">Sobre</a>
+                    <a href="#sistema" class="nav-link">Sistema</a>
+                    <a href="#seres" class="nav-link">Seres</a>
+                    <a href="#contratos" class="nav-link">Contratos</a>
+                    <a href="#combate" class="nav-link">Combate</a>
+                    <a href="#armas" class="nav-link">Armas</a>
+                    <a href="#estilos" class="nav-link">Estilos</a>
+                </nav>
+
+                <button class="mobile-menu-btn" data-modal-show="mobile-menu">
+                    <span class="iccon-menu-1"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Modal -->
+    <div data-modal="mobile-menu" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-100 h-100vh" style="background: var(--cor-fundo);">
+                <button class="dialog-close" data-modal-hide style="color: white; font-size: 2rem;"></button>
+                <div class="d-flex f-col f-items-center f-justify-center h-100 f-gap-30">
+                    <a href="#sobre" class="nav-link fs-12" data-modal-hide>Sobre</a>
+                    <a href="#sistema" class="nav-link fs-12" data-modal-hide>Sistema</a>
+                    <a href="#seres" class="nav-link fs-12" data-modal-hide>Seres</a>
+                    <a href="#contratos" class="nav-link fs-12" data-modal-hide>Contratos</a>
+                    <a href="#combate" class="nav-link fs-12" data-modal-hide>Combate</a>
+                    <a href="#armas" class="nav-link fs-12" data-modal-hide>Armas</a>
+                    <a href="#estilos" class="nav-link fs-12" data-modal-hide>Estilos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero h-100vh f-items-center f-justify-center text-center p-30-all">
+            <!-- Decorative elements -->
+            <span class="hero-decor left wow fadeIn" data-wow-delay="1.2s">⛓️</span>
+            <span class="hero-decor right wow fadeIn" data-wow-delay="1.4s">⛓️</span>
+
+            <div class="container hero-content">
+                <p class="hero-subtitle wow fadeInDown m-25-b" data-wow-delay="0.2s">Sacrificial Contract & Risk</p>
+                <h1 class="hero-title wow fadeIn" data-wow-delay="0.4s">SCAR</h1>
+                <p class="hero-tagline wow fadeInUp m-50-t m-40-b" data-wow-delay="0.6s">"Prepare-se para o contrato."</p>
+                <div class="wow fadeInUp d-flex f-justify-center f-gap-15 f-wrap" data-wow-delay="0.8s">
+                    <a href="#sobre" class="btn btn-primary">Começar</a>
+                    <a href="#sistema" class="btn btn-outline">Ver Sistema</a>
+                </div>
+            </div>
+
+            <!-- Scroll indicator -->
+            <div class="scroll-indicator wow fadeIn" data-wow-delay="1.5s">
+                <span></span>
+                Scroll
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider"></div>
+
+        <!-- Sobre Section -->
+        <section id="sobre" class="p-100-tb xs-p-60-tb">
+            <div class="container">
+                <div class="row f-items-center">
+                    <div class="c-xs-12 c-md-6 m-40-b md-m-0-b">
+                        <h2 class="section-title wow fadeInLeft">O Que É SCAR?</h2>
+                        <p class="fs-9 m-30-t wow fadeInLeft" data-wow-delay="0.2s" style="color: var(--cor-texto-secundario);">
+                            <strong style="color: var(--cor-texto);">SCAR</strong> (Sacrificial Contract & Risk) é um RPG de mesa ambientado no universo de <strong style="color: var(--cor-secundaria);">Chainsaw Man</strong>, onde demônios nascem dos medos humanos e poder <em>sempre</em> cobra um preço.
+                        </p>
+                        <p class="fs-9 m-20-t wow fadeInLeft" data-wow-delay="0.3s" style="color: var(--cor-texto-secundario);">
+                            Este é um jogo sobre <strong style="color: var(--cor-texto);">sobrevivência</strong>, <strong style="color: var(--cor-texto);">escolhas impossíveis</strong> e <strong style="color: var(--cor-texto);">o custo de ter poder</strong>.
+                        </p>
+                    </div>
+                    <div class="c-xs-12 c-md-6">
+                        <div class="row gap-15">
+                            <div class="c-xs-6">
+                                <div class="card wow fadeInUp" data-wow-delay="0.2s">
+                                    <div class="card-icon">💀</div>
+                                    <h4 class="card-title">Sobrevivência</h4>
+                                    <p class="card-text">Personagens morrem. Muitos. Sem aviso.</p>
+                                </div>
+                            </div>
+                            <div class="c-xs-6">
+                                <div class="card wow fadeInUp" data-wow-delay="0.3s">
+                                    <div class="card-icon">🩸</div>
+                                    <h4 class="card-title">Brutalidade</h4>
+                                    <p class="card-text">Combates viscerais. Sangue. Morte gráfica.</p>
+                                </div>
+                            </div>
+                            <div class="c-xs-6">
+                                <div class="card wow fadeInUp" data-wow-delay="0.4s">
+                                    <div class="card-icon">📜</div>
+                                    <h4 class="card-title">Contratos</h4>
+                                    <p class="card-text">Poder tem preço. Demônios sempre cobram.</p>
+                                </div>
+                            </div>
+                            <div class="c-xs-6">
+                                <div class="card wow fadeInUp" data-wow-delay="0.5s">
+                                    <div class="card-icon">💕</div>
+                                    <h4 class="card-title">Vínculos</h4>
+                                    <p class="card-text">Conexões são raras e preciosas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sistema Section -->
+        <section id="sistema" class="p-100-tb xs-p-60-tb" style="background: var(--cor-fundo-card);">
+            <div class="container">
+                <div class="text-center m-60-b">
+                    <h2 class="section-title centered wow fadeInUp">Fundamentos do Sistema</h2>
+                    <p class="fs-9 m-30-t wow fadeInUp" data-wow-delay="0.2s" style="color: var(--cor-texto-secundario); max-width: 600px; margin-left: auto; margin-right: auto;">
+                        SCAR usa um sistema de dados d10 baseado em atributos. Quanto maior o atributo, mais dados você rola.
+                    </p>
+                </div>
+
+                <!-- Atributos -->
+                <h3 class="fs-12 m-50-b wow fadeInUp" style="color: var(--cor-secundaria); text-align: center;">10 Atributos</h3>
+
+                <div class="row gap-25 m-50-b">
+                    <!-- Físicos -->
+                    <div class="c-xs-12 c-md-4">
+                        <div class="categoria-header wow fadeInUp">
+                            <div class="categoria-icon">⚔️</div>
+                            <h4 class="fs-10" style="color: var(--cor-accent); margin: 0;">Físicos</h4>
+                        </div>
+                        <div class="atributo-item m-15-b wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="atributo-nome"><span class="attr-icon">💪</span> Força</div>
+                            <div class="atributo-desc">Violência direta, combate corporal</div>
+                        </div>
+                        <div class="atributo-item m-15-b wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="atributo-nome"><span class="attr-icon">🫀</span> Vigor</div>
+                            <div class="atributo-desc">Resistência, fôlego, esforço prolongado</div>
+                        </div>
+                        <div class="atributo-item wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="atributo-nome"><span class="attr-icon">🎯</span> Coordenação</div>
+                            <div class="atributo-desc">Mira, reflexos, uso de armas</div>
+                        </div>
+                    </div>
+
+                    <!-- Táticos -->
+                    <div class="c-xs-12 c-md-4">
+                        <div class="categoria-header wow fadeInUp">
+                            <div class="categoria-icon">🎲</div>
+                            <h4 class="fs-10" style="color: var(--cor-accent); margin: 0;">Táticos</h4>
+                        </div>
+                        <div class="atributo-item m-15-b wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="atributo-nome"><span class="attr-icon">🃏</span> Malandragem</div>
+                            <div class="atributo-desc">Furtividade, enganação, lockpick</div>
+                        </div>
+                        <div class="atributo-item m-15-b wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="atributo-nome"><span class="attr-icon">⚙️</span> Tecnologia</div>
+                            <div class="atributo-desc">Veículos, dispositivos, equipamentos</div>
+                        </div>
+                        <div class="atributo-item wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="atributo-nome"><span class="attr-icon">👁️</span> Percepção</div>
+                            <div class="atributo-desc">Observação, rastreio, vigilância</div>
+                        </div>
+                    </div>
+
+                    <!-- Mentais / Sociais -->
+                    <div class="c-xs-12 c-md-4">
+                        <div class="categoria-header wow fadeInUp">
+                            <div class="categoria-icon">🧠</div>
+                            <h4 class="fs-10" style="color: var(--cor-accent); margin: 0;">Mentais / Sociais</h4>
+                        </div>
+                        <div class="atributo-item m-15-b wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="atributo-nome"><span class="attr-icon">🔍</span> Investigação</div>
+                            <div class="atributo-desc">Análise, dedução, pistas</div>
+                        </div>
+                        <div class="atributo-item m-15-b wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="atributo-nome"><span class="attr-icon">🤝</span> Negociação</div>
+                            <div class="atributo-desc">Barganha, persuasão</div>
+                        </div>
+                        <div class="atributo-item m-15-b wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="atributo-nome"><span class="attr-icon">👑</span> Autoridade</div>
+                            <div class="atributo-desc">Liderança, intimidação</div>
+                        </div>
+                        <div class="atributo-item wow fadeInUp" data-wow-delay="0.4s">
+                            <div class="atributo-nome"><span class="attr-icon">💕</span> Vínculo</div>
+                            <div class="atributo-desc">Empatia, conexões humanas</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Como Funciona -->
+                <div class="row f-items-center m-60-t">
+                    <div class="c-xs-12 c-md-6 m-40-b md-m-0-b">
+                        <h3 class="fs-12 m-30-b wow fadeInLeft" style="color: var(--cor-secundaria);">Como Funciona?</h3>
+                        <div class="code-block wow fadeInLeft" data-wow-delay="0.2s">
+                            <span class="comment">// Teste de Ação</span><br><br>
+                            Role <span class="highlight">[ATRIBUTO]</span> d10 = RESULTADO<br><br>
+                            <span class="comment">// Exemplo: Força 3</span><br>
+                            Role <span class="highlight">3d10</span> → 4 + 7 + 2 = <span class="highlight">13</span>
+                        </div>
+                    </div>
+                    <div class="c-xs-12 c-md-6">
+                        <div class="card wow fadeInRight" data-wow-delay="0.3s">
+                            <h4 class="card-title" style="color: var(--cor-secundaria);">Tabela de Injúrias</h4>
+                            <table class="table-scar">
+                                <tr>
+                                    <th>Diferença</th>
+                                    <th>Resultado</th>
+                                </tr>
+                                <tr>
+                                    <td>1-9</td>
+                                    <td>Injúria Leve</td>
+                                </tr>
+                                <tr>
+                                    <td>10-19</td>
+                                    <td>Injúria Grave</td>
+                                </tr>
+                                <tr>
+                                    <td>20+</td>
+                                    <td>Injúria Crítica</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider" style="background: linear-gradient(90deg, transparent, var(--cor-borda), transparent);"></div>
+
+        <!-- Stress Section -->
+        <section id="stress" class="p-100-tb xs-p-60-tb">
+            <div class="container">
+                <div class="row f-items-center">
+                    <div class="c-xs-12 c-md-6 m-40-b md-m-0-b">
+                        <h2 class="section-title wow fadeInLeft">Stress & Colapso</h2>
+                        <p class="fs-9 m-30-t wow fadeInLeft" data-wow-delay="0.2s" style="color: var(--cor-texto-secundario);">
+                            <strong style="color: var(--cor-texto);">Stress</strong> é a pressão acumulada — mental, física e emocional. É o recurso que você <em>gasta</em> para fazer coisas extraordinárias, mas se acumular demais... você <strong style="color: var(--cor-accent);">quebra</strong>.
+                        </p>
+
+                        <div class="code-block m-30-t wow fadeInLeft" data-wow-delay="0.3s">
+                            <span class="highlight">STRESS MÁXIMO</span> = 6 + Vigor + Vínculo
+                        </div>
+
+                        <div class="m-30-t wow fadeInLeft" data-wow-delay="0.4s">
+                            <p class="m-10-b"><strong>Gastar Stress para:</strong></p>
+                            <div class="atributo-item m-10-b">
+                                <span style="color: var(--cor-accent);">1 Stress</span> → +1d10 para aliado
+                            </div>
+                            <div class="atributo-item m-10-b">
+                                <span style="color: var(--cor-accent);">2 Stress</span> → Rerolar um teste
+                            </div>
+                            <div class="atributo-item">
+                                <span style="color: var(--cor-accent);">3 Stress</span> → +1 ação extra
+                            </div>
+                        </div>
+                    </div>
+                    <div class="c-xs-12 c-md-6 text-center">
+                        <div class="wow fadeInRight" data-wow-delay="0.3s">
+                            <h4 class="fs-10 m-20-b">Medidor de Stress</h4>
+                            <div class="stress-meter f-justify-center f-wrap">
+                                <div class="stress-bar filled"></div>
+                                <div class="stress-bar filled"></div>
+                                <div class="stress-bar filled"></div>
+                                <div class="stress-bar filled"></div>
+                                <div class="stress-bar filled"></div>
+                                <div class="stress-bar filled"></div>
+                                <div class="stress-bar filled"></div>
+                                <div class="stress-bar filled"></div>
+                                <div class="stress-bar"></div>
+                                <div class="stress-bar"></div>
+                                <div class="stress-bar"></div>
+                                <div class="stress-bar"></div>
+                            </div>
+                            <p class="fs-8 m-20-t" style="color: var(--cor-texto-secundario);">8 / 12 Stress</p>
+
+                            <div class="card m-40-t" style="background: rgba(139,0,0,0.2); border-color: var(--cor-principal);">
+                                <h4 style="color: var(--cor-accent);">⚠️ COLAPSO</h4>
+                                <p class="m-15-t" style="color: var(--cor-texto-secundario);">
+                                    Ao atingir Stress Máximo:<br>
+                                    <strong style="color: var(--cor-texto);">Sofre 1 Injúria + Stress reseta para 0</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seres Section -->
+        <section id="seres" class="p-100-tb xs-p-60-tb" style="background: var(--cor-fundo-card);">
+            <div class="container">
+                <div class="text-center m-60-b">
+                    <h2 class="section-title centered wow fadeInUp">Tipos de Seres</h2>
+                    <p class="fs-9 m-30-t wow fadeInUp" data-wow-delay="0.2s" style="color: var(--cor-texto-secundario); max-width: 600px; margin-left: auto; margin-right: auto;">
+                        Escolha sua natureza. Ela define como você existe, como sofre e como o mundo reage a você.
+                    </p>
+                </div>
+
+                <div class="row gap-20">
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="tipo-card humano wow fadeInUp" data-wow-delay="0.1s">
+                            <span class="tipo-icon">👤</span>
+                            <h3 class="fs-11">Humano</h3>
+                            <p class="m-15-t" style="color: var(--cor-texto-secundario); font-size: 0.9rem;">
+                                Pessoas comuns arrastadas para o mundo dos demônios. Podem fazer contratos.
+                            </p>
+                            <div class="m-20-t">
+                                <span class="arma-stat">✅ +2 Stress Máx</span>
+                                <span class="arma-stat">❌ Morte definitiva</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="tipo-card infernal wow fadeInUp" data-wow-delay="0.2s">
+                            <span class="tipo-icon">👁️</span>
+                            <h3 class="fs-11">Infernal</h3>
+                            <p class="m-15-t" style="color: var(--cor-texto-secundario); font-size: 0.9rem;">
+                                Demônio em corpo humano morto. Traços demoníacos visíveis.
+                            </p>
+                            <div class="m-20-t">
+                                <span class="arma-stat">✅ Poderes inatos</span>
+                                <span class="arma-stat">❌ Sem contratos</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="tipo-card hibrido wow fadeInUp" data-wow-delay="0.3s">
+                            <span class="tipo-icon">⚡</span>
+                            <h3 class="fs-11">Híbrido</h3>
+                            <p class="m-15-t" style="color: var(--cor-texto-secundario); font-size: 0.9rem;">
+                                Humano fundido com demônio. Pode transformar. Quase imortal.
+                            </p>
+                            <div class="m-20-t">
+                                <span class="arma-stat">✅ Recusa da Morte</span>
+                                <span class="arma-stat">❌ Grilhões</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="tipo-card demonio wow fadeInUp" data-wow-delay="0.4s">
+                            <span class="tipo-icon">👹</span>
+                            <h3 class="fs-11">Demônio</h3>
+                            <p class="m-15-t" style="color: var(--cor-texto-secundario); font-size: 0.9rem;">
+                                Manifestação pura do medo coletivo. Os mais poderosos.
+                            </p>
+                            <div class="m-20-t">
+                                <span class="arma-stat">✅ Renasce</span>
+                                <span class="arma-stat">❌ Sem empatia</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grilhões -->
+                <div class="card m-60-t wow fadeInUp" data-wow-delay="0.2s" style="border-color: var(--cor-principal);">
+                    <div class="row f-items-center">
+                        <div class="c-xs-12 c-md-8">
+                            <h3 class="fs-11" style="color: var(--cor-secundaria);">⛓️ Sistema de Grilhões (Híbridos)</h3>
+                            <p class="m-15-t" style="color: var(--cor-texto-secundario);">
+                                Representam o controle do demônio sobre você. Cada uso de poder demoníaco = +1 Grilhão.
+                            </p>
+                            <div class="row gap-15 m-20-t">
+                                <div class="c-xs-12 c-sm-4">
+                                    <div class="atributo-item text-center">
+                                        <div class="atributo-nome">A cada 5</div>
+                                        <div class="atributo-desc">Demônio age através de você</div>
+                                    </div>
+                                </div>
+                                <div class="c-xs-12 c-sm-4">
+                                    <div class="atributo-item text-center">
+                                        <div class="atributo-nome">10+</div>
+                                        <div class="atributo-desc">Controle por 1 cena</div>
+                                    </div>
+                                </div>
+                                <div class="c-xs-12 c-sm-4">
+                                    <div class="atributo-item text-center">
+                                        <div class="atributo-nome">15+</div>
+                                        <div class="atributo-desc">Possessão total</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-md-4 text-center xs-m-30-t">
+                            <span style="font-size: 5rem;">⛓️</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contratos Section -->
+        <section id="contratos" class="p-100-tb xs-p-60-tb">
+            <div class="container">
+                <div class="text-center m-60-b">
+                    <h2 class="section-title centered wow fadeInUp">Contratos Demoníacos</h2>
+                    <p class="fs-9 m-30-t wow fadeInUp" data-wow-delay="0.2s" style="color: var(--cor-texto-secundario); max-width: 700px; margin-left: auto; margin-right: auto;">
+                        Pactos vinculantes entre humano e demônio. A principal forma de ganhar poder sobrenatural.
+                        <br><strong style="color: var(--cor-accent);">⚠️ Demônios NÃO são seus amigos. Eles vão cobrar. SEMPRE.</strong>
+                    </p>
+                </div>
+
+                <!-- Estrutura -->
+                <div class="card m-40-b wow fadeInUp">
+                    <h3 class="fs-11 m-20-b" style="color: var(--cor-secundaria);">Estrutura de Todo Contrato</h3>
+                    <div class="row gap-15">
+                        <div class="c-xs-6 c-md-3">
+                            <div class="atributo-item text-center">
+                                <div style="font-size: 2rem; margin-bottom: 10px;">⚡</div>
+                                <div class="atributo-nome">O Poder</div>
+                                <div class="atributo-desc">O que o demônio te dá</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-6 c-md-3">
+                            <div class="atributo-item text-center">
+                                <div style="font-size: 2rem; margin-bottom: 10px;">💰</div>
+                                <div class="atributo-nome">O Preço</div>
+                                <div class="atributo-desc">O que você paga</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-6 c-md-3">
+                            <div class="atributo-item text-center">
+                                <div style="font-size: 2rem; margin-bottom: 10px;">📜</div>
+                                <div class="atributo-nome">A Restrição</div>
+                                <div class="atributo-desc">Regras a seguir</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-6 c-md-3">
+                            <div class="atributo-item text-center">
+                                <div style="font-size: 2rem; margin-bottom: 10px;">💀</div>
+                                <div class="atributo-nome">A Quebra</div>
+                                <div class="atributo-desc">Se violar</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exemplos de Contratos -->
+                <h3 class="fs-11 m-40-b wow fadeInUp" style="color: var(--cor-secundaria);">Exemplos de Contratos</h3>
+                <div class="row gap-20">
+                    <div class="c-xs-12 c-md-6 c-lg-4">
+                        <div class="contrato-card wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="contrato-header">
+                                <span class="contrato-categoria">Menor</span>
+                                <h4 class="contrato-nome">🚬 Demônio do Cigarro</h4>
+                            </div>
+                            <div class="contrato-body">
+                                <div class="contrato-item">
+                                    <div class="contrato-label">⚡ Poder</div>
+                                    <p>Cortina de fumaça que bloqueia visão</p>
+                                </div>
+                                <div class="contrato-item">
+                                    <div class="contrato-label">💰 Custo</div>
+                                    <p>2 Stress por uso</p>
+                                </div>
+                                <div class="contrato-item">
+                                    <div class="contrato-label">📜 Restrição</div>
+                                    <p>Deve fumar 1 cigarro por dia</p>
+                                </div>
+                                <div class="contrato-item">
+                                    <div class="contrato-label">🔖 Marca</div>
+                                    <p>Dedos amarelados permanentes</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-xs-12 c-md-6 c-lg-4">
+                        <div class="contrato-card wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="contrato-header">
+                                <span class="contrato-categoria">Médio</span>
+                                <h4 class="contrato-nome">🦊 Demônio da Raposa</h4>
+                            </div>
+                            <div class="contrato-body">
+                                <div class="contrato-item">
+                                    <div class="contrato-label">⚡ Poder</div>
+                                    <p>Cabeça gigante de raposa (Injúria Grave)</p>
+                                </div>
+                                <div class="contrato-item">
+                                    <div class="contrato-label">💰 Custo</div>
+                                    <p>4 Stress + sacrifício de memória</p>
+                                </div>
+                                <div class="contrato-item">
+                                    <div class="contrato-label">📜 Restrição</div>
+                                    <p>Não pode mentir para demônios</p>
+                                </div>
+                                <div class="contrato-item">
+                                    <div class="contrato-label">🔖 Marca</div>
+                                    <p>Olhos alaranjados quando com raiva</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-xs-12 c-md-6 c-lg-4">
+                        <div class="contrato-card wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="contrato-header">
+                                <span class="contrato-categoria">Maior</span>
+                                <h4 class="contrato-nome">⚔️ Demônio da Katana</h4>
+                            </div>
+                            <div class="contrato-body">
+                                <div class="contrato-item">
+                                    <div class="contrato-label">⚡ Poder</div>
+                                    <p>Katana demoníaca (Injúria +1 estágio)</p>
+                                </div>
+                                <div class="contrato-item">
+                                    <div class="contrato-label">💰 Custo</div>
+                                    <p>5 Stress + sangue de inimigo</p>
+                                </div>
+                                <div class="contrato-item">
+                                    <div class="contrato-label">📜 Restrição</div>
+                                    <p>Matar 1 ser vivo por mês</p>
+                                </div>
+                                <div class="contrato-item">
+                                    <div class="contrato-label">🔖 Marca</div>
+                                    <p>Cicatriz de katana nas costas</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Combate Section -->
+        <section id="combate" class="p-100-tb xs-p-60-tb" style="background: var(--cor-fundo-card);">
+            <div class="container">
+                <div class="text-center m-60-b">
+                    <h2 class="section-title centered wow fadeInUp">Sistema de Combate</h2>
+                </div>
+
+                <div class="row gap-30">
+                    <div class="c-xs-12 c-md-6">
+                        <div class="card wow fadeInLeft">
+                            <h3 class="fs-11 m-20-b" style="color: var(--cor-secundaria);">Fluxo de Combate</h3>
+                            <div class="code-block">
+                                <span class="highlight">ATACANTE</span> (Xd10) vs <span class="highlight">DEFENSOR</span> (Yd10)<br><br>
+                                <span class="comment">// Calcule a diferença</span><br>
+                                Diferença = Atacante − Defensor<br><br>
+                                <span class="comment">// Aplique o resultado</span><br>
+                                Se positivo → Causa <span class="highlight">Injúria</span><br>
+                                Se negativo → Ataque <span class="highlight">falha</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-xs-12 c-md-6">
+                        <div class="card wow fadeInRight">
+                            <h3 class="fs-11 m-20-b" style="color: var(--cor-secundaria);">Níveis de Injúria</h3>
+                            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                                <div class="atributo-item" style="flex: 1; min-width: 100px; text-align: center;">
+                                    <div class="atributo-nome">Leve</div>
+                                    <div class="atributo-desc">1-9</div>
+                                </div>
+                                <span style="font-size: 1.5rem;">→</span>
+                                <div class="atributo-item" style="flex: 1; min-width: 100px; text-align: center;">
+                                    <div class="atributo-nome">Grave</div>
+                                    <div class="atributo-desc">10-19</div>
+                                </div>
+                                <span style="font-size: 1.5rem;">→</span>
+                                <div class="atributo-item" style="flex: 1; min-width: 100px; text-align: center;">
+                                    <div class="atributo-nome">Crítica</div>
+                                    <div class="atributo-desc">20+</div>
+                                </div>
+                                <span style="font-size: 1.5rem;">→</span>
+                                <div class="atributo-item" style="flex: 1; min-width: 100px; text-align: center; background: rgba(139,0,0,0.3); border-color: var(--cor-principal);">
+                                    <div class="atributo-nome" style="color: var(--cor-accent);">Morte</div>
+                                </div>
+                            </div>
+
+                            <div class="m-30-t">
+                                <h4 class="fs-9 m-15-b">Slots de Injúria (Vigor 4)</h4>
+                                <div class="d-flex f-gap-20 f-wrap">
+                                    <div>
+                                        <span style="color: var(--cor-texto-secundario);">Leves:</span>
+                                        <span style="color: var(--cor-accent);">☐ ☐ ☐ ☐</span>
+                                    </div>
+                                    <div>
+                                        <span style="color: var(--cor-texto-secundario);">Graves:</span>
+                                        <span style="color: var(--cor-accent);">☐ ☐</span>
+                                    </div>
+                                    <div>
+                                        <span style="color: var(--cor-texto-secundario);">Crítica:</span>
+                                        <span style="color: var(--cor-accent);">☐</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teste de Medo -->
+                <div class="card m-60-t wow fadeInUp">
+                    <h3 class="fs-11 m-20-b" style="color: var(--cor-secundaria);">😱 Teste de Medo</h3>
+                    <p style="color: var(--cor-texto-secundario);" class="m-20-b">
+                        Demônios causam terror. Ao encontrar um, você pode precisar resistir ao medo.
+                    </p>
+                    <table class="table-scar">
+                        <tr>
+                            <th>Nível</th>
+                            <th>Classificação</th>
+                            <th>DT</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Perturbador</td>
+                            <td>20-25</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Amedrontador</td>
+                            <td>25-30</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Horripilante</td>
+                            <td>30-35</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Aterrorizante</td>
+                            <td>35-40</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Incompreendido (Primordiais)</td>
+                            <td>40+</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Armas Section -->
+        <section id="armas" class="p-100-tb xs-p-60-tb">
+            <div class="container">
+                <div class="text-center m-60-b">
+                    <h2 class="section-title centered wow fadeInUp">Armamento</h2>
+                </div>
+
+                <div class="row gap-20">
+                    <!-- Curto Alcance -->
+                    <div class="c-xs-12 c-md-6 c-lg-4">
+                        <h3 class="fs-10 m-20-b wow fadeInUp" style="color: var(--cor-accent);">⚔️ Curto Alcance</h3>
+
+                        <div class="arma-card m-15-b wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="arma-nome">Katana</div>
+                            <p style="color: var(--cor-texto-secundario); font-size: 0.85rem;">Corte preciso com alcance estendido</p>
+                            <div class="arma-stats">
+                                <span class="arma-stat"><span>+1d10</span> Grave</span>
+                                <span class="arma-stat">Sangramento</span>
+                                <span class="arma-stat">800 ¥</span>
+                            </div>
+                        </div>
+
+                        <div class="arma-card m-15-b wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="arma-nome">Machado</div>
+                            <p style="color: var(--cor-texto-secundario); font-size: 0.85rem;">Pesado mas devastador</p>
+                            <div class="arma-stats">
+                                <span class="arma-stat"><span>+2d10</span> Grave</span>
+                                <span class="arma-stat">Execução</span>
+                                <span class="arma-stat">300 ¥</span>
+                            </div>
+                        </div>
+
+                        <div class="arma-card wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="arma-nome">Motosserra</div>
+                            <p style="color: var(--cor-texto-secundario); font-size: 0.85rem;">Brutal e barulhenta</p>
+                            <div class="arma-stats">
+                                <span class="arma-stat"><span>+3d10</span> Grave</span>
+                                <span class="arma-stat">Brutal</span>
+                                <span class="arma-stat">1.500 ¥</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Médio Alcance -->
+                    <div class="c-xs-12 c-md-6 c-lg-4">
+                        <h3 class="fs-10 m-20-b wow fadeInUp" style="color: var(--cor-accent);">🔫 Médio Alcance</h3>
+
+                        <div class="arma-card m-15-b wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="arma-nome">Revólver</div>
+                            <p style="color: var(--cor-texto-secundario); font-size: 0.85rem;">Confiável, nunca falha</p>
+                            <div class="arma-stats">
+                                <span class="arma-stat"><span>+1d10</span> Grave</span>
+                                <span class="arma-stat">6 tiros</span>
+                                <span class="arma-stat">600 ¥</span>
+                            </div>
+                        </div>
+
+                        <div class="arma-card m-15-b wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="arma-nome">Pistola .45</div>
+                            <p style="color: var(--cor-texto-secundario); font-size: 0.85rem;">Alto poder de parada</p>
+                            <div class="arma-stats">
+                                <span class="arma-stat"><span>+2d10</span> Grave</span>
+                                <span class="arma-stat">Perfurante</span>
+                                <span class="arma-stat">900 ¥</span>
+                            </div>
+                        </div>
+
+                        <div class="arma-card wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="arma-nome">Submetralhadora</div>
+                            <p style="color: var(--cor-texto-secundario); font-size: 0.85rem;">Supressão de área</p>
+                            <div class="arma-stats">
+                                <span class="arma-stat"><span>+2d10</span> Grave</span>
+                                <span class="arma-stat">Área (2 alvos)</span>
+                                <span class="arma-stat">2.000 ¥</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Longo Alcance -->
+                    <div class="c-xs-12 c-md-6 c-lg-4">
+                        <h3 class="fs-10 m-20-b wow fadeInUp" style="color: var(--cor-accent);">🎯 Longo Alcance</h3>
+
+                        <div class="arma-card m-15-b wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="arma-nome">Rifle de Caça</div>
+                            <p style="color: var(--cor-texto-secundario); font-size: 0.85rem;">Preciso quando preparado</p>
+                            <div class="arma-stats">
+                                <span class="arma-stat"><span>+2d10</span> Crítica</span>
+                                <span class="arma-stat">Execução</span>
+                                <span class="arma-stat">2.500 ¥</span>
+                            </div>
+                        </div>
+
+                        <div class="arma-card m-15-b wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="arma-nome">Rifle Tático</div>
+                            <p style="color: var(--cor-texto-secundario); font-size: 0.85rem;">Rápido e letal</p>
+                            <div class="arma-stats">
+                                <span class="arma-stat"><span>+2d10</span> Crítica</span>
+                                <span class="arma-stat">5 tiros</span>
+                                <span class="arma-stat">4.000 ¥</span>
+                            </div>
+                        </div>
+
+                        <div class="arma-card wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="arma-nome">Sniper</div>
+                            <p style="color: var(--cor-texto-secundario); font-size: 0.85rem;">Um tiro, uma morte</p>
+                            <div class="arma-stats">
+                                <span class="arma-stat"><span>+3d10</span> Crítica</span>
+                                <span class="arma-stat">Silencioso</span>
+                                <span class="arma-stat">8.000 ¥</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Estilos Section -->
+        <section id="estilos" class="p-100-tb xs-p-60-tb" style="background: var(--cor-fundo-card);">
+            <div class="container">
+                <div class="text-center m-60-b">
+                    <h2 class="section-title centered wow fadeInUp">Estilos de Luta</h2>
+                    <p class="fs-9 m-30-t wow fadeInUp" data-wow-delay="0.2s" style="color: var(--cor-texto-secundario); max-width: 600px; margin-left: auto; margin-right: auto;">
+                        Todo personagem escolhe 1 estilo na criação. Estilos são passivos — sempre ativos, sem custo.
+                    </p>
+                </div>
+
+                <div class="row gap-20">
+                    <div class="c-xs-12 c-sm-6 c-lg-4">
+                        <div class="estilo-card wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="estilo-nome">🥊 Boxe</div>
+                            <div class="estilo-beneficio">
+                                <strong>Jab:</strong> Se alvo falhou, pode repetir ataque com metade da força
+                            </div>
+                            <div class="estilo-beneficio">
+                                <strong>Defesa:</strong> Pode usar Percepção ou Vínculo
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-xs-12 c-sm-6 c-lg-4">
+                        <div class="estilo-card wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="estilo-nome">⚔️ Espadachim</div>
+                            <div class="estilo-beneficio">
+                                <strong>Sangramento:</strong> Diferença 5+ = Leve vira sangramento
+                            </div>
+                            <div class="estilo-beneficio">
+                                <strong>1×1:</strong> Ignora armamento de defesa
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-xs-12 c-sm-6 c-lg-4">
+                        <div class="estilo-card wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="estilo-nome">🎯 Atirador</div>
+                            <div class="estilo-beneficio">
+                                <strong>Zona de Perigo:</strong> Ataques criam zona onde alvos sofrem −1d10
+                            </div>
+                            <div class="estilo-beneficio">
+                                <strong>Diferença 10+:</strong> Pode aumentar Injúria em 1 grau
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-xs-12 c-sm-6 c-lg-4">
+                        <div class="estilo-card wow fadeInUp" data-wow-delay="0.4s">
+                            <div class="estilo-nome">💪 Wrestling</div>
+                            <div class="estilo-beneficio">
+                                <strong>Agarrar:</strong> Pode usar Força ou Vigor
+                            </div>
+                            <div class="estilo-beneficio">
+                                <strong>Opção:</strong> Não causar Injúria para drenar +2 Stress
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-xs-12 c-sm-6 c-lg-4">
+                        <div class="estilo-card wow fadeInUp" data-wow-delay="0.5s">
+                            <div class="estilo-nome">🥋 Judô</div>
+                            <div class="estilo-beneficio">
+                                <strong>Contra-ataque:</strong> Quando inimigo erra, pode revidar (1×/rodada)
+                            </div>
+                            <div class="estilo-beneficio">
+                                <strong>Força maior:</strong> Ganha +1d10 defensivo
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-xs-12 c-sm-6 c-lg-4">
+                        <div class="estilo-card wow fadeInUp" data-wow-delay="0.6s">
+                            <div class="estilo-nome">🔫 Spetsnaz</div>
+                            <div class="estilo-beneficio">
+                                <strong>Primeiro Ataque:</strong> Se causar Injúria, aumenta 1 grau
+                            </div>
+                            <div class="estilo-beneficio">
+                                <strong>Alvo vulnerável:</strong> Ignora redução de defesa
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Final -->
+        <section class="cta-section p-100-tb xs-p-60-tb text-center">
+            <div class="container" style="position: relative; z-index: 1;">
+                <span class="wow fadeIn" style="font-size: 4rem; display: block; margin-bottom: 20px;">⛓️</span>
+                <h2 class="fs-14 wow fadeInUp" style="color: var(--cor-secundaria);">Pronto para o Contrato?</h2>
+                <p class="fs-9 m-30-t m-40-b wow fadeInUp" data-wow-delay="0.2s" style="color: var(--cor-texto-secundario); max-width: 500px; margin-left: auto; margin-right: auto;">
+                    Baixe o manual completo e comece sua jornada no mundo dos demônios.<br>
+                    <small style="opacity: 0.6;">Todo poder tem um preço.</small>
+                </p>
+                <div class="wow fadeInUp d-flex f-justify-center f-gap-15 f-wrap" data-wow-delay="0.4s">
+                    <a href="../MANUAL_SCAR.md" class="btn btn-primary" download>Baixar Manual</a>
+                    <a href="#hero" class="btn btn-outline">Voltar ao Topo</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer p-60-tb">
+        <div class="container">
+            <div class="row f-items-center">
+                <div class="c-xs-12 c-md-6 text-center md-text-left m-30-b md-m-0-b">
+                    <span class="footer-logo">SCAR</span>
+                    <p class="m-15-t" style="color: var(--cor-texto-secundario);">Sacrificial Contract & Risk</p>
+                </div>
+                <div class="c-xs-12 c-md-6 text-center md-text-right">
+                    <p style="color: var(--cor-texto-secundario); font-size: 0.9rem;">
+                        Baseado no universo de <strong style="color: var(--cor-texto);">Chainsaw Man</strong> por Tatsuki Fujimoto
+                    </p>
+                    <p class="m-10-t" style="color: var(--cor-texto-secundario); font-size: 0.85rem;">
+                        <em>"Prepare-se para o contrato."</em>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Squeleton JS (Footer) -->
+    <script src="https://cdn.squeleton.dev/squeleton-scripts.v4.min.js"></script>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.site-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize WOW animations
+        if (typeof WOW !== 'undefined') {
+            new WOW().init();
+        }
+    </script>
+</body>
+</html>
