@@ -1,7 +1,7 @@
 <h1 align="center">
   <img src="assets/images/logo 2.png" alt="SCAR" width="450">
 </h1>
-
+<img src="pochita.gif" width="400">
 <p align="center">
   <strong>Sistema de RPG de mesa ambientado no universo brutal de Chainsaw Man</strong>
 </p>
@@ -114,13 +114,6 @@ Atributo + Habilidade + Xd10 vs Dificuldade
       </a>
       <br>
       <sub>Ideal para edição</sub>
-    </td>
-    <td align="center">
-      <a href="index.html">
-        <img src="https://img.shields.io/badge/Site_do_Projeto-8B0000?style=for-the-badge&logo=html5&logoColor=white" alt="Site">
-      </a>
-      <br>
-      <sub>Versão web completa</sub>
     </td>
   </tr>
 </table>
