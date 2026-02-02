@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habilidades Gerais - SCAR RPG</title>
+    <link rel="stylesheet" href="https://cdn.squeleton.dev/squeleton.v4.min.css">
+    <script src="https://cdn.squeleton.dev/squeleton-main.v4.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cor-principal: #8B0000;
+            --cor-secundaria: #DC143C;
+            --cor-accent: #FF4444;
+            --cor-fundo: #0a0a0a;
+            --cor-card: #141414;
+            --cor-card-hover: #1a1a1a;
+            --cor-texto: #f5f5f5;
+            --cor-texto-soft: #999;
+            --cor-borda: #333;
+            --cor-gold: #D4AF37;
+
+            --gradient-blood: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #5a0000 100%);
+            --shadow-glow: 0 0 30px rgba(220,20,60,0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: var(--cor-principal) var(--cor-fundo);
+        }
+
+        body {
+            background: var(--cor-fundo);
+            color: var(--cor-texto);
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        /* Header */
+        .site-header {
+            background: rgba(10,10,10,0.95);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--cor-borda);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            color: var(--cor-secundaria);
+            text-decoration: none;
+            font-size: 1.6rem;
+            letter-spacing: 4px;
+        }
+
+        .nav a {
+            color: var(--cor-texto-soft);
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        .nav a:hover, .nav a.active { color: var(--cor-accent); }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            background:
+                radial-gradient(ellipse at center top, rgba(139,0,0,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 50%, rgba(220,20,60,0.08) 0%, transparent 50%);
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            letter-spacing: 10px;
+            margin-bottom: 20px;
+            color: var(--cor-secundaria);
+            text-shadow: 0 0 40px rgba(220,20,60,0.4);
+        }
+
+        .hero p {
+            color: var(--cor-texto-soft);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1rem;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: var(--cor-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 40px;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .info-item {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .info-item h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            color: var(--cor-secundaria);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .info-item p {
+            color: var(--cor-texto-soft);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Search & Filters */
+        .filters-section {
+            background: var(--cor-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 14px 20px;
+            border: 1px solid var(--cor-borda);
+            border-radius: 10px;
+            background: var(--cor-fundo);
+            color: var(--cor-texto);
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--cor-secundaria);
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.15);
+        }
+
+        .search-input::placeholder { color: var(--cor-texto-soft); }
+
+        .filter-btn {
+            padding: 12px 20px;
+            border: 1px solid var(--cor-borda);
+            background: transparent;
+            color: var(--cor-texto-soft);
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover { border-color: var(--cor-texto-soft); color: var(--cor-texto); }
+        .filter-btn.active { background: var(--cor-secundaria); border-color: var(--cor-secundaria); color: #fff; }
+
+        .filter-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .filter-tag {
+            padding: 6px 14px;
+            border: 1px solid var(--cor-borda);
+            background: transparent;
+            color: var(--cor-texto-soft);
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .filter-tag:hover { border-color: var(--cor-texto); color: var(--cor-texto); }
+        .filter-tag.active { border-color: var(--cor-secundaria); color: var(--cor-secundaria); background: rgba(220,20,60,0.1); }
+
+        /* Categories */
+        .category {
+            margin-bottom: 20px;
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--cor-card);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: border-color 0.3s;
+        }
+
+        .category:hover { border-color: var(--cor-principal); }
+
+        .category-header {
+            padding: 18px 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.3s;
+        }
+
+        .category-header:hover { background: var(--cor-card-hover); }
+
+        .category-header .left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .category-header .icon { font-size: 1.5rem; }
+        .category-header .title { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 1.2rem; letter-spacing: 1px; }
+        .category-header .count { color: var(--cor-texto-soft); font-size: 0.85rem; margin-left: 10px; background: rgba(255,255,255,0.05); padding: 2px 10px; border-radius: 10px; }
+        .category-header .arrow { transition: transform 0.3s; color: var(--cor-texto-soft); }
+        .category.open .category-header .arrow { transform: rotate(180deg); }
+
+        /* Skills Table */
+        .skills-table {
+            display: none;
+            padding: 0 24px 24px;
+        }
+
+        .category.open .skills-table { display: block; }
+
+        .skill-row {
+            padding: 20px;
+            border-bottom: 1px solid var(--cor-borda);
+            transition: background 0.2s;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .skill-row:last-child { border-bottom: none; margin-bottom: 0; }
+        .skill-row:hover { background: rgba(255,255,255,0.04); }
+
+        .skill-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--cor-secundaria);
+        }
+
+        .skill-pm {
+            background: var(--cor-gold);
+            color: #000;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .skill-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .skill-tag {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .skill-tag.requisito {
+            background: rgba(155, 89, 182, 0.2);
+            color: #BB8FCE;
+            border: 1px solid rgba(155, 89, 182, 0.3);
+        }
+
+        .skill-tag.custo {
+            background: rgba(231, 76, 60, 0.2);
+            color: #E74C3C;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        .skill-tag.passivo {
+            background: rgba(39, 174, 96, 0.2);
+            color: #2ECC71;
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+
+        .skill-tag.limite {
+            background: rgba(241, 196, 15, 0.2);
+            color: #F1C40F;
+            border: 1px solid rgba(241, 196, 15, 0.3);
+        }
+
+        .skill-effect {
+            color: var(--cor-texto-soft);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .site-footer {
+            text-align: center;
+            padding: 50px 20px;
+            border-top: 1px solid var(--cor-borda);
+            margin-top: 80px;
+            color: var(--cor-texto-soft);
+        }
+
+        .site-footer a { color: var(--cor-secundaria); text-decoration: none; transition: color 0.3s; }
+        .site-footer a:hover { color: var(--cor-accent); }
+
+        /* Results counter */
+        .results-count {
+            text-align: center;
+            padding: 15px;
+            color: var(--cor-texto-soft);
+            font-size: 0.9rem;
+        }
+
+        .results-count strong { color: var(--cor-secundaria); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; letter-spacing: 4px; }
+            .info-box { flex-direction: column; gap: 20px; }
+            .search-row { flex-direction: column; }
+            .search-input { width: 100%; }
+            .skill-header { flex-direction: column; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">SCAR</a>
+                <nav class="nav">
+                    <a href="index.html">Inicio</a>
+                    <a href="index.html#criacao">Criacao</a>
+                    <a href="habilidades.html" class="active">Habilidades</a>
+                    <a href="aflicoes.html">Aflicoes</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>HABILIDADES GERAIS</h1>
+            <p>Tecnicas extremas, sobrevivencia, trauma e adaptacao. Compre com Pontos de Marca (PM) para evoluir seu personagem.</p>
+        </section>
+
+        <div class="container">
+
+            <!-- Info -->
+            <div class="info-box">
+                <div class="info-item">
+                    <h4>CUSTO PADRAO</h4>
+                    <p>2 PM por habilidade (exceto quando indicado)</p>
+                </div>
+                <div class="info-item">
+                    <h4>REQUISITOS</h4>
+                    <p>Atributos minimos para adquirir a habilidade</p>
+                </div>
+                <div class="info-item">
+                    <h4>PASSIVAS</h4>
+                    <p>Sempre ativas, sem custo de Stress</p>
+                </div>
+                <div class="info-item">
+                    <h4>ATIVAS</h4>
+                    <p>Custam Stress para serem usadas</p>
+                </div>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="filters-section">
+                <div class="search-row">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Buscar por nome, requisito ou efeito..." onkeyup="filterSkills()">
+                    <button class="filter-btn" id="btnPassivo" onclick="toggleFilter('passivo')">Apenas Passivas</button>
+                    <button class="filter-btn" id="btnPM" onclick="toggleFilter('pm')">Com Custo PM</button>
+                </div>
+                <div class="filter-tags">
+                    <button class="filter-tag active" data-cat="all" onclick="filterCategory('all')">Todas</button>
+                    <button class="filter-tag" data-cat="corpo" onclick="filterCategory('corpo')">Corpo a Corpo</button>
+                    <button class="filter-tag" data-cat="distancia" onclick="filterCategory('distancia')">Distancia</button>
+                    <button class="filter-tag" data-cat="mobilidade" onclick="filterCategory('mobilidade')">Mobilidade</button>
+                    <button class="filter-tag" data-cat="resistencia" onclick="filterCategory('resistencia')">Resistencia</button>
+                    <button class="filter-tag" data-cat="tatica" onclick="filterCategory('tatica')">Tatica</button>
+                    <button class="filter-tag" data-cat="tecnica" onclick="filterCategory('tecnica')">Tecnica</button>
+                    <button class="filter-tag" data-cat="social" onclick="filterCategory('social')">Social</button>
+                    <button class="filter-tag" data-cat="mestre" onclick="filterCategory('mestre')">Mestres</button>
+                </div>
+            </div>
+
+            <div class="results-count" id="resultsCount"></div>
+
+            <!-- CATEGORIA: COMBATE CORPO A CORPO -->
+            <div class="category corpo" id="cat-corpo">
+                <div class="category-header" onclick="toggleCategory('cat-corpo')">
+                    <div class="left">
+                        <span class="icon">👊</span>
+                        <span class="title">Combate Corpo a Corpo</span>
+                        <span class="count">25 habilidades</span>
+                    </div>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="skills-table">
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Golpe Decisivo</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Forca 4 ou Coord 4</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Se vencer confronto por 10+, aumente Injuria em +1 estagio</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Pressao Constante</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Forca 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Se causar Injuria, alvo sofre +1 Stress adicional</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Golpe na Garganta</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 4</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Se vencer por 10+, alvo sofre -2d10 no proximo turno</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Luta de Rua</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Malandragem 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Use objetos do cenario como armas sem penalidade</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Combate Sujo</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Malandragem 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode usar Malandragem no lugar de Forca em ataques improvisados</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Pressao Implacavel</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Forca 5</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Sempre que causar Injuria, alvo sofre -1d10 na proxima acao</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="1">
+                        <div class="skill-header">
+                            <span class="skill-name">Soco Basico</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">1 PM</span>
+                                <span class="skill-tag requisito">Forca 2</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+5 em testes de soco</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="2">
+                        <div class="skill-header">
+                            <span class="skill-name">Soco Forte</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">2 PM</span>
+                                <span class="skill-tag requisito">Forca 4</span>
+                                <span class="skill-tag custo">+1 Stress ao errar</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+10 em testes de soco</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="3">
+                        <div class="skill-header">
+                            <span class="skill-name">Soco Brutal</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">3 PM</span>
+                                <span class="skill-tag requisito">Forca 6</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+15 em soco; se vencer por 5+, causa +1 Stress no alvo</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Quebra-Ossos</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Forca 5</span>
+                                <span class="skill-tag custo">3 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Se causar Injuria Grave, alvo sofre -1d10 em testes fisicos ate ser curado</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Contra-Ataque Brutal</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 4, Forca 3</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                                <span class="skill-tag limite">1x/rodada</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Quando aparar ataque corpo a corpo com sucesso, pode revidar imediatamente com +1d10</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Agarrao Tatico</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Forca 5, Vigor 3</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Prenda 1 alvo. Ambos rolam Forca a cada turno; perdedor fica imobilizado</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Postura Ofensiva</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Forca 3</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+1d10 em ataques corpo a corpo, mas -1d10 em defesas (dura a cena)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Postura Defensiva</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 4</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+1d10 em defesas, mas -1d10 em ataques (dura a cena)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Tecnica de Desarme</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 4, Malandragem 3</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Se vencer confronto corpo a corpo por 8+, desarma o oponente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Golpe Perfurante</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Forca 5, Coord 4</span>
+                                <span class="skill-tag custo">3 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ignora armadura leve/media em ataques corpo a corpo</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="3">
+                        <div class="skill-header">
+                            <span class="skill-name">Maestria em Combate</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">3 PM</span>
+                                <span class="skill-tag requisito">Forca 6, Coord 5</span>
+                                <span class="skill-tag custo">+1 Stress/ataque</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+2d10 em todos ataques corpo a corpo</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="3">
+                        <div class="skill-header">
+                            <span class="skill-name">Executor Implacavel</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">3 PM</span>
+                                <span class="skill-tag requisito">Forca 7, Vigor 5</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Seus ataques corpo a corpo sempre causam no minimo Injuria Leve, mesmo se perder</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Tecnica Mortal</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Forca 7, Coord 6</span>
+                                <span class="skill-tag custo">5 Stress</span>
+                                <span class="skill-tag limite">1x/combate</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Declare "Golpe Mortal": ataque causa +2 estagios de Injuria</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Dominio do Punho</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Forca 5</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Seus socos ignoram resistencia parcial (armadura leve)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Sequencia Devastadora</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Forca 6, Coord 5</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Se acertar 2 ataques seguidos no mesmo alvo, o 3o ganha +2d10</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="3">
+                        <div class="skill-header">
+                            <span class="skill-name">Contra-Ataque Perfeito</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">3 PM</span>
+                                <span class="skill-tag requisito">Coord 6, Percepcao 5</span>
+                                <span class="skill-tag custo">4 Stress</span>
+                                <span class="skill-tag limite">1x/cena</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ao defender com sucesso, pode contra-atacar com dano dobrado</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Cabecada Desesperada</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 3</span>
+                                <span class="skill-tag custo">Sofre 1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ataque usando Vigor; se acertar, causa +1 Stress no alvo</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Punho em Cadeia</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Forca 4</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ao acertar, pode empurrar alvo e mudar sua posicao</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORIA: COMBATE A DISTANCIA -->
+            <div class="category distancia" id="cat-distancia">
+                <div class="category-header" onclick="toggleCategory('cat-distancia')">
+                    <div class="left">
+                        <span class="icon">🎯</span>
+                        <span class="title">Combate a Distancia</span>
+                        <span class="count">18 habilidades</span>
+                    </div>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="skills-table">
+                    <div class="skill-row" data-passivo="true" data-pm="1">
+                        <div class="skill-header">
+                            <span class="skill-name">Atirador Basico</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">1 PM</span>
+                                <span class="skill-tag requisito">Coord 2</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+5 em ataques a distancia</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="2">
+                        <div class="skill-header">
+                            <span class="skill-name">Atirador Avancado</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">2 PM</span>
+                                <span class="skill-tag requisito">Coord 4</span>
+                                <span class="skill-tag custo">+1 Stress ao errar</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+10 em ataques a distancia</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="3">
+                        <div class="skill-header">
+                            <span class="skill-name">Atirador Letal</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">3 PM</span>
+                                <span class="skill-tag requisito">Coord 6</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+15 em ataques a distancia; Se vencer por 10+, ignora cobertura parcial</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Tiro de Supressao</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 4</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Inimigos na area sofrem -1d10 enquanto expostos</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Recarga Instintiva</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode recarregar arma enquanto se move sem penalidade</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Mira Estabilizada</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 3, Coord 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Se nao se mover no turno, +1d10 em ataque a distancia</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Tiro Duplo</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 5</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ataque 2 alvos adjacentes com -1d10 em cada</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Tiro de Precisao</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Percepcao 4, Coord 5</span>
+                                <span class="skill-tag custo">3 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ignore armadura parcial e cobertura leve</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Tiro em Movimento</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode se mover e atirar sem penalidade</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Municao Conservada</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Tecnologia 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Municao rende o dobro (aspecto narrativo)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Atirador de Elite Extremo</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Coord 7, Percepcao 5</span>
+                                <span class="skill-tag custo">4 Stress</span>
+                                <span class="skill-tag limite">1x/missao</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">1 tiro e automaticamente critico (causa Injuria +1 estagio, ignora tudo)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Tiro Cegante</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 4</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Se acertar cabeca/olhos, alvo sofre -2d10 por 2 rodadas</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Rajada Controlada</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 5, Vigor 3</span>
+                                <span class="skill-tag custo">3 Stress</span>
+                                <span class="skill-tag limite">1x/cena</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ataque 1 alvo 3 vezes seguidas com -1d10 cada</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Sniper Profissional</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 5, Percepcao 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">A distancia longa nao impoe penalidade</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="3">
+                        <div class="skill-header">
+                            <span class="skill-name">Cacador Paciente</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">3 PM</span>
+                                <span class="skill-tag requisito">Percepcao 6, Coord 5</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Se esperar 2 turnos mirando, proximo tiro ganha +3d10</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Tiro Ricochete</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 6, Percepcao 4</span>
+                                <span class="skill-tag custo">3 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode atingir alvo atras de cobertura com ricochete (teste de Percepcao necessario)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Maestria em Armas de Fogo</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Coord 7, Percepcao 5</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+2d10 em todos ataques a distancia</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORIA: MOBILIDADE, EVASAO E DEFESA -->
+            <div class="category mobilidade" id="cat-mobilidade">
+                <div class="category-header" onclick="toggleCategory('cat-mobilidade')">
+                    <div class="left">
+                        <span class="icon">⚡</span>
+                        <span class="title">Mobilidade, Evasao e Defesa</span>
+                        <span class="count">27 habilidades</span>
+                    </div>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="skills-table">
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Movimento Calculado</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 3</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Reposicione-se sem gerar reacao inimiga</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Maos Rapidas</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 3</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                                <span class="skill-tag limite">1x/rodada</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ganha +1 acao de aparagem na rodada</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Passo Veloz</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 3</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                                <span class="skill-tag limite">1x/rodada</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ganha +1 acao de esquiva na rodada</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Arrancada Relampago</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 2</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                                <span class="skill-tag limite">1x/rodada</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ganhe +1 acao de movimento imediatamente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Deslocamento Instintivo</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Percepcao 3, Coord 2</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                                <span class="skill-tag limite">1x/rodada</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ao ser alvo de ataque, mova-se antes da resolucao do golpe</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Passo Fantasma</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 5, Malandragem 3</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ao mover, ignore reacoes inimigas completamente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Reflexo Antecipado</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+1d10 em esquivas contra primeiro ataque do turno</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Quebra de Ritmo</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 3, Percepcao 2</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Se esquivar com sucesso, proximo ataque contra mesmo alvo ganha +1d10</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Sombra em Movimento</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Malandragem 4, Coord 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Enquanto se move, inimigos sofrem -1d10 para acertar</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Passos Cortantes</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 5</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                                <span class="skill-tag limite">1x/rodada</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ao atravessar espaco inimigo, causa 1 Injuria Leve automatica</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Foco em Alta Velocidade</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 4, Coord 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ignore -1 penalidade em acoes consecutivas no mesmo turno</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Rolamento Instintivo</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 4</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ao sofrer ataque a distancia, pode rolar para reduzir Injuria em 1 estagio</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Speed Blitz</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Coord 7, Vigor 5</span>
+                                <span class="skill-tag custo">4 Stress + 4 ao fim</span>
+                                <span class="skill-tag limite">1x/cena</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Estado de aceleracao extrema (1 turno): Pode atacar multiplos alvos, ignore reacoes inimigas, cada ataque causa +1 Stress no alvo</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Evasao Acrobatica</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 5</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+2d10 em esquivas se tiver espaco para se mover</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Cobertura Dinamica</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Percepcao 3, Malandragem 2</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode usar aliados, inimigos ou objetos como cobertura improvisada sem penalidade</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Salto Tatico</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 4, Vigor 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode saltar verticalmente ou horizontalmente o dobro da distancia normal</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="3">
+                        <div class="skill-header">
+                            <span class="skill-name">Esquiva Perfeita</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">3 PM</span>
+                                <span class="skill-tag requisito">Coord 6</span>
+                                <span class="skill-tag custo">3 Stress</span>
+                                <span class="skill-tag limite">1x/cena</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Esquive automaticamente de 1 ataque (sem rolar dados)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Reflexos Sobre-Humanos</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Coord 6, Percepcao 5</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Sempre age primeiro no turno (iniciativa automatica)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Velocidade Cegante</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 6</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Inimigos com Coordenacao menor que a sua sofrem -1d10 para te acertar</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Danca da Morte</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 5, Malandragem 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ao esquivar, pode se mover para posicao vantajosa gratuitamente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Aparagem Mestra</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 5, Forca 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+2d10 em testes de aparagem</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Bloqueio Perfeito</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 5, Coord 4</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                                <span class="skill-tag limite">1x/cena</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ao bloquear com sucesso com +10 nos testes, reduza 1 estagio de Injuria</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Defensor Natural</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 4, Coord 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+1d10 em todos testes defensivos (aparagem/esquiva/bloqueio)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Muralha Viva</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 6, Forca 4</span>
+                                <span class="skill-tag custo">1 Stress/bloqueio</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode bloquear ataques destinados a aliados adjacentes</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="3">
+                        <div class="skill-header">
+                            <span class="skill-name">Esquiva Impossivel</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">3 PM</span>
+                                <span class="skill-tag requisito">Coord 6, Percepcao 5</span>
+                                <span class="skill-tag custo">3 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode esquivar de ataques em area ou multiplos simultaneamente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Mobilidade de Combate</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 4</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode se mover livremente entre ataques sem provocar reacoes (dura a rodada)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORIA: RESISTENCIA E SOBREVIVENCIA -->
+            <div class="category resistencia" id="cat-resistencia">
+                <div class="category-header" onclick="toggleCategory('cat-resistencia')">
+                    <div class="left">
+                        <span class="icon">🛡️</span>
+                        <span class="title">Resistencia e Sobrevivencia</span>
+                        <span class="count">21 habilidades</span>
+                    </div>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="skills-table">
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Postura de Impacto</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 3</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                                <span class="skill-tag limite">1x/cena</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Reduza Injuria em 1 estagio (Critica->Grave->Leve)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Corpo Condicionado</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Reduz -1 Stress de fontes fisicas (min 1)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Ficar de Pe</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 4, ter Injuria Grave</span>
+                                <span class="skill-tag custo">+2 Stress apos</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Age normalmente por 1 rodada mesmo incapacitado</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Dor Conhecida</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ignore penalidades da primeira Injuria da cena</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Segurar no Osso</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 5</span>
+                                <span class="skill-tag custo">1 Stress/rodada</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Injurias Leves nao geram penalidade ate fim da cena</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Pe no Chao</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 4, Forca 3</span>
+                                <span class="skill-tag custo">1 Stress/uso</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ignore empurroes, quedas ou deslocamentos forcados</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Respiracao Controlada</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 3</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Reduz -1 Stress ganho no proximo efeito</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Ultimo Folego</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 5, ja ter sofrido Colapso</span>
+                                <span class="skill-tag custo">1 Injuria Grave</span>
+                                <span class="skill-tag limite">1x/missao</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Evite Colapso iminente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Instinto de Sobrevivencia</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vinculo 3, Vigor 2</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                                <span class="skill-tag limite">1x/sessao</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ao chegar a 0 Stress, recupere 1d5 imediatamente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Nada a Perder</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 4, Stress maximo</span>
+                                <span class="skill-tag custo">Colapso ao fim da cena</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Converte toda falha em falha simples (nunca critica) enquanto no limite</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Ignorar o Medo</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Autoridade 4, ja ter enfrentado Medo 3+</span>
+                                <span class="skill-tag custo">2 Stress + risco Aflicao</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ignore penalidades de Medo por 1 cena</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Pele Dura</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                                <span class="skill-tag limite">1x/cena</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Primeira Injuria Leve da cena e reduzida a 0</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Adrenalina Pura</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ao sofrer Injuria Grave, ganha +1d10 em testes fisicos por 2 rodadas</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Forca de Vontade</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vinculo 4, Vigor 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode usar Vinculo no lugar de Vigor para resistir a dor/fadiga</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Recuperacao Acelerada</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 5</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ao descansar, recupera +1d5 Stress adicional</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="3">
+                        <div class="skill-header">
+                            <span class="skill-name">Tanque Humano</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">3 PM</span>
+                                <span class="skill-tag requisito">Vigor 6, Forca 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Injurias Graves sao tratadas como Leves para efeito de penalidades</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Indestrutivel</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Vigor 7</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                                <span class="skill-tag limite">1x/missao</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Primeira Injuria Critica da missao se torna Injuria Grave</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Regeneracao Natural</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 6</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ao fim de cada combate, recupera 1 Injuria Leve automaticamente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Vontade Inabalavel</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 5, Vinculo 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Nao pode ser forcado a fugir ou desistir por efeitos mentais</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORIA: TATICA E SUPORTE -->
+            <div class="category tatica" id="cat-tatica">
+                <div class="category-header" onclick="toggleCategory('cat-tatica')">
+                    <div class="left">
+                        <span class="icon">📋</span>
+                        <span class="title">Tatica e Suporte</span>
+                        <span class="count">20 habilidades</span>
+                    </div>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="skills-table">
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Abertura Tatica</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Percepcao 3</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Um aliado ganha +1d10 na proxima acao contra mesmo alvo que voce marcou</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Plano Rapido</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Investigacao 3</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                                <span class="skill-tag limite">1x/cena</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Declare plano simples e ignore 1 falha relacionada</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Cobertura Improvisada</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Percepcao 3, Tecnologia 2</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Converte area comum em cobertura parcial rapidamente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Leitura de Cena</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Percepcao 4</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Faca 1 pergunta objetiva ao mestre sobre a cena atual</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Voz de Comando</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Autoridade 4</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Aliado proximo pode repetir um teste falho imediatamente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Segurar a Linha</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Autoridade 3, Vigor 3</span>
+                                <span class="skill-tag custo">1 Stress/rodada</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Aliados adjacentes recebem -1 Stress enquanto voce nao sair da posicao</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Aproveitar Brecha</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Percepcao 4</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                                <span class="skill-tag limite">1x/rodada</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Se aliado esta em confronto, role 1d10 e pode trocar resultado com aliado (1-4 falha e 5-10 consegue)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Leitura Corporal</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Percepcao 5</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Descubra se proximo ataque sera fisico, a distancia ou especial</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Plano de Emergencia</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Tecnologia 3, Investigacao 2</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                                <span class="skill-tag limite">1x/cena</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Declare plano; todos que seguirem ganham +1d10</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Memoria de Combate</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Investigacao 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Apos sofrer ataque, ganha +1d10 para resistir ao mesmo tipo ate fim da cena</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Arma na Mao Certa</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Percepcao 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Sempre sabe qual arma/ferramenta esta mais acessivel</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Coordenacao de Equipe</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Autoridade 4</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Aliados que agem apos voce ganham +5 no primeiro teste (dura a rodada)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="3">
+                        <div class="skill-header">
+                            <span class="skill-name">Estrategista de Campo</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">3 PM</span>
+                                <span class="skill-tag requisito">Investigacao 5, Percepcao 4, Autoridade 3</span>
+                                <span class="skill-tag custo">3 Stress</span>
+                                <span class="skill-tag limite">1x/combate</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">No inicio do combate, distribua +3d10 entre aliados como quiser</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Flanqueamento</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 3, Percepcao 2</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Se voce e aliado atacarem mesmo alvo de lados opostos, ambos ganham +1d10</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Marcacao Tatica</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Percepcao 4</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">"Marque" 1 inimigo; todos aliados ganham +5 contra ele ate fim da cena</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Inspirar Aliados</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vinculo 5, Autoridade 3</span>
+                                <span class="skill-tag custo">3 Stress</span>
+                                <span class="skill-tag limite">1x/combate</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Todos aliados proximos recuperam 1d5 Stress imediatamente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Mestre Estrategista</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Investigacao 6, Autoridade 5, Percepcao 5</span>
+                                <span class="skill-tag custo">2 Stress/turno</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode redistribuir iniciativa da equipe e conceder +2d10 a 1 aliado por turno</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Lider Natural</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Autoridade 5, Vinculo 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Aliados sob seu comando ignoram primeira falha de teste mental da cena</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Comandante de Campo</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Autoridade 6</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Aliados proximos ganham +1d10 em defesas enquanto voce estiver consciente</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORIA: PERICIA TECNICA -->
+            <div class="category tecnica" id="cat-tecnica">
+                <div class="category-header" onclick="toggleCategory('cat-tecnica')">
+                    <div class="left">
+                        <span class="icon">🔧</span>
+                        <span class="title">Pericia Tecnica</span>
+                        <span class="count">10 habilidades</span>
+                    </div>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="skills-table">
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Toque do Especialista</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Tecnologia 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ignore penalidades por armas improvisadas ou danificadas</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Arma Personalizada</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Tecnologia 4</span>
+                                <span class="skill-tag custo">2 Stress/cena</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Escolha 1 arma: recebe +1d10 em situacao especifica que voce definir</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Improviso Bruto</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Tecnologia 3</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Cria solucao temporaria com ambiente. Falha critica gera complicacao</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Hoje Nao</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Coord 5, Percepcao 4</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                                <span class="skill-tag limite">1x/cena</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode atacar quem te atacou antes do dano ser resolvido (interceptacao)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Engenheiro de Campo</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Tecnologia 4</span>
+                                <span class="skill-tag custo">2 Stress + tempo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode reparar 1 arma quebrada ou criar armadilha simples</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Sabotagem Rapida</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Tecnologia 4, Malandragem 3</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode desativar dispositivo eletronico/mecanico inimigo (teste necessario)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="3">
+                        <div class="skill-header">
+                            <span class="skill-name">Mestre em Explosivos</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">3 PM</span>
+                                <span class="skill-tag requisito">Tecnologia 5</span>
+                                <span class="skill-tag custo">3 Stress/uso</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode criar/desarmar explosivos. Dano aumentado em area (+2d10)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Armeiro Profissional</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Tecnologia 5</span>
+                                <span class="skill-tag custo">Tempo + materiais</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode modificar armas para conceder +1d10 temporario</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Hacker de Campo</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Tecnologia 5</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode invadir sistemas eletronicos em combate (teste necessario)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Mestre Inventor</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Tecnologia 7</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode criar dispositivos unicos com efeitos especiais (aprovacao do mestre)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORIA: SOCIAL E MENTAL -->
+            <div class="category social" id="cat-social">
+                <div class="category-header" onclick="toggleCategory('cat-social')">
+                    <div class="left">
+                        <span class="icon">🗣️</span>
+                        <span class="title">Social e Mental</span>
+                        <span class="count">18 habilidades</span>
+                    </div>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="skills-table">
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Frieza Profissional</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Autoridade 4 ou Investigacao 4</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ignore proximo ganho de Stress psicologico</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Bom Homem</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vinculo 3, seja alguem bom</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+20 em testes sociais se alvo conhece seu passado heroico</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Lacos Inquebraveis</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vinculo 5</span>
+                                <span class="skill-tag custo">1 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Quando aliado proximo sofreria Injuria Grave, pode sofrer no lugar dele</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Olhar que Quebra</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Autoridade 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Inimigo sofre +1 Stress ao encarar voce diretamente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Historia que Assombra</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Autoridade 5, ser temido</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+20 em testes sociais quando alvo sabe do passado violento</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Mentira Convincente</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Malandragem 4, Negociacao 2</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Mentira simples e tratada como verdade ate confrontada com evidencia</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Ultima Promessa</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vinculo 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Se cair, aliado escolhido ganha +2d10 na proxima acao</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Furia Contida</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vigor 3, ja ter sofrido Aflicao</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+1d10 em ataques enquanto com Aflicao ativa</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Odio Direcionado</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Investigacao 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Escolha 1 grupo (demonios, hibridos, pessoa especifica etc): +1d10 em acoes contra eles</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Repulsa</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Investigacao 4, ja ter sofrido Aflicao</span>
+                                <span class="skill-tag custo">+1 Stress se nao atacar</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Contra alvo do odio, +10 em testes ofensivos</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Negociador Experiente</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Negociacao 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">+1d10 em testes de persuasao/barganha fora de combate</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Intimidacao Natural</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Autoridade 5</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Inimigos humanos comuns ou Medo 1 (demonios) podem fugir ao ve-lo</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Leitor de Pessoas</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Percepcao 4, Vinculo 3</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Detecta mentiras obvias automaticamente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Carisma de Lider</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Autoridade 5, Vinculo 4</span>
+                                <span class="skill-tag custo">2 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Aliados sob comando ignoram primeira penalidade de Stress social/mental da cena</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="3">
+                        <div class="skill-header">
+                            <span class="skill-name">Presenca Dominante</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">3 PM</span>
+                                <span class="skill-tag requisito">Autoridade 6</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Todos inimigos de Nivel de Medo 2 ou menos sofrem -1d10 em sua presenca</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false">
+                        <div class="skill-header">
+                            <span class="skill-name">Manipulador Mestre</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Malandragem 5, Negociacao 4</span>
+                                <span class="skill-tag custo">3 Stress</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode plantar ideia na mente do alvo (teste oposto)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true">
+                        <div class="skill-header">
+                            <span class="skill-name">Aura de Protecao</span>
+                            <div class="skill-tags">
+                                <span class="skill-tag requisito">Vinculo 6, Autoridade 4</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Aliados proximos recebem -2 Stress de fontes mentais</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORIA: HABILIDADES MESTRES -->
+            <div class="category mestre" id="cat-mestre">
+                <div class="category-header" onclick="toggleCategory('cat-mestre')">
+                    <div class="left">
+                        <span class="icon">⭐</span>
+                        <span class="title">Habilidades Mestres</span>
+                        <span class="count">8 habilidades • Custo: 4 PM</span>
+                    </div>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="skills-table">
+                    <div class="skill-row" data-passivo="true" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Reflexo de Batalha</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Coord 7, Percepcao 6</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode reagir a qualquer ataque visivel sem custo adicional</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Senhor da Guerra</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Autoridade 7, Forca 5, Vigor 5</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Aliados ganham +1d10 em testes enquanto voce estiver de pe e visivel</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Presenca Aterrorizante</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Autoridade 7</span>
+                                <span class="skill-tag custo">3 Stress</span>
+                                <span class="skill-tag limite">1x/cena</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Inimigos de Medo 3 (Demonios) ou menos fazem teste de medo (DT 35) ao ve-lo</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Mente de Aco</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Investigacao 5, Autoridade 5</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Imune a efeitos mentais de Nivel de Medo 3 ou menos</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Sobrevivente Lendario</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Vigor 7, Vinculo 5</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                                <span class="skill-tag limite">1x/missao</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Pode sobreviver a qualquer ataque sofrendo 0 de injuria</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Assassino Silencioso</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Malandragem 7, Coord 6</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Ataques furtivos causam +2 estagios de Injuria automaticamente</div>
+                    </div>
+                    <div class="skill-row" data-passivo="true" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Imortal de Combate</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Vigor 7, Forca 6</span>
+                                <span class="skill-tag passivo">Passivo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Nao pode ser incapacitado por Injurias Graves (apenas Criticas)</div>
+                    </div>
+                    <div class="skill-row" data-passivo="false" data-pm="4">
+                        <div class="skill-header">
+                            <span class="skill-name">Olho do Predador</span>
+                            <div class="skill-tags">
+                                <span class="skill-pm">4 PM</span>
+                                <span class="skill-tag requisito">Percepcao 7</span>
+                                <span class="skill-tag custo">2 Stress/alvo</span>
+                            </div>
+                        </div>
+                        <div class="skill-effect">Detecta automaticamente pontos fracos: +2d10 contra alvos analisados</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>SCAR - Sacrificial Contract & Risk</p>
+        <p><a href="index.html">Voltar ao Inicio</a></p>
+    </footer>
+
+    <script src="https://cdn.squeleton.dev/squeleton-scripts.v4.min.js"></script>
+    <script>
+        let activeFilters = {
+            passivo: false,
+            pm: false,
+            category: 'all'
+        };
+
+        // Toggle category
+        function toggleCategory(id) {
+            document.getElementById(id).classList.toggle('open');
+        }
+
+        // Filter by category tag
+        function filterCategory(cat) {
+            activeFilters.category = cat;
+
+            // Update active tag
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.classList.remove('active');
+                if (tag.dataset.cat === cat) tag.classList.add('active');
+            });
+
+            filterSkills();
+        }
+
+        // Toggle filter buttons
+        function toggleFilter(type) {
+            activeFilters[type] = !activeFilters[type];
+            document.getElementById('btn' + type.charAt(0).toUpperCase() + type.slice(1)).classList.toggle('active');
+            filterSkills();
+        }
+
+        // Main filter function
+        function filterSkills() {
+            const term = document.getElementById('searchInput').value.toLowerCase().trim();
+            const categories = document.querySelectorAll('.category');
+            let totalVisible = 0;
+
+            categories.forEach(category => {
+                const catType = category.id.replace('cat-', '');
+                const rows = category.querySelectorAll('.skill-row');
+                let visibleInCategory = 0;
+
+                // Check category filter
+                if (activeFilters.category !== 'all' && activeFilters.category !== catType) {
+                    category.style.display = 'none';
+                    return;
+                }
+
+                rows.forEach(row => {
+                    let visible = true;
+
+                    // Text search
+                    if (term) {
+                        const name = row.querySelector('.skill-name').textContent.toLowerCase();
+                        const effect = row.querySelector('.skill-effect').textContent.toLowerCase();
+                        const tags = row.querySelector('.skill-tags').textContent.toLowerCase();
+
+                        if (!name.includes(term) && !effect.includes(term) && !tags.includes(term)) {
+                            visible = false;
+                        }
+                    }
+
+                    // Passivo filter
+                    if (activeFilters.passivo && row.dataset.passivo !== 'true') {
+                        visible = false;
+                    }
+
+                    // PM filter
+                    if (activeFilters.pm && !row.dataset.pm) {
+                        visible = false;
+                    }
+
+                    row.style.display = visible ? '' : 'none';
+                    if (visible) visibleInCategory++;
+                });
+
+                // Show/hide category
+                if (visibleInCategory > 0) {
+                    category.style.display = '';
+                    if (term || activeFilters.passivo || activeFilters.pm) {
+                        category.classList.add('open');
+                    }
+                } else {
+                    category.style.display = 'none';
+                }
+
+                totalVisible += visibleInCategory;
+            });
+
+            // Update counter
+            document.getElementById('resultsCount').innerHTML = term || activeFilters.passivo || activeFilters.pm || activeFilters.category !== 'all'
+                ? `<strong>${totalVisible}</strong> habilidades encontradas`
+                : '';
+
+            // Reset categories if no filters
+            if (!term && !activeFilters.passivo && !activeFilters.pm && activeFilters.category === 'all') {
+                categories.forEach(c => {
+                    c.style.display = '';
+                    c.classList.remove('open');
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>
