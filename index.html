@@ -1100,6 +1100,7 @@
                     <a href="#criacao" class="nav-link">Criar Personagem</a>
                     <a href="#contratos" class="nav-link">Contratos</a>
                     <a href="#combate" class="nav-link">Combate</a>
+                    <a href="aflicoes.html" class="nav-link">Aflicoes</a>
                     <a href="#faq" class="nav-link">FAQ</a>
                 </nav>
 
@@ -1123,6 +1124,7 @@
                     <a href="#criacao" class="nav-link fs-12" data-modal-hide>Criar Personagem</a>
                     <a href="#contratos" class="nav-link fs-12" data-modal-hide>Contratos</a>
                     <a href="#combate" class="nav-link fs-12" data-modal-hide>Combate</a>
+                    <a href="aflicoes.html" class="nav-link fs-12" data-modal-hide>Aflicoes</a>
                     <a href="#faq" class="nav-link fs-12" data-modal-hide>FAQ</a>
                 </div>
             </div>
@@ -2436,6 +2438,169 @@
         </div>
     </div>
 
+    <!-- Modal PM (Pontos de Marca) -->
+    <div data-modal="modal-pm" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-800px xs-w-95">
+                <button class="dialog-close" data-modal-hide></button>
+                <div class="modal-popup border-rd-10 p-30-all xs-p-20-all" style="background: var(--cor-fundo-card); border: 1px solid var(--cor-accent); max-height: 85vh; overflow-y: auto;">
+                    <div class="text-center m-20-b">
+                        <span style="font-size: 3rem;">⭐</span>
+                        <h3 class="fs-13 m-10-t" style="color: var(--cor-accent);">Pontos de Marca (PM)</h3>
+                        <p style="color: var(--cor-texto-secundario);">O sistema de progressão do SCAR</p>
+                    </div>
+
+                    <div class="p-20-all border-rd-8 m-20-b" style="background: rgba(139,0,0,0.2); border: 1px solid var(--cor-principal);">
+                        <p class="text-center fs-9" style="color: var(--cor-texto);">
+                            <strong>PM = Experiência + Trauma + Evolução</strong><br>
+                            <span style="color: var(--cor-accent);">"Você não fica forte sem sofrer."</span>
+                        </p>
+                    </div>
+
+                    <!-- O que é PM -->
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-secundaria);">📌 O Que São Pontos de Marca?</h4>
+                        <p style="color: var(--cor-texto-secundario); line-height: 1.7;">
+                            <strong style="color: var(--cor-texto);">Pontos de Marca (PM)</strong> representam o quanto o mundo,
+                            o sistema e os demônios já deixaram <em>cicatriz</em> em você. É através dos PM que personagens
+                            crescem e ficam mais fortes.
+                        </p>
+                    </div>
+
+                    <!-- PM Inicial -->
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-secundaria);">🎭 PM Inicial (Baseado na História)</h4>
+                        <table class="table-scar">
+                            <tr>
+                                <th>História do Personagem</th>
+                                <th>PM Inicial</th>
+                            </tr>
+                            <tr>
+                                <td>Vida comum, sem eventos extremos</td>
+                                <td class="text-center"><strong>2 PM</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Já enfrentou mortes, violência ou caos</td>
+                                <td class="text-center"><strong>3 PM</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Sobreviveu a eventos traumáticos graves</td>
+                                <td class="text-center"><strong>4 PM</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Passado extremo (massacre, contrato antigo)</td>
+                                <td class="text-center"><strong>5 PM</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Como Ganhar PM -->
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-secundaria);">📈 Como Ganhar PM</h4>
+                        <div class="row gap-15">
+                            <div class="c-xs-12 c-md-6">
+                                <h5 class="fs-8 m-10-b" style="color: var(--cor-accent);">Durante Missões</h5>
+                                <table class="table-scar" style="font-size: 0.9rem;">
+                                    <tr>
+                                        <th>Situação</th>
+                                        <th>PM</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Missão padrão concluída</td>
+                                        <td class="text-center">+1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Missão com risco real / trauma</td>
+                                        <td class="text-center">+2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Evento que muda o personagem</td>
+                                        <td class="text-center">+3</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="c-xs-12 c-md-6">
+                                <h5 class="fs-8 m-10-b" style="color: var(--cor-accent);">Treinos e Conhecimento</h5>
+                                <table class="table-scar" style="font-size: 0.9rem;">
+                                    <tr>
+                                        <th>Situação</th>
+                                        <th>PM</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Treino comum</td>
+                                        <td class="text-center">+1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Treino perigoso ou demoníaco</td>
+                                        <td class="text-center">+2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ritual / conhecimento proibido</td>
+                                        <td class="text-center">+3</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custos por Origem -->
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-secundaria);">💰 Custos de Progressão por Origem</h4>
+                        <div class="row gap-15">
+                            <div class="c-xs-12 c-md-4">
+                                <div class="estilo-card" style="height: auto;">
+                                    <div class="estilo-nome">👤 Humanos</div>
+                                    <div class="fs-4 m-10-t" style="color: var(--cor-texto-secundario);">
+                                        <div class="d-flex f-justify-between m-5-b"><span>Habilidade Geral</span><strong>2 PM</strong></div>
+                                        <div class="d-flex f-justify-between m-5-b"><span>Contrato Menor</span><strong>2 PM</strong></div>
+                                        <div class="d-flex f-justify-between m-5-b"><span>Contrato Médio</span><strong>3 PM</strong></div>
+                                        <div class="d-flex f-justify-between"><span>Contrato Maior</span><strong>4 PM</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-xs-12 c-md-4">
+                                <div class="estilo-card" style="height: auto;">
+                                    <div class="estilo-nome">🔥 Infernais</div>
+                                    <div class="fs-4 m-10-t" style="color: var(--cor-texto-secundario);">
+                                        <div class="d-flex f-justify-between m-5-b"><span>Habilidade Geral</span><strong>2 PM</strong></div>
+                                        <div class="d-flex f-justify-between m-5-b"><span>Poder Demoníaco</span><strong>3 PM</strong></div>
+                                        <div class="d-flex f-justify-between m-5-b"><span>Evolução de Poder</span><strong>3 PM</strong></div>
+                                        <div class="d-flex f-justify-between"><span>Transformação</span><strong>4-6 PM</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-xs-12 c-md-4">
+                                <div class="estilo-card" style="height: auto;">
+                                    <div class="estilo-nome">⚡ Híbridos</div>
+                                    <div class="fs-4 m-10-t" style="color: var(--cor-texto-secundario);">
+                                        <div class="d-flex f-justify-between m-5-b"><span>Habilidade Geral</span><strong>2 PM</strong></div>
+                                        <div class="d-flex f-justify-between m-5-b"><span>Poder Demoníaco</span><strong>3 PM</strong></div>
+                                        <div class="d-flex f-justify-between m-5-b"><span>Evolução de Poder</span><strong>2 PM</strong></div>
+                                        <div class="d-flex f-justify-between"><span>Contrato Menor</span><strong>3 PM</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Marcos -->
+                    <div class="m-30-t p-20-all border-rd-8" style="background: rgba(139,0,0,0.15); border: 1px dashed var(--cor-principal);">
+                        <h4 class="fs-10 m-10-b text-center" style="color: var(--cor-accent);">⚠️ Marcos de Progressão</h4>
+                        <p class="text-center" style="color: var(--cor-texto-secundario);">
+                            A cada <strong style="color: var(--cor-texto);">10 / 20 / 30 PM gastos</strong>, a narrativa exige:
+                        </p>
+                        <div class="d-flex f-justify-center f-gap-10 f-wrap m-15-t">
+                            <span class="arma-stat">Marca do Demônio</span>
+                            <span class="arma-stat">Aflição Permanente</span>
+                            <span class="arma-stat">Consequência Narrativa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main>
         <!-- Hero Section -->
         <section id="hero" class="hero h-100vh f-items-center f-justify-center text-center p-30-all">
@@ -2879,17 +3044,29 @@
                     </div>
                 </div>
 
-                <!-- Card de Referência de Armamentos -->
+                <!-- Cards de Referência -->
                 <div class="row gap-20 m-40-t">
-                    <div class="c-xs-12">
-                        <div class="card wow fadeInUp cursor-pointer" style="border-color: var(--cor-secundaria);" data-modal-show="modal-armamentos">
-                            <div class="d-flex f-items-center f-gap-20 f-wrap f-justify-center">
-                                <span style="font-size: 2.5rem;">⚔️</span>
-                                <div>
-                                    <h4 class="fs-11" style="color: var(--cor-secundaria);">Consultar Armamentos & Equipamentos</h4>
-                                    <p class="card-text m-5-t">Armas de curto, médio e longo alcance • Armaduras • Tipos de dano • Efeitos</p>
+                    <div class="c-xs-12 c-md-6">
+                        <div class="card wow fadeInUp cursor-pointer h-100" style="border-color: var(--cor-secundaria);" data-modal-show="modal-armamentos">
+                            <div class="d-flex f-items-center f-gap-15 f-wrap">
+                                <span style="font-size: 2rem;">⚔️</span>
+                                <div class="f-grow-1">
+                                    <h4 class="fs-10" style="color: var(--cor-secundaria);">Armamentos & Equipamentos</h4>
+                                    <p class="card-text m-5-t fs-4">Armas • Armaduras • Tipos de dano</p>
                                 </div>
-                                <span class="fs-9" style="color: var(--cor-accent);">Ver arsenal →</span>
+                                <span class="fs-4" style="color: var(--cor-accent);">Ver →</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="c-xs-12 c-md-6">
+                        <div class="card wow fadeInUp cursor-pointer h-100" style="border-color: var(--cor-accent);" data-wow-delay="0.1s" data-modal-show="modal-pm">
+                            <div class="d-flex f-items-center f-gap-15 f-wrap">
+                                <span style="font-size: 2rem;">⭐</span>
+                                <div class="f-grow-1">
+                                    <h4 class="fs-10" style="color: var(--cor-accent);">Pontos de Marca (PM)</h4>
+                                    <p class="card-text m-5-t fs-4">Progressão • Custos • Marcos</p>
+                                </div>
+                                <span class="fs-4" style="color: var(--cor-accent);">Ver →</span>
                             </div>
                         </div>
                     </div>
