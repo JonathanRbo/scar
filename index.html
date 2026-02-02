@@ -247,50 +247,27 @@
         /* Botões */
         .btn {
             display: inline-block;
-            padding: 16px 42px;
+            padding: 15px 40px;
             text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 2px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
             cursor: pointer;
             border: none;
-            border-radius: 6px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn:hover::before {
-            left: 100%;
         }
 
         .btn-primary {
-            background: var(--gradient-blood);
+            background: var(--cor-principal);
             color: white;
             border: 2px solid var(--cor-principal);
-            box-shadow: 0 4px 15px rgba(139,0,0,0.3);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(220,20,60,0.5);
+            background: var(--cor-secundaria);
             border-color: var(--cor-secundaria);
-        }
-
-        .btn-primary:active {
-            transform: translateY(-1px);
+            box-shadow: 0 0 30px rgba(220,20,60,0.5);
         }
 
         .btn-outline {
@@ -302,8 +279,6 @@
         .btn-outline:hover {
             border-color: var(--cor-accent);
             color: var(--cor-accent);
-            background: rgba(220,20,60,0.1);
-            transform: translateY(-3px);
         }
 
         /* Section Titles */
@@ -990,49 +965,17 @@
             box-shadow: 0 0 10px rgba(220,20,60,0.5);
         }
 
-        /* CTA Section */
-        .cta-section {
-            background:
-                radial-gradient(ellipse at center, rgba(139,0,0,0.2) 0%, transparent 70%),
-                var(--gradient-dark);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23DC143C' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            pointer-events: none;
-        }
-
         /* Footer */
         .site-footer {
-            background: linear-gradient(180deg, #080808 0%, #030303 100%);
+            background: linear-gradient(180deg, var(--cor-fundo) 0%, #050505 100%);
             border-top: 1px solid var(--cor-borda);
-            position: relative;
-        }
-
-        .site-footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: var(--gradient-blood);
         }
 
         .footer-logo {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 3.5rem;
+            font-size: 3rem;
             color: var(--cor-secundaria);
-            letter-spacing: 6px;
-            text-shadow: 0 0 30px rgba(220,20,60,0.3);
+            letter-spacing: 4px;
         }
 
         /* Animação de sangue */
@@ -1074,6 +1017,42 @@
             .nav-sections {
                 display: none;
             }
+        }
+
+        /* Modal Styling */
+        .modal-popup {
+            scrollbar-width: thin;
+            scrollbar-color: var(--cor-principal) var(--cor-fundo-card);
+        }
+
+        .modal-popup::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-popup::-webkit-scrollbar-track {
+            background: var(--cor-fundo-card);
+        }
+
+        .modal-popup::-webkit-scrollbar-thumb {
+            background: var(--cor-principal);
+            border-radius: 3px;
+        }
+
+        .dialog-close {
+            color: var(--cor-texto);
+            font-size: 1.5rem;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .dialog-close:hover {
+            opacity: 1;
+        }
+
+        /* FAQ Cards hover */
+        .card:hover .card-title,
+        .card:hover h4 {
+            color: var(--cor-accent) !important;
         }
 
         /* Smooth scroll */
@@ -1118,10 +1097,10 @@
                     <a href="#sobre" class="nav-link">Sobre</a>
                     <a href="#sistema" class="nav-link">Sistema</a>
                     <a href="#seres" class="nav-link">Seres</a>
+                    <a href="#criacao" class="nav-link">Criar Personagem</a>
                     <a href="#contratos" class="nav-link">Contratos</a>
                     <a href="#combate" class="nav-link">Combate</a>
-                    <a href="#armas" class="nav-link">Armas</a>
-                    <a href="#estilos" class="nav-link">Estilos</a>
+                    <a href="#faq" class="nav-link">FAQ</a>
                 </nav>
 
                 <button class="mobile-menu-btn" data-modal-show="mobile-menu">
@@ -1141,10 +1120,894 @@
                     <a href="#sobre" class="nav-link fs-12" data-modal-hide>Sobre</a>
                     <a href="#sistema" class="nav-link fs-12" data-modal-hide>Sistema</a>
                     <a href="#seres" class="nav-link fs-12" data-modal-hide>Seres</a>
+                    <a href="#criacao" class="nav-link fs-12" data-modal-hide>Criar Personagem</a>
                     <a href="#contratos" class="nav-link fs-12" data-modal-hide>Contratos</a>
                     <a href="#combate" class="nav-link fs-12" data-modal-hide>Combate</a>
-                    <a href="#armas" class="nav-link fs-12" data-modal-hide>Armas</a>
-                    <a href="#estilos" class="nav-link fs-12" data-modal-hide>Estilos</a>
+                    <a href="#faq" class="nav-link fs-12" data-modal-hide>FAQ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Humano -->
+    <div data-modal="modal-humano" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-700px xs-w-95">
+                <button class="dialog-close" data-modal-hide></button>
+                <div class="modal-popup border-rd-10 p-30-all xs-p-20-all" style="background: var(--cor-fundo-card); border: 1px solid #4A90D9; max-height: 85vh; overflow-y: auto;">
+                    <div class="text-center m-20-b">
+                        <span style="font-size: 4rem;">👤</span>
+                        <h3 class="fs-13 m-10-t" style="color: #5DADE2;">Humano</h3>
+                        <p style="color: var(--cor-texto-secundario); font-style: italic;">"O mundo não te protege — mas também não te cobra além do que pode pagar."</p>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: #5DADE2;">📊 Atributos Base</h4>
+                        <div class="row gap-10">
+                            <div class="c-xs-6"><div class="atributo-item"><span style="color: var(--cor-accent);">Pontos:</span> 16-22</div></div>
+                            <div class="c-xs-6"><div class="atributo-item"><span style="color: var(--cor-accent);">Stress:</span> 6 + Vigor + Vínculo</div></div>
+                            <div class="c-xs-6"><div class="atributo-item"><span style="color: var(--cor-accent);">Armamento:</span> 2 itens iniciais</div></div>
+                            <div class="c-xs-6"><div class="atributo-item"><span style="color: var(--cor-accent);">Contrato:</span> 1 opcional</div></div>
+                        </div>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: #27AE60;">✅ Benefícios</h4>
+                        <ul style="color: var(--cor-texto-secundario); padding-left: 20px; line-height: 1.8;">
+                            <li><strong style="color: var(--cor-texto);">+2 Stress Máximo</strong> adicional</li>
+                            <li><strong style="color: var(--cor-texto);">+1 Vínculo</strong> inicial</li>
+                            <li>Contratos mais <strong style="color: var(--cor-texto);">fáceis de encerrar</strong></li>
+                            <li>Recuperação emocional <strong style="color: var(--cor-texto);">eficiente</strong></li>
+                            <li>Pode começar com <strong style="color: var(--cor-texto);">1 Contrato Demoníaco</strong> (opcional)</li>
+                        </ul>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">❌ Malefícios</h4>
+                        <ul style="color: var(--cor-texto-secundario); padding-left: 20px; line-height: 1.8;">
+                            <li><strong style="color: var(--cor-accent);">MORTE É DEFINITIVA</strong> — sem segunda chance</li>
+                            <li>Demônios cobram <strong style="color: var(--cor-texto);">caro</strong> em contratos</li>
+                            <li>Sofrem Aflições físicas com mais <strong style="color: var(--cor-texto);">facilidade</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: #5DADE2;">❓ Perguntas de Criação</h4>
+                        <div class="code-block" style="font-size: 0.85rem;">
+                            1. Quem você era antes de ser arrastado para isso?<br>
+                            2. O que você perderia se desaparecesse amanhã?<br>
+                            3. Qual mentira você conta para si mesmo?
+                        </div>
+                    </div>
+
+                    <div class="m-30-t p-20-all border-rd-8" style="background: rgba(74,144,217,0.1); border: 1px solid rgba(74,144,217,0.3);">
+                        <p class="text-center" style="color: var(--cor-texto-secundario);">
+                            <strong style="color: #5DADE2;">Ideal para:</strong> Drama humano, sobrevivência, explorar contratos<br>
+                            <em>"Como uma pessoa normal lida com o horror?"</em>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Infernal -->
+    <div data-modal="modal-infernal" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-700px xs-w-95">
+                <button class="dialog-close" data-modal-hide></button>
+                <div class="modal-popup border-rd-10 p-30-all xs-p-20-all" style="background: var(--cor-fundo-card); border: 1px solid #9B59B6; max-height: 85vh; overflow-y: auto;">
+                    <div class="text-center m-20-b">
+                        <span style="font-size: 4rem;">👁️</span>
+                        <h3 class="fs-13 m-10-t" style="color: #9B59B6;">Infernal (Fiend)</h3>
+                        <p style="color: var(--cor-texto-secundario); font-style: italic;">"Você já foi um demônio. Agora está preso em carne. Faça o que quiser com isso."</p>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: #9B59B6;">📊 Atributos Base</h4>
+                        <div class="row gap-10">
+                            <div class="c-xs-6"><div class="atributo-item"><span style="color: var(--cor-accent);">Pontos:</span> 16-22</div></div>
+                            <div class="c-xs-6"><div class="atributo-item"><span style="color: var(--cor-accent);">Stress:</span> 6 + Vigor + Vínculo</div></div>
+                        </div>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: #27AE60;">✅ Benefícios</h4>
+                        <ul style="color: var(--cor-texto-secundario); padding-left: 20px; line-height: 1.8;">
+                            <li><strong style="color: var(--cor-texto);">+1 Poder Demoníaco</strong> (geral)</li>
+                            <li><strong style="color: var(--cor-texto);">+1 Poder Sobrenatural</strong> Direto</li>
+                            <li><strong style="color: var(--cor-texto);">1× por cena:</strong> detectar demônios ou poderes (custa Stress)</li>
+                        </ul>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">❌ Malefícios</h4>
+                        <ul style="color: var(--cor-texto-secundario); padding-left: 20px; line-height: 1.8;">
+                            <li><strong style="color: var(--cor-accent);">NÃO pode fazer contratos</strong></li>
+                            <li>Poderes demoníacos geram Stress <strong style="color: var(--cor-texto);">ADICIONAL</strong></li>
+                            <li>Aflições são <strong style="color: var(--cor-accent);">PERMANENTES</strong> ou progressivas</li>
+                            <li>Romper contrato exige <strong style="color: var(--cor-texto);">sacrifício extremo</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: #9B59B6;">👁️ Traços Visíveis (Obrigatórios)</h4>
+                        <div class="d-flex f-wrap f-gap-10">
+                            <span class="arma-stat">Chifres</span>
+                            <span class="arma-stat">Presas</span>
+                            <span class="arma-stat">Olhos estranhos</span>
+                            <span class="arma-stat">Pele de cor incomum</span>
+                            <span class="arma-stat">Marcas corporais</span>
+                            <span class="arma-stat">Membros deformados</span>
+                        </div>
+                        <p class="m-10-t fs-4" style="color: var(--cor-texto-secundario);">⚠️ Não dá pra esconder completamente o que você é.</p>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: #9B59B6;">❓ Perguntas de Criação</h4>
+                        <div class="code-block" style="font-size: 0.85rem;">
+                            1. Você foi capturado ou se entregou?<br>
+                            2. O que você perdeu ao ganhar um corpo?<br>
+                            3. Qual regra humana você acha absurda?<br>
+                            4. Qual é seu princípio inegociável?
+                        </div>
+                    </div>
+
+                    <div class="m-30-t p-20-all border-rd-8" style="background: rgba(155,89,182,0.1); border: 1px solid rgba(155,89,182,0.3);">
+                        <p class="text-center" style="color: var(--cor-texto-secundario);">
+                            <strong style="color: #9B59B6;">Ideal para:</strong> Perspectiva alienígena, não pertencer, aprender humanidade<br>
+                            <em>"Como um monstro tenta existir entre humanos?"</em>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Híbrido -->
+    <div data-modal="modal-hibrido" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-700px xs-w-95">
+                <button class="dialog-close" data-modal-hide></button>
+                <div class="modal-popup border-rd-10 p-30-all xs-p-20-all" style="background: var(--cor-fundo-card); border: 1px solid #F39C12; max-height: 85vh; overflow-y: auto;">
+                    <div class="text-center m-20-b">
+                        <span style="font-size: 4rem;">⚡</span>
+                        <h3 class="fs-13 m-10-t" style="color: #F39C12;">Híbrido</h3>
+                        <p style="color: var(--cor-texto-secundario); font-style: italic;">"Você não é humano. Não é demônio. É uma arma viva. Nada além disso."</p>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: #F39C12;">📊 Atributos Base</h4>
+                        <div class="row gap-10">
+                            <div class="c-xs-6"><div class="atributo-item"><span style="color: var(--cor-accent);">Pontos:</span> 16-22</div></div>
+                            <div class="c-xs-6"><div class="atributo-item"><span style="color: var(--cor-accent);">Stress:</span> 6 + Vigor + Vínculo</div></div>
+                        </div>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: #27AE60;">✅ Benefícios</h4>
+                        <ul style="color: var(--cor-texto-secundario); padding-left: 20px; line-height: 1.8;">
+                            <li><strong style="color: var(--cor-texto);">+1 Poder Demoníaco</strong> (transformação com gatilho)</li>
+                            <li><strong style="color: var(--cor-texto);">Ignorar 1 consequência física</strong> por combate</li>
+                            <li>Stress <strong style="color: var(--cor-texto);">REDUZIDO</strong> em combate direto</li>
+                            <li><strong style="color: #F39C12;">RECUSA DA MORTE</strong> — pode voltar... mas algo fica pra trás</li>
+                        </ul>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">❌ Malefícios</h4>
+                        <ul style="color: var(--cor-texto-secundario); padding-left: 20px; line-height: 1.8;">
+                            <li>Stress <strong style="color: var(--cor-accent);">AUMENTADO</strong> em cenas psicológicas</li>
+                            <li>Recuperação emocional <strong style="color: var(--cor-texto);">FRACA</strong></li>
+                            <li>Reação <strong style="color: var(--cor-texto);">extrema</strong> do mundo</li>
+                            <li><strong style="color: var(--cor-accent);">Sistema de GRILHÕES</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: #F39C12;">⛓️ Sistema de Grilhões</h4>
+                        <p class="m-10-b" style="color: var(--cor-texto-secundario);">Representam o controle do demônio sobre você.</p>
+                        <table class="table-scar">
+                            <tr>
+                                <th>Grilhões</th>
+                                <th>Efeito</th>
+                            </tr>
+                            <tr>
+                                <td>A cada 5</td>
+                                <td>Demônio age através de você (1×)</td>
+                            </tr>
+                            <tr>
+                                <td>10+</td>
+                                <td>Controle por 1 cena inteira</td>
+                            </tr>
+                            <tr>
+                                <td>15+</td>
+                                <td>Possessão total (Medo DT 40)</td>
+                            </tr>
+                        </table>
+                        <p class="m-10-t fs-4" style="color: var(--cor-texto-secundario);">📉 Diminui 1 ponto a cada 20 minutos de descanso</p>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: #F39C12;">❓ Perguntas de Criação</h4>
+                        <div class="code-block" style="font-size: 0.85rem;">
+                            1. Como aconteceu a fusão?<br>
+                            2. O demônio quer algo de você?<br>
+                            3. O que você ainda tenta proteger?<br>
+                            4. O que acontece se perder o controle?
+                        </div>
+                    </div>
+
+                    <div class="m-30-t p-20-all border-rd-8" style="background: rgba(243,156,18,0.1); border: 1px solid rgba(243,156,18,0.3);">
+                        <p class="text-center" style="color: var(--cor-texto-secundario);">
+                            <strong style="color: #F39C12;">Ideal para:</strong> Conflito interno, poder vs controle, perda de humanidade<br>
+                            <em>"Quanto da minha humanidade eu perco?"</em>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Demônio -->
+    <div data-modal="modal-demonio" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-700px xs-w-95">
+                <button class="dialog-close" data-modal-hide></button>
+                <div class="modal-popup border-rd-10 p-30-all xs-p-20-all" style="background: var(--cor-fundo-card); border: 1px solid var(--cor-secundaria); max-height: 85vh; overflow-y: auto;">
+                    <div class="text-center m-20-b">
+                        <span style="font-size: 4rem;">👹</span>
+                        <h3 class="fs-13 m-10-t" style="color: var(--cor-secundaria);">Demônio Puro</h3>
+                        <p style="color: var(--cor-texto-secundario); font-style: italic;">"Um Demônio não nasce — ele CONDENSA."</p>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-secundaria);">📊 Atributos Base</h4>
+                        <div class="row gap-10">
+                            <div class="c-xs-6"><div class="atributo-item"><span style="color: var(--cor-accent);">Pontos:</span> 18 + bônus da origem</div></div>
+                            <div class="c-xs-6"><div class="atributo-item"><span style="color: var(--cor-accent);">Medo Inicial:</span> Nível 1</div></div>
+                            <div class="c-xs-6"><div class="atributo-item"><span style="color: var(--cor-accent);">Poderes:</span> 2 Demoníacos</div></div>
+                            <div class="c-xs-6"><div class="atributo-item"><span style="color: var(--cor-accent);">Falha Central:</span> Obrigatória</div></div>
+                        </div>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-secundaria);">🔥 Origens do Medo</h4>
+                        <table class="table-scar">
+                            <tr>
+                                <th>Origem</th>
+                                <th>Exemplos</th>
+                            </tr>
+                            <tr>
+                                <td>🔥 Medo Incomum</td>
+                                <td>Dor, fogo, sangue, lâminas</td>
+                            </tr>
+                            <tr>
+                                <td>👥 Medo Social</td>
+                                <td>Vigilância, guerra, autoridade</td>
+                            </tr>
+                            <tr>
+                                <td>✝️ Medo Bíblico</td>
+                                <td>Juízo, pecado, castigo</td>
+                            </tr>
+                            <tr>
+                                <td>🌀 Medo Conceitual</td>
+                                <td>Silêncio, vazio, tempo</td>
+                            </tr>
+                            <tr>
+                                <td>💀 Medo Primordial</td>
+                                <td>Morte, extinção, trevas</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: #27AE60;">✅ Benefícios</h4>
+                        <ul style="color: var(--cor-texto-secundario); padding-left: 20px; line-height: 1.8;">
+                            <li><strong style="color: var(--cor-texto);">RENASCE</strong> após morrer (Terra → Inferno → Terra)</li>
+                            <li>Quanto mais <strong style="color: var(--cor-texto);">temido</strong>, mais poderoso</li>
+                            <li><strong style="color: var(--cor-texto);">2 Poderes Demoníacos</strong> inatos</li>
+                            <li>Pode <strong style="color: var(--cor-texto);">marcar</strong> humanos com contratos</li>
+                        </ul>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">❌ Malefícios</h4>
+                        <ul style="color: var(--cor-texto-secundario); padding-left: 20px; line-height: 1.8;">
+                            <li><strong style="color: var(--cor-accent);">Sem empatia natural</strong> — precisa APRENDER</li>
+                            <li>Aflições <strong style="color: var(--cor-texto);">ligadas ao medo</strong></li>
+                            <li><strong style="color: var(--cor-accent);">Falha Central</strong> obrigatória</li>
+                            <li>⚠️ Devorado pelo Demônio da Motosserra = <strong style="color: var(--cor-accent);">APAGADO</strong> da existência</li>
+                        </ul>
+                    </div>
+
+                    <div class="m-30-t p-20-all border-rd-8" style="background: rgba(139,0,0,0.15); border: 1px solid var(--cor-principal);">
+                        <h4 class="fs-9 m-10-b" style="color: var(--cor-secundaria);">⚡ Regra de Ouro do Poder</h4>
+                        <p class="text-center" style="color: var(--cor-texto);">
+                            <strong>QUANTO MAIS PESSOAS TEMEM UM CONCEITO,<br>MAIS PODEROSO É O DEMÔNIO.</strong>
+                        </p>
+                    </div>
+
+                    <div class="m-30-t p-20-all border-rd-8" style="background: rgba(220,20,60,0.1); border: 1px solid rgba(220,20,60,0.3);">
+                        <p class="text-center" style="color: var(--cor-texto-secundario);">
+                            <strong style="color: var(--cor-secundaria);">Ideal para:</strong> Ser o monstro, evolução pelo terror, perspectiva inumana<br>
+                            <em>"O que significa ser feito de medo?"</em>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Naturezas (Tipos de Seres) -->
+    <div data-modal="modal-naturezas" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-900px xs-w-95">
+                <button class="dialog-close" data-modal-hide></button>
+                <div class="modal-popup border-rd-10 p-30-all xs-p-20-all" style="background: var(--cor-fundo-card); border: 1px solid var(--cor-secundaria); max-height: 85vh; overflow-y: auto;">
+                    <div class="text-center m-20-b">
+                        <span style="font-size: 3rem;">👥</span>
+                        <h3 class="fs-13 m-10-t" style="color: var(--cor-secundaria);">Tipos de Seres</h3>
+                        <p style="color: var(--cor-texto-secundario);">Escolha sua natureza. Ela define como você existe, como sofre e como o mundo reage a você.</p>
+                    </div>
+
+                    <div class="row gap-15 m-30-t">
+                        <!-- Humano -->
+                        <div class="c-xs-12 c-sm-6">
+                            <div class="tipo-card humano cursor-pointer" style="height: auto;" data-modal-show="modal-humano" data-modal-hide>
+                                <span class="tipo-icon">👤</span>
+                                <h3 class="fs-11">Humano</h3>
+                                <p class="m-10-t" style="color: var(--cor-texto-secundario); font-size: 0.85rem;">
+                                    Pessoas comuns arrastadas para o mundo dos demônios.
+                                </p>
+                                <div class="m-15-t d-flex f-wrap f-gap-5 f-justify-center">
+                                    <span class="arma-stat">✅ +2 Stress Máx</span>
+                                    <span class="arma-stat">✅ Contratos</span>
+                                    <span class="arma-stat">❌ Morte definitiva</span>
+                                </div>
+                                <p class="m-10-t fs-3" style="color: var(--cor-accent);">Clique para detalhes →</p>
+                            </div>
+                        </div>
+
+                        <!-- Infernal -->
+                        <div class="c-xs-12 c-sm-6">
+                            <div class="tipo-card infernal cursor-pointer" style="height: auto;" data-modal-show="modal-infernal" data-modal-hide>
+                                <span class="tipo-icon">👁️</span>
+                                <h3 class="fs-11">Infernal</h3>
+                                <p class="m-10-t" style="color: var(--cor-texto-secundario); font-size: 0.85rem;">
+                                    Demônio em corpo humano morto. Traços visíveis.
+                                </p>
+                                <div class="m-15-t d-flex f-wrap f-gap-5 f-justify-center">
+                                    <span class="arma-stat">✅ Poderes inatos</span>
+                                    <span class="arma-stat">✅ Detectar demônios</span>
+                                    <span class="arma-stat">❌ Sem contratos</span>
+                                </div>
+                                <p class="m-10-t fs-3" style="color: var(--cor-accent);">Clique para detalhes →</p>
+                            </div>
+                        </div>
+
+                        <!-- Híbrido -->
+                        <div class="c-xs-12 c-sm-6">
+                            <div class="tipo-card hibrido cursor-pointer" style="height: auto;" data-modal-show="modal-hibrido" data-modal-hide>
+                                <span class="tipo-icon">⚡</span>
+                                <h3 class="fs-11">Híbrido</h3>
+                                <p class="m-10-t" style="color: var(--cor-texto-secundario); font-size: 0.85rem;">
+                                    Humano fundido com demônio. Pode transformar.
+                                </p>
+                                <div class="m-15-t d-flex f-wrap f-gap-5 f-justify-center">
+                                    <span class="arma-stat">✅ Recusa da Morte</span>
+                                    <span class="arma-stat">✅ Transformação</span>
+                                    <span class="arma-stat">❌ Grilhões</span>
+                                </div>
+                                <p class="m-10-t fs-3" style="color: var(--cor-accent);">Clique para detalhes →</p>
+                            </div>
+                        </div>
+
+                        <!-- Demônio -->
+                        <div class="c-xs-12 c-sm-6">
+                            <div class="tipo-card demonio cursor-pointer" style="height: auto;" data-modal-show="modal-demonio" data-modal-hide>
+                                <span class="tipo-icon">👹</span>
+                                <h3 class="fs-11">Demônio</h3>
+                                <p class="m-10-t" style="color: var(--cor-texto-secundario); font-size: 0.85rem;">
+                                    Manifestação pura do medo coletivo.
+                                </p>
+                                <div class="m-15-t d-flex f-wrap f-gap-5 f-justify-center">
+                                    <span class="arma-stat">✅ Renasce</span>
+                                    <span class="arma-stat">✅ 2 Poderes</span>
+                                    <span class="arma-stat">❌ Sem empatia</span>
+                                </div>
+                                <p class="m-10-t fs-3" style="color: var(--cor-accent);">Clique para detalhes →</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-30-t p-15-all border-rd-8" style="background: rgba(139,0,0,0.1); border: 1px solid rgba(139,0,0,0.3);">
+                        <p class="text-center" style="color: var(--cor-texto-secundario);">
+                            <strong style="color: var(--cor-accent);">Dica:</strong> Clique em cada tipo para ver detalhes completos, benefícios, malefícios e perguntas de criação.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Atributos -->
+    <div data-modal="modal-atributos" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-800px xs-w-95">
+                <button class="dialog-close" data-modal-hide></button>
+                <div class="modal-popup border-rd-10 p-30-all xs-p-20-all" style="background: var(--cor-fundo-card); border: 1px solid #9B59B6; max-height: 85vh; overflow-y: auto;">
+                    <div class="text-center m-20-b">
+                        <span style="font-size: 3rem;">🎲</span>
+                        <h3 class="fs-13 m-10-t" style="color: #9B59B6;">10 Atributos</h3>
+                        <p style="color: var(--cor-texto-secundario);">Distribua 16-22 pontos. Mínimo 0, máximo 5 por atributo.</p>
+                    </div>
+
+                    <div class="row gap-20 m-30-t">
+                        <!-- Físicos -->
+                        <div class="c-xs-12 c-md-4">
+                            <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">⚔️ Físicos</h4>
+                            <div class="atributo-item m-10-b">
+                                <div class="atributo-nome">💪 Força</div>
+                                <div class="atributo-desc">Violência direta, combate corporal</div>
+                            </div>
+                            <div class="atributo-item m-10-b">
+                                <div class="atributo-nome">🫀 Vigor</div>
+                                <div class="atributo-desc">Resistência, fôlego, esforço prolongado</div>
+                            </div>
+                            <div class="atributo-item">
+                                <div class="atributo-nome">🎯 Coordenação</div>
+                                <div class="atributo-desc">Mira, reflexos, uso de armas</div>
+                            </div>
+                        </div>
+
+                        <!-- Táticos -->
+                        <div class="c-xs-12 c-md-4">
+                            <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">🎲 Táticos</h4>
+                            <div class="atributo-item m-10-b">
+                                <div class="atributo-nome">🃏 Malandragem</div>
+                                <div class="atributo-desc">Furtividade, enganação, lockpick</div>
+                            </div>
+                            <div class="atributo-item m-10-b">
+                                <div class="atributo-nome">⚙️ Tecnologia</div>
+                                <div class="atributo-desc">Veículos, dispositivos, equipamentos</div>
+                            </div>
+                            <div class="atributo-item">
+                                <div class="atributo-nome">👁️ Percepção</div>
+                                <div class="atributo-desc">Observação, rastreio, vigilância</div>
+                            </div>
+                        </div>
+
+                        <!-- Mentais/Sociais -->
+                        <div class="c-xs-12 c-md-4">
+                            <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">🧠 Mentais/Sociais</h4>
+                            <div class="atributo-item m-10-b">
+                                <div class="atributo-nome">🔍 Investigação</div>
+                                <div class="atributo-desc">Análise, dedução, pistas</div>
+                            </div>
+                            <div class="atributo-item m-10-b">
+                                <div class="atributo-nome">🤝 Negociação</div>
+                                <div class="atributo-desc">Barganha, persuasão</div>
+                            </div>
+                            <div class="atributo-item m-10-b">
+                                <div class="atributo-nome">👑 Autoridade</div>
+                                <div class="atributo-desc">Liderança, intimidação</div>
+                            </div>
+                            <div class="atributo-item">
+                                <div class="atributo-nome">💕 Vínculo</div>
+                                <div class="atributo-desc">Empatia, conexões humanas</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-30-t p-15-all border-rd-8" style="background: rgba(155,89,182,0.1); border: 1px solid rgba(155,89,182,0.3);">
+                        <p class="text-center" style="color: var(--cor-texto-secundario);">
+                            <strong style="color: var(--cor-accent);">⚠️ Atributo 0:</strong> Ainda pode agir, mas falha gera +1 Stress adicional
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Estilos de Luta -->
+    <div data-modal="modal-estilos" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-900px xs-w-95">
+                <button class="dialog-close" data-modal-hide></button>
+                <div class="modal-popup border-rd-10 p-30-all xs-p-20-all" style="background: var(--cor-fundo-card); border: 1px solid var(--cor-secundaria); max-height: 85vh; overflow-y: auto;">
+                    <div class="text-center m-20-b">
+                        <span style="font-size: 3rem;">⚔️</span>
+                        <h3 class="fs-13 m-10-t" style="color: var(--cor-secundaria);">Estilos de Luta</h3>
+                        <p style="color: var(--cor-texto-secundario);">Escolha 1 na criação. São passivos — sempre ativos, sem custo.</p>
+                    </div>
+
+                    <div class="row gap-15 m-30-t">
+                        <div class="c-xs-12 c-sm-6 c-lg-4">
+                            <div class="estilo-card" style="height: auto;">
+                                <div class="estilo-nome">🥊 Boxe</div>
+                                <div class="estilo-beneficio"><strong>Jab:</strong> Se alvo falhou, repete ataque com metade da força</div>
+                                <div class="estilo-beneficio"><strong>Defesa:</strong> Pode usar Percepção ou Vínculo</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-lg-4">
+                            <div class="estilo-card" style="height: auto;">
+                                <div class="estilo-nome">⚔️ Espadachim</div>
+                                <div class="estilo-beneficio"><strong>Sangramento:</strong> Diferença 5+ = Leve vira sangramento</div>
+                                <div class="estilo-beneficio"><strong>1×1:</strong> Ignora armamento de defesa</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-lg-4">
+                            <div class="estilo-card" style="height: auto;">
+                                <div class="estilo-nome">🎯 Atirador</div>
+                                <div class="estilo-beneficio"><strong>Zona:</strong> Ataques criam zona onde alvos sofrem −1d10</div>
+                                <div class="estilo-beneficio"><strong>Diferença 10+:</strong> Pode aumentar Injúria 1 grau</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-lg-4">
+                            <div class="estilo-card" style="height: auto;">
+                                <div class="estilo-nome">💪 Wrestling</div>
+                                <div class="estilo-beneficio"><strong>Agarrar:</strong> Pode usar Força ou Vigor</div>
+                                <div class="estilo-beneficio"><strong>Opção:</strong> Não causar Injúria para drenar +2 Stress</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-lg-4">
+                            <div class="estilo-card" style="height: auto;">
+                                <div class="estilo-nome">🥋 Judô</div>
+                                <div class="estilo-beneficio"><strong>Contra-ataque:</strong> Quando inimigo erra, revida (1×/rodada)</div>
+                                <div class="estilo-beneficio"><strong>Força maior:</strong> Ganha +1d10 defensivo</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-lg-4">
+                            <div class="estilo-card" style="height: auto;">
+                                <div class="estilo-nome">🔫 Spetsnaz</div>
+                                <div class="estilo-beneficio"><strong>Primeiro Ataque:</strong> Se causar Injúria, +1 grau</div>
+                                <div class="estilo-beneficio"><strong>Alvo vulnerável:</strong> Ignora redução de defesa</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-lg-4">
+                            <div class="estilo-card" style="height: auto;">
+                                <div class="estilo-nome">🤼 Estilo Livre</div>
+                                <div class="estilo-beneficio"><strong>Malandragem:</strong> Usa para atacar ou defender</div>
+                                <div class="estilo-beneficio"><strong>Efeitos:</strong> Injúrias causam queda/desarme</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-lg-4">
+                            <div class="estilo-card" style="height: auto;">
+                                <div class="estilo-nome">🔨 Armas Pesadas</div>
+                                <div class="estilo-beneficio"><strong>Devastador:</strong> Armaduras não reduzem dano</div>
+                                <div class="estilo-beneficio"><strong>Terror:</strong> Alvos menores testam Medo 1</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-lg-4">
+                            <div class="estilo-card" style="height: auto;">
+                                <div class="estilo-nome">🏹 Caçador</div>
+                                <div class="estilo-beneficio"><strong>Observar:</strong> Cada rodada ignora 1d10 defensivo</div>
+                                <div class="estilo-beneficio"><strong>Marcar:</strong> Trocar dano por condição</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-lg-4">
+                            <div class="estilo-card" style="height: auto;">
+                                <div class="estilo-nome">🐺 Instintivo</div>
+                                <div class="estilo-beneficio"><strong>Feroz:</strong> Causar Injúria → +2 Stress no alvo</div>
+                                <div class="estilo-beneficio"><strong>Ataque:</strong> Usar Percepção ou Investigação no lugar de Força</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-lg-4">
+                            <div class="estilo-card" style="height: auto;">
+                                <div class="estilo-nome">⚖️ Executor</div>
+                                <div class="estilo-beneficio"><strong>Caça ao Poder:</strong> +1d10 geral contra alvos com Autoridade maior</div>
+                                <div class="estilo-beneficio"><strong>Injúria Grave:</strong> Alvo não pode conceder bônus ou liderar</div>
+                                <div class="estilo-beneficio"><strong>Opção:</strong> Trocar dano por Aflição</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-lg-4">
+                            <div class="estilo-card" style="height: auto;">
+                                <div class="estilo-nome">🤲 Mãos da Guerra</div>
+                                <div class="estilo-beneficio"><strong>Improvisado:</strong> Armas improvisadas viram leve (+1d10) ou média (+2d10)</div>
+                                <div class="estilo-beneficio"><strong>Demoníaco:</strong> Armamento demoníaco ganha +10 em dano</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Talismã -->
+    <div data-modal="modal-talisma" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-600px xs-w-95">
+                <button class="dialog-close" data-modal-hide></button>
+                <div class="modal-popup border-rd-10 p-30-all xs-p-20-all" style="background: var(--cor-fundo-card); border: 1px solid var(--cor-gold); max-height: 85vh; overflow-y: auto;">
+                    <div class="text-center m-20-b">
+                        <span style="font-size: 3rem;">🍀</span>
+                        <h3 class="fs-13 m-10-t" style="color: var(--cor-gold);">Talismã (Objeto da Sorte)</h3>
+                        <p style="color: var(--cor-texto-secundario);">Cada personagem possui 1 Talismã — algo que ancora sua humanidade.</p>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">Como Definir</h4>
+                        <div class="row gap-10">
+                            <div class="c-xs-12 c-sm-4">
+                                <div class="atributo-item text-center">
+                                    <div style="font-size: 1.5rem;">📦</div>
+                                    <div class="atributo-nome">O que é?</div>
+                                    <div class="atributo-desc">Objeto físico ou marca</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-12 c-sm-4">
+                                <div class="atributo-item text-center">
+                                    <div style="font-size: 1.5rem;">🔗</div>
+                                    <div class="atributo-nome">De onde veio?</div>
+                                    <div class="atributo-desc">Pessoa, evento ou lugar</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-12 c-sm-4">
+                                <div class="atributo-item text-center">
+                                    <div style="font-size: 1.5rem;">💝</div>
+                                    <div class="atributo-nome">O que representa?</div>
+                                    <div class="atributo-desc">Amor, promessa, memória</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">Efeitos (1×/sessão)</h4>
+                        <p style="color: var(--cor-texto-secundario); margin-bottom: 15px;">Escolha UM efeito por sessão:</p>
+                        <div class="row gap-10">
+                            <div class="c-xs-6 c-sm-4">
+                                <div class="estilo-card text-center" style="height: auto; padding: 15px;">
+                                    <div style="font-size: 1.3rem;">🎲</div>
+                                    <div class="fs-5 fw-600 m-5-t">Rerolar</div>
+                                    <div class="fs-3" style="color: var(--cor-texto-secundario);">Teste falho</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-6 c-sm-4">
+                                <div class="estilo-card text-center" style="height: auto; padding: 15px;">
+                                    <div style="font-size: 1.3rem;">🩹</div>
+                                    <div class="fs-5 fw-600 m-5-t">−1 Nível</div>
+                                    <div class="fs-3" style="color: var(--cor-texto-secundario);">Injúria</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-6 c-sm-4">
+                                <div class="estilo-card text-center" style="height: auto; padding: 15px;">
+                                    <div style="font-size: 1.3rem;">🚫</div>
+                                    <div class="fs-5 fw-600 m-5-t">Ignorar</div>
+                                    <div class="fs-3" style="color: var(--cor-texto-secundario);">1 Aflição</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-6 c-sm-4">
+                                <div class="estilo-card text-center" style="height: auto; padding: 15px;">
+                                    <div style="font-size: 1.3rem;">⚡</div>
+                                    <div class="fs-5 fw-600 m-5-t">+3d10</div>
+                                    <div class="fs-3" style="color: var(--cor-texto-secundario);">Em 1 teste</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-6 c-sm-4">
+                                <div class="estilo-card text-center" style="height: auto; padding: 15px;">
+                                    <div style="font-size: 1.3rem;">😰</div>
+                                    <div class="fs-5 fw-600 m-5-t">Resistir</div>
+                                    <div class="fs-3" style="color: var(--cor-texto-secundario);">Medo</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-6 c-sm-4">
+                                <div class="estilo-card text-center" style="height: auto; padding: 15px;">
+                                    <div style="font-size: 1.3rem;">💆</div>
+                                    <div class="fs-5 fw-600 m-5-t">Recuperar</div>
+                                    <div class="fs-3" style="color: var(--cor-texto-secundario);">Stress</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-30-t p-20-all border-rd-8" style="background: rgba(212, 175, 55, 0.1); border: 1px dashed var(--cor-gold);">
+                        <h4 class="fs-9 m-10-b" style="color: var(--cor-gold);">💡 Exemplos de Talismãs</h4>
+                        <ul style="color: var(--cor-texto-secundario); padding-left: 20px; line-height: 1.8; margin: 0;">
+                            <li>Aliança de casamento da mãe falecida</li>
+                            <li>Cicatriz de uma batalha que sobreviveu</li>
+                            <li>Foto amassada de alguém que prometeu proteger</li>
+                            <li>Isqueiro do melhor amigo que morreu</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Contratos -->
+    <div data-modal="modal-contratos" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-800px xs-w-95">
+                <button class="dialog-close" data-modal-hide></button>
+                <div class="modal-popup border-rd-10 p-30-all xs-p-20-all" style="background: var(--cor-fundo-card); border: 1px solid var(--cor-principal); max-height: 85vh; overflow-y: auto;">
+                    <div class="text-center m-20-b">
+                        <span style="font-size: 3rem;">📜</span>
+                        <h3 class="fs-13 m-10-t" style="color: var(--cor-secundaria);">Contratos Demoníacos</h3>
+                        <p style="color: var(--cor-texto-secundario);">Pactos vinculantes entre humano e demônio.</p>
+                        <p style="color: var(--cor-accent); font-weight: bold;">⚠️ Demônios NÃO são seus amigos. Eles vão cobrar. SEMPRE.</p>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-secundaria);">Estrutura de Todo Contrato</h4>
+                        <div class="row gap-10">
+                            <div class="c-xs-6 c-md-3">
+                                <div class="atributo-item text-center">
+                                    <div style="font-size: 1.5rem;">⚡</div>
+                                    <div class="atributo-nome">O Poder</div>
+                                    <div class="atributo-desc">O que o demônio te dá</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-6 c-md-3">
+                                <div class="atributo-item text-center">
+                                    <div style="font-size: 1.5rem;">💰</div>
+                                    <div class="atributo-nome">O Preço</div>
+                                    <div class="atributo-desc">O que você paga</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-6 c-md-3">
+                                <div class="atributo-item text-center">
+                                    <div style="font-size: 1.5rem;">📜</div>
+                                    <div class="atributo-nome">A Restrição</div>
+                                    <div class="atributo-desc">Regras a seguir</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-6 c-md-3">
+                                <div class="atributo-item text-center">
+                                    <div style="font-size: 1.5rem;">💀</div>
+                                    <div class="atributo-nome">A Quebra</div>
+                                    <div class="atributo-desc">Se violar o contrato</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-secundaria);">Categorias</h4>
+                        <table class="table-scar">
+                            <tr>
+                                <th>Categoria</th>
+                                <th>Poder</th>
+                                <th>Aflição</th>
+                                <th>Custo PM</th>
+                            </tr>
+                            <tr>
+                                <td>Menor</td>
+                                <td>Limitado</td>
+                                <td>Leve</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>Médio</td>
+                                <td>Forte</td>
+                                <td>Ativa</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>Maior</td>
+                                <td>Destruidor</td>
+                                <td>Severa</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>Restrição</td>
+                                <td>Extremo</td>
+                                <td style="color: var(--cor-accent);">MORTE</td>
+                                <td>Aprovação</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-secundaria);">Exemplos Rápidos</h4>
+                        <div class="row gap-10">
+                            <div class="c-xs-12 c-md-4">
+                                <div class="atributo-item">
+                                    <div class="atributo-nome">🚬 Cigarro</div>
+                                    <div class="atributo-desc">Cortina de fumaça. Deve fumar 1/dia.</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-12 c-md-4">
+                                <div class="atributo-item">
+                                    <div class="atributo-nome">🦊 Raposa</div>
+                                    <div class="atributo-desc">Cabeça gigante ataca. Perde memórias.</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-12 c-md-4">
+                                <div class="atributo-item">
+                                    <div class="atributo-nome">⚔️ Katana</div>
+                                    <div class="atributo-desc">Lâmina demoníaca. Matar 1/mês.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ficha de Personagem -->
+    <div data-modal="modal-ficha" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-700px xs-w-95">
+                <button class="dialog-close" data-modal-hide></button>
+                <div class="modal-popup border-rd-10 p-30-all xs-p-20-all" style="background: var(--cor-fundo-card); border: 1px solid var(--cor-gold); max-height: 85vh; overflow-y: auto;">
+                    <div class="text-center m-20-b">
+                        <span style="font-size: 3rem;">📋</span>
+                        <h3 class="fs-13 m-10-t" style="color: var(--cor-gold);">Ficha de Personagem</h3>
+                        <p style="color: var(--cor-texto-secundario);">Estrutura completa para criar seu personagem</p>
+                    </div>
+
+                    <div class="code-block m-20-t" style="font-size: 0.85rem; line-height: 1.8;">
+                        <span class="highlight">═══ DADOS BÁSICOS ═══</span><br><br>
+                        <span class="comment">NOME:</span> _______________________<br>
+                        <span class="comment">IDADE:</span> _______________________<br>
+                        <span class="comment">CONCEITO/RESUMO:</span> _______________________<br>
+                        <span class="comment">LIGAÇÃO COM DEMÔNIOS:</span> _______________________<br>
+                        <span class="comment">FALHA CENTRAL:</span> _______________________<br>
+                        <span class="comment">PM:</span> <span class="highlight">0</span><br><br>
+
+                        <span class="highlight">═══ ATRIBUTOS (16-22 PONTOS) ═══</span><br><br>
+
+                        <span style="color: var(--cor-accent);">▸ Físicos</span><br>
+                        &nbsp;&nbsp;<span class="comment">Força:</span> [ ]<br>
+                        &nbsp;&nbsp;<span class="comment">Vigor:</span> [ ]<br>
+                        &nbsp;&nbsp;<span class="comment">Coordenação:</span> [ ]<br><br>
+
+                        <span style="color: var(--cor-accent);">▸ Táticos / Técnicos</span><br>
+                        &nbsp;&nbsp;<span class="comment">Malandragem:</span> [ ]<br>
+                        &nbsp;&nbsp;<span class="comment">Tecnologia:</span> [ ]<br>
+                        &nbsp;&nbsp;<span class="comment">Percepção:</span> [ ]<br><br>
+
+                        <span style="color: var(--cor-accent);">▸ Mentais / Sociais</span><br>
+                        &nbsp;&nbsp;<span class="comment">Investigação:</span> [ ]<br>
+                        &nbsp;&nbsp;<span class="comment">Negociação:</span> [ ]<br>
+                        &nbsp;&nbsp;<span class="comment">Autoridade:</span> [ ]<br>
+                        &nbsp;&nbsp;<span class="comment">Vínculo:</span> [ ]<br><br>
+
+                        <span class="highlight">═══ RECURSOS ═══</span><br><br>
+
+                        <span class="comment">STRESS:</span> <span class="highlight">6 + Vigor + Vínculo</span> = ____<br><br>
+
+                        <span class="comment">INJÚRIAS</span><br>
+                        &nbsp;&nbsp;Leves: ☐ ☐ ☐ ☐ <span style="color: #666;">(2 + Vigor÷2)</span><br>
+                        &nbsp;&nbsp;Graves: ☐ ☐ <span style="color: #666;">(1 + Vigor÷3)</span><br>
+                        &nbsp;&nbsp;Crítica: ☐ <span style="color: #666;">(sempre 1)</span><br><br>
+
+                        <span class="highlight">═══ EQUIPAMENTO ═══</span><br><br>
+
+                        <span class="comment">ARMAMENTO:</span><br>
+                        &nbsp;&nbsp;1) _______________________<br>
+                        &nbsp;&nbsp;2) _______________________<br><br>
+
+                        <span class="comment">AFLIÇÕES:</span><br>
+                        &nbsp;&nbsp;1) _______________________<br>
+                        &nbsp;&nbsp;2) _______________________<br><br>
+
+                        <span class="highlight">═══ ESPECIAL ═══</span><br><br>
+
+                        <span class="comment">TALISMÃ:</span> _______________________<br>
+                        <span class="comment">ESTILO DE LUTA:</span> _______________________<br>
+                        <span class="comment">MARCA DO DEMÔNIO:</span> _______________________<br>
+                    </div>
+
+                    <div class="m-20-t p-15-all border-rd-8" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3);">
+                        <p class="text-center" style="color: var(--cor-texto-secundario);">
+                            <strong style="color: var(--cor-gold);">💡 Dica:</strong> Copie esta estrutura para criar sua ficha no papel ou em um documento digital.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1417,58 +2280,62 @@
 
                 <div class="row gap-20">
                     <div class="c-xs-12 c-sm-6 c-lg-3">
-                        <div class="tipo-card humano wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="tipo-card humano wow fadeInUp cursor-pointer" data-wow-delay="0.1s" data-modal-show="modal-humano">
                             <span class="tipo-icon">👤</span>
                             <h3 class="fs-11">Humano</h3>
                             <p class="m-15-t" style="color: var(--cor-texto-secundario); font-size: 0.9rem;">
                                 Pessoas comuns arrastadas para o mundo dos demônios. Podem fazer contratos.
                             </p>
-                            <div class="m-20-t">
+                            <div class="m-20-t d-flex f-wrap f-gap-5 f-justify-center">
                                 <span class="arma-stat">✅ +2 Stress Máx</span>
                                 <span class="arma-stat">❌ Morte definitiva</span>
                             </div>
+                            <p class="m-15-t fs-3" style="color: var(--cor-accent);">Clique para detalhes →</p>
                         </div>
                     </div>
 
                     <div class="c-xs-12 c-sm-6 c-lg-3">
-                        <div class="tipo-card infernal wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="tipo-card infernal wow fadeInUp cursor-pointer" data-wow-delay="0.2s" data-modal-show="modal-infernal">
                             <span class="tipo-icon">👁️</span>
                             <h3 class="fs-11">Infernal</h3>
                             <p class="m-15-t" style="color: var(--cor-texto-secundario); font-size: 0.9rem;">
                                 Demônio em corpo humano morto. Traços demoníacos visíveis.
                             </p>
-                            <div class="m-20-t">
+                            <div class="m-20-t d-flex f-wrap f-gap-5 f-justify-center">
                                 <span class="arma-stat">✅ Poderes inatos</span>
                                 <span class="arma-stat">❌ Sem contratos</span>
                             </div>
+                            <p class="m-15-t fs-3" style="color: var(--cor-accent);">Clique para detalhes →</p>
                         </div>
                     </div>
 
                     <div class="c-xs-12 c-sm-6 c-lg-3">
-                        <div class="tipo-card hibrido wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="tipo-card hibrido wow fadeInUp cursor-pointer" data-wow-delay="0.3s" data-modal-show="modal-hibrido">
                             <span class="tipo-icon">⚡</span>
                             <h3 class="fs-11">Híbrido</h3>
                             <p class="m-15-t" style="color: var(--cor-texto-secundario); font-size: 0.9rem;">
                                 Humano fundido com demônio. Pode transformar. Quase imortal.
                             </p>
-                            <div class="m-20-t">
+                            <div class="m-20-t d-flex f-wrap f-gap-5 f-justify-center">
                                 <span class="arma-stat">✅ Recusa da Morte</span>
                                 <span class="arma-stat">❌ Grilhões</span>
                             </div>
+                            <p class="m-15-t fs-3" style="color: var(--cor-accent);">Clique para detalhes →</p>
                         </div>
                     </div>
 
                     <div class="c-xs-12 c-sm-6 c-lg-3">
-                        <div class="tipo-card demonio wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="tipo-card demonio wow fadeInUp cursor-pointer" data-wow-delay="0.4s" data-modal-show="modal-demonio">
                             <span class="tipo-icon">👹</span>
                             <h3 class="fs-11">Demônio</h3>
                             <p class="m-15-t" style="color: var(--cor-texto-secundario); font-size: 0.9rem;">
                                 Manifestação pura do medo coletivo. Os mais poderosos.
                             </p>
-                            <div class="m-20-t">
+                            <div class="m-20-t d-flex f-wrap f-gap-5 f-justify-center">
                                 <span class="arma-stat">✅ Renasce</span>
                                 <span class="arma-stat">❌ Sem empatia</span>
                             </div>
+                            <p class="m-15-t fs-3" style="color: var(--cor-accent);">Clique para detalhes →</p>
                         </div>
                     </div>
                 </div>
@@ -1509,6 +2376,155 @@
                 </div>
             </div>
         </section>
+
+        <!-- Criação de Personagem Section -->
+        <section id="criacao" class="p-100-tb xs-p-60-tb">
+            <div class="container">
+                <div class="text-center m-60-b">
+                    <h2 class="section-title centered wow fadeInUp">Criar Personagem</h2>
+                    <p class="fs-9 m-30-t wow fadeInUp" data-wow-delay="0.2s" style="color: var(--cor-texto-secundario); max-width: 600px; margin-left: auto; margin-right: auto;">
+                        Siga estes 8 passos para criar seu personagem em SCAR. Simples, direto e mortal.
+                    </p>
+                </div>
+
+                <!-- Passos -->
+                <div class="row gap-20">
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="card wow fadeInUp cursor-pointer" data-wow-delay="0.1s" data-modal-show="modal-naturezas">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #3498DB, #5DADE2);">1</div>
+                            <h4 class="card-title">Escolha a Natureza</h4>
+                            <p class="card-text">Humano, Infernal, Híbrido ou Demônio. Cada um tem vantagens e custos únicos.</p>
+                            <p class="fs-3 m-10-t" style="color: var(--cor-accent);">Ver origens →</p>
+                        </div>
+                    </div>
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="card wow fadeInUp cursor-pointer" data-wow-delay="0.2s" data-modal-show="modal-atributos">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #9B59B6, #8E44AD);">2</div>
+                            <h4 class="card-title">Distribua Atributos</h4>
+                            <p class="card-text">16 a 22 pontos entre os 10 atributos. Mínimo 0, máximo 5 cada.</p>
+                            <p class="fs-3 m-10-t" style="color: var(--cor-accent);">Ver atributos →</p>
+                        </div>
+                    </div>
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="card wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #E67E22, #F39C12);">3</div>
+                            <h4 class="card-title">Calcule Stress</h4>
+                            <p class="card-text"><strong>6 + Vigor + Vínculo</strong><br>Humanos ganham +2 extra.</p>
+                        </div>
+                    </div>
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="card wow fadeInUp" data-wow-delay="0.4s">
+                            <div class="card-icon">4</div>
+                            <h4 class="card-title">Calcule Injúrias</h4>
+                            <p class="card-text">Leves: 2 + Vigor÷2<br>Graves: 1 + Vigor÷3<br>Crítica: sempre 1</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gap-20 m-20-t">
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="card wow fadeInUp cursor-pointer" data-wow-delay="0.5s" data-modal-show="modal-estilos">
+                            <div class="card-icon">5</div>
+                            <h4 class="card-title">Estilo de Luta</h4>
+                            <p class="card-text">Escolha 1: Boxe, Espadachim, Atirador, Wrestling, Judô, Spetsnaz...</p>
+                            <p class="fs-3 m-10-t" style="color: var(--cor-accent);">Ver estilos →</p>
+                        </div>
+                    </div>
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="card wow fadeInUp cursor-pointer" data-wow-delay="0.6s" data-modal-show="modal-talisma">
+                            <div class="card-icon">6</div>
+                            <h4 class="card-title">Defina o Talismã</h4>
+                            <p class="card-text">Objeto que ancora sua humanidade. 1×/sessão: rerolar, reduzir injúria, +3d10...</p>
+                            <p class="fs-3 m-10-t" style="color: var(--cor-accent);">Ver talismã →</p>
+                        </div>
+                    </div>
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="card wow fadeInUp cursor-pointer" data-wow-delay="0.7s" data-modal-show="modal-contratos">
+                            <div class="card-icon">7</div>
+                            <h4 class="card-title">Contratos/Poderes</h4>
+                            <p class="card-text">Humanos: 1 contrato opcional.<br>Infernais/Híbridos: poderes inatos.</p>
+                            <p class="fs-3 m-10-t" style="color: var(--cor-accent);">Ver contratos →</p>
+                        </div>
+                    </div>
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="card wow fadeInUp cursor-pointer" data-wow-delay="0.8s" data-modal-show="modal-ficha">
+                            <div class="card-icon">8</div>
+                            <h4 class="card-title">Preencha a Ficha</h4>
+                            <p class="card-text">Nome, história, medos, falha central. Quem você era? O que você teme?</p>
+                            <p class="fs-3 m-10-t" style="color: var(--cor-accent);">Ver ficha →</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabela de Referência -->
+                <div class="card m-60-t wow fadeInUp">
+                    <h3 class="fs-11 m-20-b" style="color: var(--cor-secundaria);">📊 Tabela de Referência Rápida</h3>
+                    <div class="row gap-30">
+                        <div class="c-xs-12 c-md-6">
+                            <h4 class="fs-9 m-15-b" style="color: var(--cor-accent);">Fórmulas Essenciais</h4>
+                            <table class="table-scar">
+                                <tr>
+                                    <th>Cálculo</th>
+                                    <th>Fórmula</th>
+                                </tr>
+                                <tr>
+                                    <td>Stress Máximo</td>
+                                    <td>6 + Vigor + Vínculo</td>
+                                </tr>
+                                <tr>
+                                    <td>Injúrias Leves</td>
+                                    <td>2 + ⌊Vigor ÷ 2⌋</td>
+                                </tr>
+                                <tr>
+                                    <td>Injúrias Graves</td>
+                                    <td>1 + ⌊Vigor ÷ 3⌋</td>
+                                </tr>
+                                <tr>
+                                    <td>Movimento</td>
+                                    <td>Coordenação × 2 metros</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="c-xs-12 c-md-6">
+                            <h4 class="fs-9 m-15-b" style="color: var(--cor-accent);">Comparativo de Origens</h4>
+                            <table class="table-scar">
+                                <tr>
+                                    <th>Aspecto</th>
+                                    <th>Hu</th>
+                                    <th>In</th>
+                                    <th>Hí</th>
+                                    <th>De</th>
+                                </tr>
+                                <tr>
+                                    <td>Morte definitiva?</td>
+                                    <td>✓</td>
+                                    <td>✓</td>
+                                    <td>~</td>
+                                    <td>✗</td>
+                                </tr>
+                                <tr>
+                                    <td>Contratos?</td>
+                                    <td>✓</td>
+                                    <td>✗</td>
+                                    <td>✓</td>
+                                    <td>✗</td>
+                                </tr>
+                                <tr>
+                                    <td>Grilhões?</td>
+                                    <td>✗</td>
+                                    <td>✗</td>
+                                    <td>✓</td>
+                                    <td>✗</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider"></div>
 
         <!-- Contratos Section -->
         <section id="contratos" class="p-100-tb xs-p-60-tb">
@@ -1954,19 +2970,170 @@
             </div>
         </section>
 
+        <!-- FAQ Section -->
+        <section id="faq" class="p-100-tb xs-p-60-tb">
+            <div class="container">
+                <div class="text-center m-60-b">
+                    <h2 class="section-title centered wow fadeInUp">Perguntas Frequentes</h2>
+                    <p class="fs-9 m-30-t wow fadeInUp" data-wow-delay="0.2s" style="color: var(--cor-texto-secundario); max-width: 600px; margin-left: auto; margin-right: auto;">
+                        Dúvidas comuns sobre o sistema SCAR respondidas de forma direta.
+                    </p>
+                </div>
+
+                <div class="row gap-20 f-items-start">
+                    <div class="c-xs-12 c-md-6">
+                        <!-- FAQ Item 1 -->
+                        <div class="card m-20-b wow fadeInUp" data-wow-delay="0.1s" style="height: auto;">
+                            <h4 class="fs-10" style="color: var(--cor-secundaria);">🎲 Quantos dados eu rolo?</h4>
+                            <p class="m-15-t" style="color: var(--cor-texto-secundario);">
+                                Role <strong style="color: var(--cor-texto);">Xd10</strong> onde X é o valor do seu atributo.
+                                Força 3? Role 3d10. Some todos os resultados. Atributo 0 ainda permite rolar 1d10, mas falhas dão +1 Stress extra.
+                            </p>
+                        </div>
+
+                        <!-- FAQ Item 2 -->
+                        <div class="card m-20-b wow fadeInUp" data-wow-delay="0.2s" style="height: auto;">
+                            <h4 class="fs-10" style="color: var(--cor-secundaria);">💀 Meu personagem pode morrer?</h4>
+                            <p class="m-15-t" style="color: var(--cor-texto-secundario);">
+                                <strong style="color: var(--cor-accent);">Sim.</strong> Humanos e Infernais morrem definitivamente.
+                                Híbridos têm a "Recusa da Morte" mas algo fica pra trás. Demônios renascem, mas podem ser apagados pelo Demônio da Motosserra.
+                            </p>
+                        </div>
+
+                        <!-- FAQ Item 3 -->
+                        <div class="card m-20-b wow fadeInUp" data-wow-delay="0.3s" style="height: auto;">
+                            <h4 class="fs-10" style="color: var(--cor-secundaria);">📜 O que acontece se eu quebrar um contrato?</h4>
+                            <p class="m-15-t" style="color: var(--cor-texto-secundario);">
+                                Depende do contrato. Contratos menores podem causar aflições ou perda de poder.
+                                <strong style="color: var(--cor-accent);">Contratos de Restrição causam MORTE INSTANTÂNEA.</strong> Demônios sempre cobram.
+                            </p>
+                        </div>
+
+                        <!-- FAQ Item 4 -->
+                        <div class="card m-20-b wow fadeInUp" data-wow-delay="0.4s" style="height: auto;">
+                            <h4 class="fs-10" style="color: var(--cor-secundaria);">⚡ Como funciona o crítico?</h4>
+                            <p class="m-15-t" style="color: var(--cor-texto-secundario);">
+                                Quando seu resultado é <strong style="color: var(--cor-texto);">múltiplo de 10</strong> (20, 30, 40...):
+                            </p>
+                            <div class="m-10-t d-flex f-wrap f-gap-5">
+                                <span class="arma-stat">2× = +1 Injúria + Aflição</span>
+                                <span class="arma-stat">3× = +2 Injúrias</span>
+                                <span class="arma-stat">4×+ = Aflição permanente</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-xs-12 c-md-6">
+                        <!-- FAQ Item 5 -->
+                        <div class="card m-20-b wow fadeInUp" data-wow-delay="0.1s" style="height: auto;">
+                            <h4 class="fs-10" style="color: var(--cor-secundaria);">😱 Preciso fazer Teste de Medo sempre?</h4>
+                            <p class="m-15-t" style="color: var(--cor-texto-secundario);">
+                                Não sempre. O Mestre decide quando é necessário — geralmente ao encontrar demônios poderosos pela primeira vez.
+                                <strong style="color: var(--cor-texto);">Você escolhe</strong> qual atributo usar para resistir, cada um com efeitos diferentes.
+                            </p>
+                        </div>
+
+                        <!-- FAQ Item 6 -->
+                        <div class="card m-20-b wow fadeInUp" data-wow-delay="0.2s" style="height: auto;">
+                            <h4 class="fs-10" style="color: var(--cor-secundaria);">⛓️ O que são Grilhões?</h4>
+                            <p class="m-15-t" style="color: var(--cor-texto-secundario);">
+                                <strong style="color: var(--cor-texto);">Exclusivo de Híbridos.</strong> Representam o controle do demônio sobre você.
+                                Cada uso de poder = +1 Grilhão. A cada 5, o demônio pode agir através de você.
+                                15+ = possessão total.
+                            </p>
+                        </div>
+
+                        <!-- FAQ Item 7 -->
+                        <div class="card m-20-b wow fadeInUp" data-wow-delay="0.3s" style="height: auto;">
+                            <h4 class="fs-10" style="color: var(--cor-secundaria);">🩸 Como funciona o Sangue?</h4>
+                            <p class="m-15-t" style="color: var(--cor-texto-secundario);">
+                                Sangue é um recurso que permite <strong style="color: var(--cor-texto);">curar injúrias em combate</strong>.
+                                Usar 1 Sangue diminui 1 grau da maior injúria (Crítica → Grave → Leve → Curado).
+                            </p>
+                        </div>
+
+                        <!-- FAQ Item 8 -->
+                        <div class="card m-20-b wow fadeInUp" data-wow-delay="0.4s" style="height: auto;">
+                            <h4 class="fs-10" style="color: var(--cor-secundaria);">🎭 Qual origem devo escolher?</h4>
+                            <p class="m-15-t" style="color: var(--cor-texto-secundario);">
+                                Depende da história que quer contar:
+                            </p>
+                            <ul style="color: var(--cor-texto-secundario); padding-left: 20px; margin-top: 10px; line-height: 1.6;">
+                                <li><strong style="color: #5DADE2;">Humano:</strong> Drama, sobrevivência, contratos</li>
+                                <li><strong style="color: #9B59B6;">Infernal:</strong> Outsider, aprender humanidade</li>
+                                <li><strong style="color: #F39C12;">Híbrido:</strong> Conflito interno, poder vs controle</li>
+                                <li><strong style="color: var(--cor-secundaria);">Demônio:</strong> Ser o monstro, terror</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dicas de Jogo -->
+                <div class="card m-60-t wow fadeInUp" style="border-color: var(--cor-gold); background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 100%);">
+                    <h3 class="fs-11 m-20-b" style="color: var(--cor-gold);">💡 Dicas Para Jogar SCAR</h3>
+                    <div class="row gap-20">
+                        <div class="c-xs-12 c-sm-6 c-md-4">
+                            <div class="atributo-item">
+                                <div class="atributo-nome">1. Aceite o Sofrimento</div>
+                                <div class="atributo-desc">Seu personagem VAI sofrer. Isso é parte do jogo.</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-md-4">
+                            <div class="atributo-item">
+                                <div class="atributo-nome">2. Pense nos Contratos</div>
+                                <div class="atributo-desc">São tentadores, mas demônios SEMPRE cobram.</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-md-4">
+                            <div class="atributo-item">
+                                <div class="atributo-nome">3. Medo é Poder</div>
+                                <div class="atributo-desc">Quanto mais temido, mais forte o demônio.</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-md-4">
+                            <div class="atributo-item">
+                                <div class="atributo-nome">4. Vínculos Importam</div>
+                                <div class="atributo-desc">Relações são sua âncora mental. Cultive-as.</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-md-4">
+                            <div class="atributo-item">
+                                <div class="atributo-nome">5. Gerencie o Stress</div>
+                                <div class="atributo-desc">Gastar cedo = vantagem agora, risco depois.</div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-sm-6 c-md-4">
+                            <div class="atributo-item">
+                                <div class="atributo-nome">6. Ninguém é Puro</div>
+                                <div class="atributo-desc">Nem bom nem mau. Só sobreviventes.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider"></div>
+
         <!-- CTA Final -->
-        <section class="cta-section p-100-tb xs-p-60-tb text-center">
-            <div class="container" style="position: relative; z-index: 1;">
-                <span class="wow fadeIn" style="font-size: 4rem; display: block; margin-bottom: 20px;">⛓️</span>
+        <section class="p-100-tb xs-p-60-tb text-center" style="background: linear-gradient(180deg, var(--cor-fundo) 0%, rgba(139,0,0,0.2) 100%);">
+            <div class="container">
                 <h2 class="fs-14 wow fadeInUp" style="color: var(--cor-secundaria);">Pronto para o Contrato?</h2>
-                <p class="fs-9 m-30-t m-40-b wow fadeInUp" data-wow-delay="0.2s" style="color: var(--cor-texto-secundario); max-width: 500px; margin-left: auto; margin-right: auto;">
-                    Baixe o manual completo e comece sua jornada no mundo dos demônios.<br>
-                    <small style="opacity: 0.6;">Todo poder tem um preço.</small>
+                <p class="fs-9 m-30-t m-30-b wow fadeInUp" data-wow-delay="0.2s" style="color: var(--cor-texto-secundario); max-width: 500px; margin-left: auto; margin-right: auto;">
+                    Baixe o manual completo e comece sua jornada no mundo dos demônios.
                 </p>
                 <div class="wow fadeInUp d-flex f-justify-center f-gap-15 f-wrap" data-wow-delay="0.4s">
-                    <a href="../MANUAL_SCAR.md" class="btn btn-primary" download>Baixar Manual</a>
-                    <a href="#hero" class="btn btn-outline">Voltar ao Topo</a>
+                    <a href="MANUAL_SCAR.pdf" class="btn btn-primary" download>
+                        📄 Baixar PDF
+                    </a>
+                    <a href="MANUAL_SCAR.md" class="btn btn-outline" download>
+                        📝 Baixar Markdown
+                    </a>
                 </div>
+                <p class="m-20-t fs-4 wow fadeInUp" data-wow-delay="0.6s" style="color: var(--cor-texto-secundario);">
+                    O PDF contém o manual formatado para impressão. O Markdown é ideal para edição.
+                </p>
             </div>
         </section>
     </main>
