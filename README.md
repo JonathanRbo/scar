@@ -1,7 +1,7 @@
 # SCAR - Sacrificial Contract & Risk
 
 <p align="center">
-  <img src="logo 2.png" alt="" width="400">
+  <img src="assets/images/logo 2.png" alt="" width="400">
 </p>
 
 <p align="center">
@@ -60,9 +60,9 @@ Inspirado no universo de **Chainsaw Man**, o jogo coloca os jogadores em um mund
 
 ## Downloads
 
-- [Manual Completo (PDF)](site/MANUAL_SCAR.pdf)
-- [Manual (Markdown)](MANUAL_SCAR.md)
-- [Site do Projeto](site/index.html)
+- [Manual Completo (PDF)](docs/MANUAL_SCAR.pdf)
+- [Manual (Markdown)](docs/MANUAL_SCAR.md)
+- [Site do Projeto](index.html)
 
 ```
 

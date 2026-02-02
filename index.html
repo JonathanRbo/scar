@@ -8,6 +8,9 @@
     <!-- Squeleton CSS -->
     <link rel="stylesheet" href="https://cdn.squeleton.dev/squeleton.v4.min.css">
 
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="assets/css/main.css">
+
     <!-- Squeleton JS (Head) -->
     <script src="https://cdn.squeleton.dev/squeleton-main.v4.min.js"></script>
 
@@ -2695,6 +2698,7 @@
                         <span class="comment">TALISMÃ:</span> _______________________<br>
                         <span class="comment">ESTILO DE LUTA:</span> _______________________<br>
                         <span class="comment">MARCA DO DEMÔNIO:</span> _______________________<br>
+                        <span class="comment">EXTRA:</span> _______________________<br>
                     </div>
 
                     <div class="m-20-t p-15-all border-rd-8" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3);">
@@ -4062,35 +4066,7 @@
     <!-- Squeleton JS (Footer) -->
     <script src="https://cdn.squeleton.dev/squeleton-scripts.v4.min.js"></script>
 
-    <script>
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('.site-header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // Smooth scroll for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Initialize WOW animations
-        if (typeof WOW !== 'undefined') {
-            new WOW().init();
-        }
-    </script>
+    <!-- JS Principal -->
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
