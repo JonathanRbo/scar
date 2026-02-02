@@ -4,6 +4,7 @@
 <p align="center">
   <strong>Sistema de RPG de mesa ambientado no universo brutal de Chainsaw Man</strong>
 </p>
+<img src="pochita.gif" width="400">
 
 <p align="center">
   <img src="https://img.shields.io/badge/Versão-1.0-DC143C?style=for-the-badge" alt="Versão">
