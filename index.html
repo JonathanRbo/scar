@@ -1824,6 +1824,429 @@
         </div>
     </div>
 
+    <!-- Modal Armamentos -->
+    <div data-modal="modal-armamentos" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-900px xs-w-95">
+                <button class="dialog-close" data-modal-hide></button>
+                <div class="modal-popup border-rd-10 p-30-all xs-p-20-all" style="background: var(--cor-fundo-card); border: 1px solid var(--cor-secundaria); max-height: 85vh; overflow-y: auto;">
+                    <div class="text-center m-20-b">
+                        <span style="font-size: 3rem;">⚔️</span>
+                        <h3 class="fs-13 m-10-t" style="color: var(--cor-secundaria);">Armamentos & Equipamentos</h3>
+                        <p style="color: var(--cor-texto-secundario);">Armas, armaduras e seus efeitos.</p>
+                    </div>
+
+                    <!-- Estrutura de Armas -->
+                    <div class="m-20-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">📋 Estrutura de Armas</h4>
+                        <div class="row gap-10">
+                            <div class="c-xs-6 c-sm-4 c-md-2">
+                                <div class="atributo-item text-center" style="padding: 10px;">
+                                    <div class="fs-9 fw-600" style="color: var(--cor-secundaria);">Dano</div>
+                                    <div class="fs-3" style="color: var(--cor-texto-secundario);">+Xd10</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-6 c-sm-4 c-md-2">
+                                <div class="atributo-item text-center" style="padding: 10px;">
+                                    <div class="fs-9 fw-600" style="color: var(--cor-secundaria);">Injúria</div>
+                                    <div class="fs-3" style="color: var(--cor-texto-secundario);">L/G/C</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-6 c-sm-4 c-md-2">
+                                <div class="atributo-item text-center" style="padding: 10px;">
+                                    <div class="fs-9 fw-600" style="color: var(--cor-secundaria);">Crítico</div>
+                                    <div class="fs-3" style="color: var(--cor-texto-secundario);">Efeito</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-6 c-sm-4 c-md-2">
+                                <div class="atributo-item text-center" style="padding: 10px;">
+                                    <div class="fs-9 fw-600" style="color: var(--cor-secundaria);">Alcance</div>
+                                    <div class="fs-3" style="color: var(--cor-texto-secundario);">C/M/L</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-6 c-sm-4 c-md-2">
+                                <div class="atributo-item text-center" style="padding: 10px;">
+                                    <div class="fs-9 fw-600" style="color: var(--cor-secundaria);">Tipo</div>
+                                    <div class="fs-3" style="color: var(--cor-texto-secundario);">Dano</div>
+                                </div>
+                            </div>
+                            <div class="c-xs-6 c-sm-4 c-md-2">
+                                <div class="atributo-item text-center" style="padding: 10px;">
+                                    <div class="fs-9 fw-600" style="color: var(--cor-secundaria);">Custo</div>
+                                    <div class="fs-3" style="color: var(--cor-texto-secundario);">¥</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Curto Alcance -->
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">🗡️ Curto Alcance</h4>
+                        <div class="table-responsive">
+                            <table class="table-scar" style="font-size: 0.85rem;">
+                                <tr>
+                                    <th>Arma</th>
+                                    <th>Dano</th>
+                                    <th>Injúria</th>
+                                    <th>Crítico</th>
+                                    <th>Efeito</th>
+                                    <th>Custo</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>Faca</strong></td>
+                                    <td>+0</td>
+                                    <td>Leve</td>
+                                    <td>Sangramento</td>
+                                    <td>Ocultável</td>
+                                    <td>50 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Soco Inglês</strong></td>
+                                    <td>+1d10</td>
+                                    <td>Leve</td>
+                                    <td>Atordoar</td>
+                                    <td>Ocultável</td>
+                                    <td>30 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bastão/Taco</strong></td>
+                                    <td>+1d10</td>
+                                    <td>Leve</td>
+                                    <td>Atordoar</td>
+                                    <td>—</td>
+                                    <td>40 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Katana</strong></td>
+                                    <td>+1d10</td>
+                                    <td>Grave</td>
+                                    <td>Sangramento</td>
+                                    <td>Alcance estendido</td>
+                                    <td>800 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Machado</strong></td>
+                                    <td>+2d10</td>
+                                    <td>Grave</td>
+                                    <td>Execução</td>
+                                    <td>Pesada</td>
+                                    <td>300 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Marreta</strong></td>
+                                    <td>+2d10</td>
+                                    <td>Grave</td>
+                                    <td>Derrubar</td>
+                                    <td>Pesada, Lenta</td>
+                                    <td>250 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Motosserra</strong></td>
+                                    <td>+3d10</td>
+                                    <td>Grave</td>
+                                    <td>Brutal (+1 Injúria)</td>
+                                    <td>Pesada, Barulhenta</td>
+                                    <td>1.500 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Lança</strong></td>
+                                    <td>+1d10</td>
+                                    <td>Grave</td>
+                                    <td>Perfurante</td>
+                                    <td>Alcance estendido</td>
+                                    <td>200 ¥</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Médio Alcance -->
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">🔫 Médio Alcance</h4>
+                        <div class="table-responsive">
+                            <table class="table-scar" style="font-size: 0.85rem;">
+                                <tr>
+                                    <th>Arma</th>
+                                    <th>Dano</th>
+                                    <th>Injúria</th>
+                                    <th>Crítico</th>
+                                    <th>Efeito</th>
+                                    <th>Custo</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>Revólver</strong></td>
+                                    <td>+1d10</td>
+                                    <td>Grave</td>
+                                    <td>+1 Injúria</td>
+                                    <td>Confiável, 6 tiros</td>
+                                    <td>600 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Pistola 9mm</strong></td>
+                                    <td>+1d10</td>
+                                    <td>Grave</td>
+                                    <td>+1 Injúria</td>
+                                    <td>Rápida, 3 rajadas</td>
+                                    <td>700 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Pistola .45</strong></td>
+                                    <td>+2d10</td>
+                                    <td>Grave</td>
+                                    <td>Perfurante</td>
+                                    <td>Recuo, 4 tiros</td>
+                                    <td>900 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Submetralhadora</strong></td>
+                                    <td>+2d10</td>
+                                    <td>Grave</td>
+                                    <td>Supressão</td>
+                                    <td>Área (2 alvos), 2 rajadas</td>
+                                    <td>2.000 ¥</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Longo Alcance -->
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">🎯 Longo Alcance</h4>
+                        <div class="table-responsive">
+                            <table class="table-scar" style="font-size: 0.85rem;">
+                                <tr>
+                                    <th>Arma</th>
+                                    <th>Dano</th>
+                                    <th>Injúria</th>
+                                    <th>Crítico</th>
+                                    <th>Efeito</th>
+                                    <th>Custo</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>Rifle de Caça</strong></td>
+                                    <td>+2d10</td>
+                                    <td>Crítica</td>
+                                    <td>Execução</td>
+                                    <td>Precisa (+2d10 prep), 3 tiros</td>
+                                    <td>2.500 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Rifle Tático</strong></td>
+                                    <td>+2d10</td>
+                                    <td>Crítica</td>
+                                    <td>+1 Injúria</td>
+                                    <td>Rápido, 5 tiros</td>
+                                    <td>4.000 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sniper</strong></td>
+                                    <td>+3d10</td>
+                                    <td>Crítica</td>
+                                    <td>Execução</td>
+                                    <td>Requer preparo, Silencioso</td>
+                                    <td>8.000 ¥</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Armas Especiais -->
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">💥 Armas Especiais</h4>
+                        <div class="table-responsive">
+                            <table class="table-scar" style="font-size: 0.85rem;">
+                                <tr>
+                                    <th>Arma</th>
+                                    <th>Dano</th>
+                                    <th>Injúria</th>
+                                    <th>Alcance</th>
+                                    <th>Efeito</th>
+                                    <th>Custo</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>Granada</strong></td>
+                                    <td>+2d10</td>
+                                    <td>Grave</td>
+                                    <td>Médio</td>
+                                    <td>Área grande, 1 uso</td>
+                                    <td>500 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Coquetel Molotov</strong></td>
+                                    <td>+1d10</td>
+                                    <td>Grave</td>
+                                    <td>Médio</td>
+                                    <td>Área, Queimadura (+3 Stress)</td>
+                                    <td>50 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Arco Composto</strong></td>
+                                    <td>+1d10</td>
+                                    <td>Grave</td>
+                                    <td>Longo</td>
+                                    <td>Silencioso, flechas recuperáveis</td>
+                                    <td>1.500 ¥</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Armaduras -->
+                    <div class="m-30-t">
+                        <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">🛡️ Armaduras</h4>
+                        <div class="table-responsive">
+                            <table class="table-scar" style="font-size: 0.85rem;">
+                                <tr>
+                                    <th>Armadura</th>
+                                    <th>Proteção</th>
+                                    <th>Cobertura</th>
+                                    <th>Penalidade</th>
+                                    <th>Custo</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>Roupa Reforçada</strong></td>
+                                    <td>−1 nível (1×/cena)</td>
+                                    <td>Tronco</td>
+                                    <td>—</td>
+                                    <td>200 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Colete Oculto</strong></td>
+                                    <td>−1 nível</td>
+                                    <td>Tronco</td>
+                                    <td>—</td>
+                                    <td>800 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Colete Tático</strong></td>
+                                    <td>−1 nível</td>
+                                    <td>Tronco</td>
+                                    <td>−1d10 Coord</td>
+                                    <td>1.500 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Colete + Placas</strong></td>
+                                    <td>−2 níveis</td>
+                                    <td>Tronco</td>
+                                    <td>−1d10 Coord/Malan</td>
+                                    <td>3.000 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Capacete Tático</strong></td>
+                                    <td>Crítica→Grave</td>
+                                    <td>Cabeça</td>
+                                    <td>−1d10 Percepção</td>
+                                    <td>600 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Armadura Anti-Motim</strong></td>
+                                    <td>−2 níveis</td>
+                                    <td>Corpo todo</td>
+                                    <td>−2d10 Coord/Malan</td>
+                                    <td>5.000 ¥</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Escudo Balístico</strong></td>
+                                    <td>Bloqueia 1 ataque/rodada</td>
+                                    <td>Frontal</td>
+                                    <td>Ocupa 1 mão</td>
+                                    <td>2.000 ¥</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Tipos de Dano e Efeitos -->
+                    <div class="row gap-20 m-30-t">
+                        <div class="c-xs-12 c-md-6">
+                            <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">⚡ Tipos de Dano</h4>
+                            <div class="row gap-5">
+                                <div class="c-xs-6">
+                                    <div class="estilo-card" style="height: auto; padding: 10px;">
+                                        <div class="fs-5 fw-600">🗡️ Corte</div>
+                                        <div class="fs-3" style="color: var(--cor-texto-secundario);">Pode causar sangramento</div>
+                                    </div>
+                                </div>
+                                <div class="c-xs-6">
+                                    <div class="estilo-card" style="height: auto; padding: 10px;">
+                                        <div class="fs-5 fw-600">📌 Perfuração</div>
+                                        <div class="fs-3" style="color: var(--cor-texto-secundario);">Ignora proteção</div>
+                                    </div>
+                                </div>
+                                <div class="c-xs-6">
+                                    <div class="estilo-card" style="height: auto; padding: 10px;">
+                                        <div class="fs-5 fw-600">💥 Impacto</div>
+                                        <div class="fs-3" style="color: var(--cor-texto-secundario);">Atordoa/derruba</div>
+                                    </div>
+                                </div>
+                                <div class="c-xs-6">
+                                    <div class="estilo-card" style="height: auto; padding: 10px;">
+                                        <div class="fs-5 fw-600">🔫 Balístico</div>
+                                        <div class="fs-3" style="color: var(--cor-texto-secundario);">Ignorado por coberturas</div>
+                                    </div>
+                                </div>
+                                <div class="c-xs-6">
+                                    <div class="estilo-card" style="height: auto; padding: 10px;">
+                                        <div class="fs-5 fw-600">💣 Explosivo</div>
+                                        <div class="fs-3" style="color: var(--cor-texto-secundario);">Área, ignora cobertura</div>
+                                    </div>
+                                </div>
+                                <div class="c-xs-6">
+                                    <div class="estilo-card" style="height: auto; padding: 10px;">
+                                        <div class="fs-5 fw-600">🔥 Fogo</div>
+                                        <div class="fs-3" style="color: var(--cor-texto-secundario);">Dano contínuo</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="c-xs-12 c-md-6">
+                            <h4 class="fs-10 m-15-b" style="color: var(--cor-accent);">🏷️ Efeitos Comuns</h4>
+                            <div class="row gap-5">
+                                <div class="c-xs-6">
+                                    <div class="estilo-card" style="height: auto; padding: 10px;">
+                                        <div class="fs-5 fw-600">Ocultável</div>
+                                        <div class="fs-3" style="color: var(--cor-texto-secundario);">Esconde no corpo</div>
+                                    </div>
+                                </div>
+                                <div class="c-xs-6">
+                                    <div class="estilo-card" style="height: auto; padding: 10px;">
+                                        <div class="fs-5 fw-600">Pesada</div>
+                                        <div class="fs-3" style="color: var(--cor-texto-secundario);">−1d10 para esquivar</div>
+                                    </div>
+                                </div>
+                                <div class="c-xs-6">
+                                    <div class="estilo-card" style="height: auto; padding: 10px;">
+                                        <div class="fs-5 fw-600">Lenta</div>
+                                        <div class="fs-3" style="color: var(--cor-texto-secundario);">Não move e ataca</div>
+                                    </div>
+                                </div>
+                                <div class="c-xs-6">
+                                    <div class="estilo-card" style="height: auto; padding: 10px;">
+                                        <div class="fs-5 fw-600">Barulhenta</div>
+                                        <div class="fs-3" style="color: var(--cor-texto-secundario);">Sem furtividade</div>
+                                    </div>
+                                </div>
+                                <div class="c-xs-6">
+                                    <div class="estilo-card" style="height: auto; padding: 10px;">
+                                        <div class="fs-5 fw-600">Perfurante</div>
+                                        <div class="fs-3" style="color: var(--cor-texto-secundario);">Ignora 1 proteção</div>
+                                    </div>
+                                </div>
+                                <div class="c-xs-6">
+                                    <div class="estilo-card" style="height: auto; padding: 10px;">
+                                        <div class="fs-5 fw-600">Execução</div>
+                                        <div class="fs-3" style="color: var(--cor-texto-secundario);">Mata indefeso</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Contratos -->
     <div data-modal="modal-contratos" class="modal-dialog" aria-hidden="true">
         <div class="dialog-content">
@@ -2452,6 +2875,22 @@
                             <h4 class="card-title">Preencha a Ficha</h4>
                             <p class="card-text">Nome, história, medos, falha central. Quem você era? O que você teme?</p>
                             <p class="fs-3 m-10-t" style="color: var(--cor-accent);">Ver ficha →</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card de Referência de Armamentos -->
+                <div class="row gap-20 m-40-t">
+                    <div class="c-xs-12">
+                        <div class="card wow fadeInUp cursor-pointer" style="border-color: var(--cor-secundaria);" data-modal-show="modal-armamentos">
+                            <div class="d-flex f-items-center f-gap-20 f-wrap f-justify-center">
+                                <span style="font-size: 2.5rem;">⚔️</span>
+                                <div>
+                                    <h4 class="fs-11" style="color: var(--cor-secundaria);">Consultar Armamentos & Equipamentos</h4>
+                                    <p class="card-text m-5-t">Armas de curto, médio e longo alcance • Armaduras • Tipos de dano • Efeitos</p>
+                                </div>
+                                <span class="fs-9" style="color: var(--cor-accent);">Ver arsenal →</span>
+                            </div>
                         </div>
                     </div>
                 </div>
