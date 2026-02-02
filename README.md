@@ -127,13 +127,13 @@ Atributo + Habilidade + Xd10 vs Dificuldade
 
 ---
 
-Dúvidas, sugestões ou quer contribuir? Entre em contato!
+
 
 ---
 
 ## ⚖️ Licença
 
-Este é um **projeto de fã**, criado para fins de entretenimento e **sem fins lucrativos**.
+Este é um **projeto de fã**, criado para fins de entretenimento e **sem fins lucrativos**. Dúvidas, sugestões ou quer contribuir? Entre em contato!
 
 **Chainsaw Man** é propriedade de **Tatsuki Fujimoto** e **Shueisha**. Este RPG é uma homenagem à obra original e não possui qualquer afiliação oficial com os detentores dos direitos.
 
