@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCAR - Rolador de Dados</title>
+    <link rel="stylesheet" href="https://cdn.squeleton.dev/squeleton.v4.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <script src="https://cdn.squeleton.dev/squeleton-main.v4.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           Dice Roller - Estilos Especificos da Pagina
+           Estilos comuns estao em assets/css/main.css
+           ============================================ */
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* Container principal de conteúdo */
+        .main-content {
+            background: var(--cor-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03);
+        }
+
+        /* Tabs - integradas ao container */
+        .tabs {
+            border-bottom: 1px solid var(--cor-borda);
+            overflow-x: auto;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+            padding: 0 15px;
+            display: flex;
+            gap: 5px;
+        }
+        .tabs::-webkit-scrollbar {
+            height: 3px;
+        }
+        .tabs::-webkit-scrollbar-thumb {
+            background: var(--cor-principal);
+            border-radius: 3px;
+        }
+        .tab {
+            background: transparent;
+            border: none;
+            color: var(--cor-texto-soft);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1.5px;
+            font-size: 0.95rem;
+            position: relative;
+            margin-bottom: -1px;
+        }
+        .tab:hover {
+            color: var(--cor-texto);
+            background: rgba(255,255,255,0.03);
+        }
+        .tab.active {
+            color: var(--cor-secundaria);
+            border-bottom-color: var(--cor-secundaria);
+            background: linear-gradient(180deg, rgba(220,20,60,0.08) 0%, transparent 100%);
+        }
+        .tab-content {
+            display: none;
+            padding: 28px;
+        }
+        .tab-content.active { display: block; }
+
+        /* Labels */
+        .field-label {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--cor-texto-soft);
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Inputs */
+        input, select {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--cor-borda);
+            color: var(--cor-texto);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+        input:hover, select:hover {
+            border-color: rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.5);
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--cor-secundaria);
+            background: rgba(0,0,0,0.5);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 0 0 3px rgba(220, 20, 60, 0.15);
+        }
+        input::placeholder { color: rgba(255,255,255,0.3); }
+
+        /* Select dropdown */
+        select option {
+            background: var(--cor-card);
+            color: var(--cor-texto);
+        }
+
+        /* Buttons */
+        .btn {
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+        .btn:hover::after {
+            left: 100%;
+        }
+        .btn-primary {
+            background: var(--gradient-blood);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(139,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .btn-primary:hover {
+            filter: brightness(1.15);
+            box-shadow: 0 8px 30px rgba(220,20,60,0.5);
+            transform: translateY(-3px);
+        }
+        .btn-primary:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(220,20,60,0.4);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--cor-borda);
+            color: var(--cor-texto);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--cor-texto-soft);
+            transform: translateY(-2px);
+        }
+        .btn-online {
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(155,89,182,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .btn-online:hover {
+            filter: brightness(1.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(155,89,182,0.5);
+        }
+        .btn-green {
+            background: linear-gradient(135deg, #27ae60, #1e8449);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(39,174,96,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .btn-green:hover {
+            filter: brightness(1.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(39,174,96,0.5);
+        }
+
+        /* Dice */
+        .dice-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+        .die {
+            width: 54px;
+            height: 54px;
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            border: 2px solid var(--cor-borda);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+            font-family: 'Bebas Neue', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+        .die.rolling {
+            animation: shake 0.1s infinite;
+            border-color: var(--cor-gold);
+            box-shadow: 0 0 20px rgba(212,175,55,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .die.max {
+            border-color: var(--green);
+            color: var(--green);
+            background: linear-gradient(145deg, rgba(39,174,96,0.15), rgba(39,174,96,0.05));
+            box-shadow: 0 0 20px rgba(39,174,96,0.4), inset 0 1px 0 rgba(39,174,96,0.2);
+        }
+        .die.min {
+            border-color: var(--cor-secundaria);
+            color: var(--cor-secundaria);
+            background: linear-gradient(145deg, rgba(220,20,60,0.15), rgba(220,20,60,0.05));
+            box-shadow: 0 0 20px rgba(220,20,60,0.4), inset 0 1px 0 rgba(220,20,60,0.2);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        /* Results */
+        .result-total {
+            font-size: 60px;
+            font-weight: bold;
+            color: var(--cor-gold);
+            font-family: 'Bebas Neue', sans-serif;
+            text-shadow: 0 0 40px rgba(212,175,55,0.5), 0 2px 10px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+        .injury-badge {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            white-space: nowrap;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        /* Tabela de Injúrias */
+        .injury-table-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .injury-table-row:last-child {
+            border-bottom: none;
+        }
+        .injury-none {
+            background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(39,174,96,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+        }
+        .injury-leve {
+            background: linear-gradient(135deg, #D4AF37 0%, #b8960c 100%);
+            color: #000;
+            box-shadow: 0 4px 20px rgba(212,175,55,0.4), inset 0 1px 0 rgba(255,255,255,0.25);
+        }
+        .injury-grave {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(230,126,34,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+        }
+        .injury-critica {
+            background: var(--gradient-blood);
+            color: #fff;
+            animation: critGlow 1s ease-in-out infinite alternate;
+            box-shadow: 0 4px 20px rgba(220,20,60,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        @keyframes critGlow {
+            from { box-shadow: 0 0 10px rgba(220,20,60,0.3); }
+            to { box-shadow: 0 0 25px rgba(220,20,60,0.6); }
+        }
+
+        .fear-success {
+            color: var(--green);
+            text-shadow: 0 0 20px rgba(39,174,96,0.5), 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .fear-fail {
+            color: var(--cor-secundaria);
+            text-shadow: 0 0 20px rgba(220,20,60,0.5), 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Crítico */
+        .crit-banner {
+            background: var(--gradient-blood);
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin-top: 18px;
+            animation: critPulse 0.5s ease;
+            box-shadow: 0 8px 30px rgba(220,20,60,0.5), inset 0 1px 0 rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        @keyframes critPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* Quick dice */
+        .quick-btn {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--cor-borda);
+            color: var(--cor-texto-soft);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .quick-btn:hover {
+            background: var(--gradient-blood);
+            border-color: var(--cor-secundaria);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(220,20,60,0.4);
+        }
+        .quick-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(220,20,60,0.3);
+        }
+
+        /* Seção interna do card */
+        .section-box {
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .section-box:last-child {
+            margin-bottom: 0;
+        }
+        .section-box:hover {
+            border-color: rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.3);
+        }
+
+        /* Separador decorativo */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cor-borda), transparent);
+            margin: 20px 0;
+        }
+
+        /* Título de seção */
+        .section-title {
+            color: var(--cor-gold);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--gradient-blood);
+            border-radius: 2px;
+        }
+
+        /* Modal */
+        .modal-popup {
+            background: var(--cor-card);
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid var(--cor-borda);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+        }
+        .history-item {
+            border-left: 3px solid var(--cor-borda);
+            transition: all 0.2s ease;
+            background: rgba(0,0,0,0.3);
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .history-item:hover {
+            border-left-color: var(--cor-secundaria);
+            background: rgba(0,0,0,0.4);
+            transform: translateX(4px);
+        }
+
+        /* Online */
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .status-dot.online {
+            background: var(--green);
+            box-shadow: 0 0 12px rgba(39,174,96,0.7), 0 0 4px rgba(39,174,96,0.9);
+        }
+        .status-dot.offline {
+            background: var(--cor-secundaria);
+            box-shadow: 0 0 12px rgba(220,20,60,0.7), 0 0 4px rgba(220,20,60,0.9);
+        }
+        .status-dot.waiting {
+            background: var(--cor-gold);
+            animation: pulse 1.2s ease-in-out infinite;
+            box-shadow: 0 0 12px rgba(212,175,55,0.7), 0 0 4px rgba(212,175,55,0.9);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .room-code {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 6px;
+            color: var(--cor-gold);
+            background: rgba(212,175,55,0.08);
+            text-shadow: 0 0 25px rgba(212,175,55,0.5);
+            padding: 14px 28px;
+            border-radius: 10px;
+            border: 2px dashed rgba(212,175,55,0.5);
+            display: inline-block;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .player-box {
+            background: rgba(0,0,0,0.3);
+            border: 2px solid var(--cor-borda);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+        }
+        .player-box.connected {
+            border-color: var(--green);
+            background: rgba(39,174,96,0.08);
+            box-shadow: 0 0 25px rgba(39,174,96,0.2), inset 0 1px 0 rgba(39,174,96,0.1);
+        }
+        .player-box.ready {
+            border-color: var(--cor-gold);
+            background: rgba(212,175,55,0.08);
+            box-shadow: 0 0 25px rgba(212,175,55,0.25), inset 0 1px 0 rgba(212,175,55,0.1);
+        }
+        .player-box.winner {
+            border-color: var(--green);
+            background: rgba(39,174,96,0.12);
+            box-shadow: 0 0 35px rgba(39,174,96,0.35), inset 0 1px 0 rgba(39,174,96,0.15);
+        }
+        .player-box.loser {
+            border-color: var(--cor-secundaria);
+            opacity: 0.65;
+            background: rgba(220,20,60,0.08);
+            box-shadow: 0 0 20px rgba(220,20,60,0.2);
+        }
+
+        .chat-box {
+            background: rgba(0,0,0,0.4);
+            height: 160px;
+            overflow-y: auto;
+            border: 1px solid var(--cor-borda);
+            border-radius: 10px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .chat-msg {
+            padding: 10px 14px;
+            margin: 8px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+        .chat-msg.system {
+            background: rgba(212,175,55,0.12);
+            color: var(--cor-gold);
+            border-left: 3px solid var(--cor-gold);
+        }
+        .chat-msg.player {
+            background: rgba(255,255,255,0.03);
+            border-left: 3px solid var(--cor-texto-soft);
+            color: var(--cor-texto);
+        }
+
+        /* Botão Voltar */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--cor-borda);
+            border-radius: 10px;
+            color: var(--cor-texto-soft);
+            text-decoration: none;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            background: rgba(220,20,60,0.1);
+            border-color: var(--cor-secundaria);
+            color: var(--cor-texto);
+            transform: translateX(-3px);
+        }
+        .btn-back svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+        .btn-back:hover svg {
+            transform: translateX(-3px);
+        }
+
+        /* Footer */
+        .site-footer {
+            text-align: center;
+            padding: 40px 20px 30px;
+            margin-top: 40px;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(180deg, var(--cor-fundo) 0%, rgba(139,0,0,0.15) 100%);
+            border-top: 1px solid rgba(139,0,0,0.3);
+        }
+        .site-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: var(--gradient-blood);
+            box-shadow: 0 0 10px rgba(220,20,60,0.5);
+        }
+        .footer-brand {
+            margin-bottom: 20px;
+        }
+        .footer-brand a {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            color: var(--cor-secundaria);
+            text-decoration: none;
+            letter-spacing: 4px;
+            transition: text-shadow 0.3s ease;
+        }
+        .footer-brand a:hover {
+            text-shadow: 0 0 30px rgba(220,20,60,0.6);
+        }
+        .footer-brand span {
+            display: block;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.7rem;
+            color: var(--cor-texto-soft);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 16px;
+            color: var(--cor-texto-soft);
+            text-decoration: none;
+            font-size: 0.8rem;
+            border: 1px solid var(--cor-borda);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: var(--cor-texto);
+            border-color: var(--cor-secundaria);
+            background: rgba(139,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        .footer-links svg {
+            width: 16px;
+            height: 16px;
+            opacity: 0.8;
+        }
+        .footer-links a:hover svg {
+            opacity: 1;
+        }
+        .footer-divider-line {
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139,0,0,0.3), transparent);
+            margin: 0 auto 15px;
+        }
+        .footer-copy {
+            color: var(--cor-texto-soft);
+            font-size: 0.7rem;
+            opacity: 0.5;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body class="p-30-t p-30-lr xs-p-15-t xs-p-15-lr" style="overflow-x: hidden;">
+    <div class="container">
+        <!-- Botão Voltar -->
+        <div class="m-20-b">
+            <a href="index.html" class="btn-back">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                Voltar ao Início
+            </a>
+        </div>
+
+        <!-- Header -->
+        <div class="text-center m-40-b xs-m-25-b">
+            <h1 class="title fs-15 xs-fs-12 m-5-b" style="letter-spacing: 10px;">SCAR</h1>
+            <p class="opacity-4 fs-7" style="letter-spacing: 5px; text-transform: uppercase;">Sacrificial Contract & Risk</p>
+            <div class="m-15-t d-flex f-justify-center f-items-center f-gap-15">
+                <span style="width: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--cor-secundaria));"></span>
+                <span class="fs-6" style="color: var(--cor-secundaria); font-style: italic;">Rolador de Dados</span>
+                <span style="width: 40px; height: 1px; background: linear-gradient(90deg, var(--cor-secundaria), transparent);"></span>
+            </div>
+        </div>
+
+        <!-- Botão Histórico -->
+        <div class="text-center m-25-b">
+            <button class="btn btn-secondary border-rd-10 p-12-tb p-30-lr fs-7" data-modal-show="modal-historico">
+                📜 HISTÓRICO <span id="historico-count" class="m-5-l opacity-6">(0)</span>
+            </button>
+        </div>
+
+        <!-- Container Principal -->
+        <div class="main-content">
+            <!-- Tabs -->
+            <div class="tabs d-flex f-gap-5">
+                <button class="tab active p-15-tb p-25-lr fs-7" data-tab="teste">TESTE</button>
+                <button class="tab p-15-tb p-25-lr fs-7" data-tab="combate">COMBATE</button>
+                <button class="tab p-15-tb p-25-lr fs-7" data-tab="medo">MEDO</button>
+                <button class="tab p-15-tb p-25-lr fs-7" data-tab="duelo">DUELO</button>
+                <button class="tab p-15-tb p-25-lr fs-7" data-tab="livre">LIVRE</button>
+                <button class="tab p-15-tb p-25-lr fs-7" data-tab="online" style="color:var(--pink)">⚔ ONLINE</button>
+            </div>
+
+            <!-- TAB: Teste de Ação -->
+            <div class="tab-content active" id="tab-teste">
+                <div class="section-title">Teste de Ação (Xd10)</div>
+
+                <div class="section-box">
+                    <div class="d-flex f-wrap f-gap-25 f-items-end">
+                        <div>
+                            <label class="field-label">Atributo</label>
+                            <input type="number" id="atributo" value="3" min="0" max="10" class="border-rd-10 p-14-all w-90px text-center fs-9">
+                        </div>
+                        <div>
+                            <label class="field-label">Bônus</label>
+                            <input type="number" id="bonus" value="0" class="border-rd-10 p-14-all w-90px text-center fs-9">
+                        </div>
+                        <button class="btn btn-primary border-rd-10 p-15-tb p-50-lr fs-8" onclick="rolarTeste()">ROLAR</button>
+                    </div>
+                    <p class="fs-6 opacity-4 m-20-t" style="border-left: 3px solid var(--cor-principal); padding-left: 12px;">Atributo 0 não impede, mas falha gera +1 Stress</p>
+                </div>
+
+                <div class="section-box">
+                    <label class="field-label m-15-b">Rolagem Rápida</label>
+                    <div class="d-flex f-wrap f-gap-12">
+                        <button class="quick-btn border-rd-10 p-12-tb p-20-lr fs-7" onclick="rolarRapido(1)">1D10</button>
+                        <button class="quick-btn border-rd-10 p-12-tb p-20-lr fs-7" onclick="rolarRapido(2)">2D10</button>
+                        <button class="quick-btn border-rd-10 p-12-tb p-20-lr fs-7" onclick="rolarRapido(3)">3D10</button>
+                        <button class="quick-btn border-rd-10 p-12-tb p-20-lr fs-7" onclick="rolarRapido(4)">4D10</button>
+                        <button class="quick-btn border-rd-10 p-12-tb p-20-lr fs-7" onclick="rolarRapido(5)">5D10</button>
+                        <button class="quick-btn border-rd-10 p-12-tb p-20-lr fs-7" onclick="rolarRapido(6)">6D10</button>
+                    </div>
+                </div>
+
+                <div id="resultado-teste" class="section-box text-center p-35-all">
+                    <span class="opacity-4 fs-8">🎲 Role os dados</span>
+                </div>
+            </div>
+
+            <!-- TAB: Combate -->
+            <div class="tab-content" id="tab-combate">
+                <div class="section-title">Combate - Injúrias</div>
+
+                <div class="section-box">
+                    <div class="row gap-25">
+                        <div class="c-xs-12 c-sm-6">
+                            <label class="field-label">Atacante (dados)</label>
+                            <input type="number" id="atacante-dados" value="4" min="1" class="border-rd-10 p-14-all w-100 text-center fs-9">
+                        </div>
+                        <div class="c-xs-12 c-sm-6">
+                            <label class="field-label">Defensor (dados)</label>
+                            <input type="number" id="defensor-dados" value="3" min="1" class="border-rd-10 p-14-all w-100 text-center fs-9">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary border-rd-10 p-15-tb w-100 fs-8 m-25-t" onclick="rolarCombate()">ROLAR COMBATE</button>
+                </div>
+
+                <div class="section-box">
+                    <label class="field-label m-15-b">Tabela de Injúrias</label>
+                    <div class="fs-7">
+                        <div class="injury-table-row">
+                            <span class="opacity-6">Diferença 1-9</span>
+                            <span class="injury-badge injury-leve">Leve</span>
+                        </div>
+                        <div class="injury-table-row">
+                            <span class="opacity-6">Diferença 10-19</span>
+                            <span class="injury-badge injury-grave">Grave</span>
+                        </div>
+                        <div class="injury-table-row">
+                            <span class="opacity-6">Diferença 20+</span>
+                            <span class="injury-badge injury-critica">Crítica</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="resultado-combate" class="section-box text-center p-35-all">
+                    <span class="opacity-4 fs-8">⚔ Role o combate</span>
+                </div>
+            </div>
+
+            <!-- TAB: Teste de Medo -->
+            <div class="tab-content" id="tab-medo">
+                <div class="section-title">Teste de Medo</div>
+
+                <div class="section-box">
+                    <div class="d-flex f-wrap f-gap-25 f-items-end">
+                        <div>
+                            <label class="field-label">Nível de Medo</label>
+                            <select id="nivel-medo" class="border-rd-10 p-14-all w-200px fs-7">
+                                <option value="1">1 - Perturbador</option>
+                                <option value="2">2 - Amedrontador</option>
+                                <option value="3">3 - Horripilante</option>
+                                <option value="4">4 - Aterrorizante</option>
+                                <option value="5">5 - Incompreendido</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="field-label">Atributo</label>
+                            <input type="number" id="medo-atributo" value="4" min="0" class="border-rd-10 p-14-all w-90px text-center fs-9">
+                        </div>
+                        <div>
+                            <label class="field-label">DT</label>
+                            <input type="number" id="medo-dt" value="25" min="1" class="border-rd-10 p-14-all w-90px text-center fs-9">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary border-rd-10 p-15-tb w-100 fs-8 m-25-t" onclick="rolarMedo()">TESTAR MEDO</button>
+                </div>
+
+                <div id="resultado-medo" class="section-box text-center p-35-all">
+                    <span class="opacity-4 fs-8">👁 Faça o teste de medo</span>
+                </div>
+            </div>
+
+            <!-- TAB: Duelo -->
+            <div class="tab-content" id="tab-duelo">
+                <div class="section-title">Duelo (Melhor de 3)</div>
+
+                <div class="section-box">
+                    <p class="fs-7 opacity-5 m-20-b" style="border-left: 3px solid var(--cor-principal); padding-left: 12px;">Cada duelista escolhe 3 atributos (forte, médio, fraco)</p>
+                    <div class="row gap-25 m-25-b">
+                        <div class="c-xs-6">
+                            <p class="fs-7 text-center m-15-b" style="color:var(--blue); letter-spacing: 2px; font-family: 'Bebas Neue', sans-serif;">DUELISTA A</p>
+                            <input type="number" id="duelo-a1" placeholder="Forte" class="border-rd-10 p-12-all w-100 text-center m-10-b">
+                            <input type="number" id="duelo-a2" placeholder="Médio" class="border-rd-10 p-12-all w-100 text-center m-10-b">
+                            <input type="number" id="duelo-a3" placeholder="Fraco" class="border-rd-10 p-12-all w-100 text-center">
+                        </div>
+                        <div class="c-xs-6">
+                            <p class="fs-7 text-center m-15-b" style="color:var(--cor-secundaria); letter-spacing: 2px; font-family: 'Bebas Neue', sans-serif;">DUELISTA B</p>
+                            <input type="number" id="duelo-b1" placeholder="Forte" class="border-rd-10 p-12-all w-100 text-center m-10-b">
+                            <input type="number" id="duelo-b2" placeholder="Médio" class="border-rd-10 p-12-all w-100 text-center m-10-b">
+                            <input type="number" id="duelo-b3" placeholder="Fraco" class="border-rd-10 p-12-all w-100 text-center">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary border-rd-10 p-15-tb w-100 fs-8" onclick="rolarDuelo()">INICIAR DUELO</button>
+                </div>
+
+                <div id="resultado-duelo" class="section-box text-center p-35-all">
+                    <span class="opacity-4 fs-8">🗡 Configure os duelistas</span>
+                </div>
+            </div>
+
+            <!-- TAB: Livre -->
+            <div class="tab-content" id="tab-livre">
+                <div class="section-title">Rolagem Livre</div>
+
+                <div class="section-box">
+                    <div class="d-flex f-wrap f-gap-20 f-items-end">
+                        <div>
+                            <label class="field-label">Quantidade</label>
+                            <input type="number" id="livre-qtd" value="1" min="1" class="border-rd-10 p-14-all w-80px text-center fs-9">
+                        </div>
+                        <div>
+                            <label class="field-label">Lados</label>
+                            <input type="number" id="livre-lados" value="10" min="2" class="border-rd-10 p-14-all w-80px text-center fs-9">
+                        </div>
+                        <div>
+                            <label class="field-label">Modificador</label>
+                            <input type="number" id="livre-mod" value="0" class="border-rd-10 p-14-all w-80px text-center fs-9">
+                        </div>
+                        <button class="btn btn-primary border-rd-10 p-15-tb p-40-lr fs-8" onclick="rolarLivre()">ROLAR</button>
+                    </div>
+                </div>
+
+                <div class="section-box">
+                    <label class="field-label m-15-b">Atalhos</label>
+                    <div class="d-flex f-wrap f-gap-12">
+                        <button class="quick-btn border-rd-10 p-12-tb p-18-lr fs-7" onclick="rolarCustom(1,4,0)">D4</button>
+                        <button class="quick-btn border-rd-10 p-12-tb p-18-lr fs-7" onclick="rolarCustom(1,6,0)">D6</button>
+                        <button class="quick-btn border-rd-10 p-12-tb p-18-lr fs-7" onclick="rolarCustom(1,8,0)">D8</button>
+                        <button class="quick-btn border-rd-10 p-12-tb p-18-lr fs-7" onclick="rolarCustom(1,10,0)">D10</button>
+                        <button class="quick-btn border-rd-10 p-12-tb p-18-lr fs-7" onclick="rolarCustom(1,12,0)">D12</button>
+                        <button class="quick-btn border-rd-10 p-12-tb p-18-lr fs-7" onclick="rolarCustom(1,20,0)">D20</button>
+                        <button class="quick-btn border-rd-10 p-12-tb p-18-lr fs-7" onclick="rolarCustom(1,100,0)">D100</button>
+                        <button class="quick-btn border-rd-10 p-12-tb p-18-lr fs-7" onclick="rolarCustom(2,6,0)">2D6</button>
+                        <button class="quick-btn border-rd-10 p-12-tb p-18-lr fs-7" onclick="rolarCustom(1,7,0)">D7</button>
+                    </div>
+                </div>
+
+                <div id="resultado-livre" class="section-box text-center p-35-all">
+                    <span class="opacity-4 fs-8">🎲 Role os dados</span>
+                </div>
+            </div>
+
+            <!-- TAB: Online -->
+            <div class="tab-content" id="tab-online">
+                <!-- Status -->
+                <div class="section-box p-15-all m-0-b">
+                    <div class="d-flex f-items-center f-gap-12">
+                        <span class="status-dot offline" id="online-status-dot"></span>
+                        <span class="fs-7" id="online-status-text">Desconectado</span>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Tela Inicial (não conectado) -->
+                <div id="online-lobby">
+                    <div class="section-title">Combate Online (P2P)</div>
+
+                    <div class="section-box">
+                        <div class="m-20-b">
+                            <label class="field-label">Seu Nome</label>
+                            <input type="text" id="online-nome" placeholder="Digite seu nome" maxlength="20" class="border-rd-10 p-14-all w-100 fs-8">
+                        </div>
+
+                        <div class="d-flex f-gap-15">
+                            <button class="btn btn-online border-rd-10 p-15-tb f-grow-1 fs-8" onclick="criarSala()">CRIAR SALA</button>
+                            <button class="btn btn-secondary border-rd-10 p-15-tb f-grow-1 fs-8" onclick="toggleEntrar()">ENTRAR EM SALA</button>
+                        </div>
+
+                        <div id="entrar-form" class="d-none m-25-t">
+                            <label class="field-label">Código da Sala</label>
+                            <div class="d-flex f-gap-12">
+                                <input type="text" id="codigo-entrar" placeholder="Cole o código aqui" class="border-rd-10 p-14-all f-grow-1 fs-8">
+                                <button class="btn btn-green border-rd-10 p-14-tb p-30-lr fs-8" onclick="entrarSala()">ENTRAR</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-box">
+                        <label class="field-label m-15-b">Como Funciona</label>
+                        <ol class="fs-7 opacity-5" style="padding-left: 20px; line-height: 2.2;">
+                            <li>Um jogador clica em "Criar Sala"</li>
+                            <li>Compartilha o código com o outro jogador</li>
+                            <li>O outro jogador cola o código e clica "Entrar"</li>
+                            <li>Ambos rolam e veem o resultado em tempo real!</li>
+                        </ol>
+                    </div>
+                </div>
+
+            <!-- Tela da Sala (conectado) -->
+            <div id="online-sala" class="d-none">
+                <!-- Código da Sala -->
+                <div class="section-box text-center">
+                    <label class="field-label">Código da Sala</label>
+                    <p class="room-code m-15-t" id="sala-codigo">------</p>
+                    <button class="btn btn-secondary border-rd-8 p-10-tb p-25-lr fs-7 m-15-t" onclick="copiarCodigo()">📋 Copiar Código</button>
+                </div>
+
+                <!-- Jogadores -->
+                <div class="section-box">
+                    <div class="section-title">Jogadores</div>
+                    <div class="row gap-20">
+                        <div class="c-xs-6">
+                            <div class="player-box border-rd-12 p-20-all text-center" id="player1-box">
+                                <span class="field-label">Host</span>
+                                <p class="fs-9 m-10-t" id="player1-nome" style="font-family: 'Bebas Neue', sans-serif;">Aguardando...</p>
+                                <p class="fs-7 m-8-t" id="player1-status" style="color: var(--green);"></p>
+                            </div>
+                        </div>
+                        <div class="c-xs-6">
+                            <div class="player-box border-rd-12 p-20-all text-center" id="player2-box">
+                                <span class="field-label">Convidado</span>
+                                <p class="fs-9 m-10-t" id="player2-nome" style="font-family: 'Bebas Neue', sans-serif;">Aguardando...</p>
+                                <p class="fs-7 m-8-t" id="player2-status" style="color: var(--green);"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controles de Combate -->
+                <div class="section-box" id="online-controles">
+                    <div class="section-title">Controles de Combate</div>
+                    <div class="d-flex f-wrap f-gap-25 f-items-end f-justify-center">
+                        <div>
+                            <label class="field-label">Seus Dados</label>
+                            <input type="number" id="online-dados" value="3" min="1" max="10" class="border-rd-10 p-14-all w-90px text-center fs-9">
+                        </div>
+                        <div>
+                            <label class="field-label">Tipo</label>
+                            <select id="online-tipo" class="border-rd-10 p-14-all w-150px fs-8">
+                                <option value="atacante">Atacante</option>
+                                <option value="defensor">Defensor</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary border-rd-10 p-15-tb p-50-lr fs-8" id="btn-rolar-online" onclick="rolarOnline()">ROLAR!</button>
+                    </div>
+                </div>
+
+                <!-- Resultado Online -->
+                <div class="section-box" id="online-resultado">
+                    <div class="text-center p-20-all">
+                        <span class="opacity-4 fs-8">⚔ Aguardando rolagens...</span>
+                    </div>
+                </div>
+
+                <!-- Chat / Log -->
+                <div class="section-box">
+                    <div class="section-title">Log de Eventos</div>
+                    <div class="chat-box border-rd-10 p-15-all" id="chat-box"></div>
+                </div>
+
+                <!-- Sair -->
+                <button class="btn btn-secondary border-rd-10 p-14-tb w-100 fs-7" onclick="sairSala()">SAIR DA SALA</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-brand">
+            <a href="index.html">SCAR</a>
+            <span>Sacrificial Contract & Risk</span>
+        </div>
+
+        <div class="footer-links">
+            <a href="index.html">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Início
+            </a>
+            <a href="habilidades.html">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 3.83L19.13 19H4.87L12 5.83zM11 16h2v2h-2zm0-6h2v4h-2z"/></svg>
+                Habilidades
+            </a>
+            <a href="aflicoes.html">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                Aflições
+            </a>
+        </div>
+
+        <div class="footer-divider-line"></div>
+        <p class="footer-copy">© 2026 SCAR RPG • Feito com 🩸 por fãs, para fãs</p>
+    </footer>
+
+    <!-- Modal Histórico -->
+    <div data-modal="modal-historico" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide></div>
+            <div class="dialog-inline w-550px xs-w-95">
+                <button class="dialog-close" data-modal-hide></button>
+                <div class="modal-popup border-rd-16 p-30-all xs-p-20-all">
+                    <div class="section-title m-0-b p-0-b border-0-b">📜 Histórico de Rolagens</div>
+                    <div class="divider m-15-t m-20-b"></div>
+                    <div id="historico-lista" class="p-5-r" style="max-height:55vh; overflow-y:auto;">
+                        <div class="text-center p-30-all">
+                            <span class="opacity-4 fs-7">Nenhuma rolagem ainda</span>
+                        </div>
+                    </div>
+                    <div class="divider m-20-t m-15-b"></div>
+                    <button class="btn btn-secondary border-rd-10 p-14-tb w-100 fs-7" onclick="limparHistorico()">🗑 Limpar Histórico</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.squeleton.dev/squeleton-scripts.v4.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        // ========== ESTADO ==========
+        let historico = [];
+        let peer = null;
+        let conn = null;
+        let isHost = false;
+        let meuNome = '';
+        let oponenteNome = '';
+        let minhaRolagem = null;
+        let oponenteRolagem = null;
+
+        // ========== TABS ==========
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // ========== FUNÇÕES DE DADOS ==========
+        function rolar(lados) {
+            return Math.floor(Math.random() * lados) + 1;
+        }
+
+        function rolarMultiplos(qtd, lados) {
+            const resultados = [];
+            for (let i = 0; i < qtd; i++) resultados.push(rolar(lados));
+            return resultados;
+        }
+
+        function soma(arr) {
+            return arr.reduce((a, b) => a + b, 0);
+        }
+
+        // ========== HISTÓRICO ==========
+        function addHistorico(tipo, descricao, total, extra = '') {
+            const hora = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+            historico.unshift({ hora, tipo, descricao, total, extra });
+            if (historico.length > 50) historico.pop();
+            renderHistorico();
+            document.getElementById('historico-count').textContent = `(${historico.length})`;
+        }
+
+        function renderHistorico() {
+            const el = document.getElementById('historico-lista');
+            if (historico.length === 0) {
+                el.innerHTML = '<span class="opacity-5 fs-6">Nenhuma rolagem</span>';
+                return;
+            }
+            el.innerHTML = historico.map(h => `
+                <div class="history-item p-12-all m-8-b border-rd-4" style="background:rgba(255,255,255,0.02)">
+                    <div class="d-flex f-justify-between f-items-start">
+                        <div>
+                            <span class="opacity-5 fs-5">${h.hora}</span>
+                            <span class="fs-6 fw-600 m-5-l" style="color:var(--gold)">${h.tipo}</span>
+                            <p class="fs-6 opacity-8 m-5-t">${h.descricao}</p>
+                            ${h.extra ? `<p class="fs-5 m-5-t" style="color:var(--purple)">${h.extra}</p>` : ''}
+                        </div>
+                        <span class="fs-9 fw-700">${h.total}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function limparHistorico() {
+            historico = [];
+            renderHistorico();
+            document.getElementById('historico-count').textContent = '(0)';
+        }
+
+        let diceIdCounter = 0;
+
+        function renderDados(container, resultados, lados = 10) {
+            const baseId = ++diceIdCounter;
+            container.innerHTML = `
+                <div class="dice-pool m-20-b" id="dice-pool-${baseId}">
+                    ${resultados.map((r, i) => `<div class="die rolling border-rd-8" id="die-${baseId}-${i}">?</div>`).join('')}
+                </div>
+            `;
+
+            return new Promise((resolve) => {
+                let completed = 0;
+                resultados.forEach((r, i) => {
+                    const el = document.getElementById(`die-${baseId}-${i}`);
+                    if (!el) return;
+                    let count = 0;
+                    const interval = setInterval(() => {
+                        el.textContent = rolar(lados);
+                        count++;
+                        if (count >= 8) {
+                            clearInterval(interval);
+                            el.textContent = r;
+                            el.classList.remove('rolling');
+                            if (r === lados) el.classList.add('max');
+                            if (r === 1) el.classList.add('min');
+                            completed++;
+                            if (completed === resultados.length) resolve();
+                        }
+                    }, 50);
+                });
+            });
+        }
+
+        // ========== CRÍTICO E FALHAS ==========
+        // Crítico = quantidade de dados que tiraram 10 (valor máximo)
+        // 2 dados com 10 = 2x, 3 dados com 10 = 3x, 4+ dados com 10 = 4x+
+        function verificarCritico(resultados) {
+            const quantDez = resultados.filter(r => r === 10).length;
+            if (quantDez < 2) return null;
+            if (quantDez >= 4) return { mult: '4x+', bonus: '+3 níveis de Injúria OU Aflição permanente', qtd: quantDez };
+            if (quantDez === 3) return { mult: '3x', bonus: '+2 níveis de Injúria + 1 Aflição', qtd: quantDez };
+            if (quantDez === 2) return { mult: '2x', bonus: '+1 nível de Injúria + 1 Aflição', qtd: quantDez };
+            return null;
+        }
+
+        // Falhas baseadas em múltiplos (espelha sistema de crítico)
+        // 0-1 uns = sem penalidade | 2 uns = -5 | 3 uns = -10 | 4+ uns = -15
+        function calcularFalhas(resultados) {
+            const quantUm = resultados.filter(r => r === 1).length;
+            if (quantUm < 2) return { qtd: quantUm, penalidade: 0, mult: null };
+            if (quantUm >= 4) return { qtd: quantUm, penalidade: 15, mult: '4x+' };
+            if (quantUm === 3) return { qtd: quantUm, penalidade: 10, mult: '3x' };
+            return { qtd: quantUm, penalidade: 5, mult: '2x' }; // quantUm === 2
+        }
+
+        // Crítico Defensivo = defensor com 2+ dados 10 reduz nível da injúria
+        function verificarCriticoDefensivo(resultados) {
+            const quantDez = resultados.filter(r => r === 10).length;
+            if (quantDez < 2) return null;
+            if (quantDez >= 4) return { mult: '4x+', reducao: 3, qtd: quantDez };
+            if (quantDez === 3) return { mult: '3x', reducao: 2, qtd: quantDez };
+            if (quantDez === 2) return { mult: '2x', reducao: 1, qtd: quantDez };
+            return null;
+        }
+
+        // Calcula injúria final considerando críticos ofensivo/defensivo
+        function calcularInjuria(diff, criticoAtk, criticoDef) {
+            // Níveis: 0 = Defendeu, 1 = Leve, 2 = Grave, 3 = Crítica
+            let nivel = 0;
+            if (diff <= 0) nivel = 0;
+            else if (diff <= 9) nivel = 1;
+            else if (diff <= 19) nivel = 2;
+            else nivel = 3;
+
+            // Se não acertou, não tem modificação
+            if (nivel === 0) {
+                return { nivel: 0, nome: 'Defendeu!', classe: 'injury-none', modificado: false };
+            }
+
+            const nivelOriginal = nivel;
+
+            // Crítico ofensivo aumenta nível
+            if (criticoAtk) {
+                if (criticoAtk.mult === '2x') nivel += 1;
+                else if (criticoAtk.mult === '3x') nivel += 2;
+                else if (criticoAtk.mult === '4x+') nivel += 3;
+            }
+
+            // Crítico defensivo reduz nível (mínimo 1 = Leve)
+            if (criticoDef) {
+                nivel -= criticoDef.reducao;
+                if (nivel < 1) nivel = 1; // Mínimo Leve se acertou
+            }
+
+            const nomes = ['Defendeu!', 'Injúria Leve', 'Injúria Grave', 'Injúria Crítica', 'Injúria Crítica+', 'Injúria Crítica++', 'DEVASTADOR'];
+            const classes = ['injury-none', 'injury-leve', 'injury-grave', 'injury-critica', 'injury-critica', 'injury-critica', 'injury-critica'];
+
+            return {
+                nivel: nivel,
+                nome: nomes[Math.min(nivel, nomes.length - 1)],
+                classe: classes[Math.min(nivel, classes.length - 1)],
+                modificado: nivel !== nivelOriginal
+            };
+        }
+
+        // ========== TESTE DE AÇÃO ==========
+        async function rolarTeste() {
+            const atributo = parseInt(document.getElementById('atributo').value) || 0;
+            const bonus = parseInt(document.getElementById('bonus').value) || 0;
+            const qtd = Math.max(1, atributo);
+            const resultados = rolarMultiplos(qtd, 10);
+            const total = soma(resultados) + bonus;
+
+            const container = document.getElementById('resultado-teste');
+            await renderDados(container, resultados);
+
+            container.innerHTML += `
+                <div class="result-total">${total}</div>
+                <p class="fs-6 opacity-6 m-10-t">${qtd}d10${bonus ? (bonus > 0 ? '+' : '') + bonus : ''} = [${resultados.join(', ')}]${bonus ? ' ' + (bonus > 0 ? '+' : '') + bonus : ''}</p>
+                ${atributo === 0 ? '<p class="fs-6 m-10-t" style="color:var(--red)">Atributo 0: Falha gera +1 Stress</p>' : ''}
+            `;
+
+            addHistorico('Teste', `${qtd}d10${bonus ? (bonus > 0 ? '+' : '') + bonus : ''} = [${resultados.join(', ')}]`, total);
+        }
+
+        async function rolarRapido(qtd) {
+            document.getElementById('atributo').value = qtd;
+            document.getElementById('bonus').value = 0;
+            await rolarTeste();
+        }
+
+        // ========== COMBATE ==========
+        async function rolarCombate() {
+            const atkDados = parseInt(document.getElementById('atacante-dados').value) || 1;
+            const defDados = parseInt(document.getElementById('defensor-dados').value) || 1;
+
+            const atkResultados = rolarMultiplos(atkDados, 10);
+            const defResultados = rolarMultiplos(defDados, 10);
+
+            // Calcular falhas (múltiplos de 1: 2+=−5, 3+=−10, 4+=−15)
+            const atkFalhas = calcularFalhas(atkResultados);
+            const defFalhas = calcularFalhas(defResultados);
+
+            // Total com penalidade de falhas
+            const atkTotalBruto = soma(atkResultados);
+            const defTotalBruto = soma(defResultados);
+            const atkTotal = atkTotalBruto - atkFalhas.penalidade;
+            const defTotal = defTotalBruto - defFalhas.penalidade;
+            const diff = atkTotal - defTotal;
+
+            // Críticos
+            const criticoAtk = diff > 0 ? verificarCritico(atkResultados) : null;
+            const criticoDef = diff > 0 ? verificarCriticoDefensivo(defResultados) : null;
+
+            // Calcular injúria final
+            const injuriaFinal = calcularInjuria(diff, criticoAtk, criticoDef);
+
+            // Criar IDs únicos para animação
+            const atkId = ++diceIdCounter;
+            const defId = ++diceIdCounter;
+
+            const container = document.getElementById('resultado-combate');
+            container.innerHTML = `
+                <div class="row gap-20 m-20-b">
+                    <div class="c-xs-6 text-center">
+                        <p class="fs-6 m-10-b" style="color:var(--blue)">Atacante</p>
+                        <div class="dice-pool f-justify-center">
+                            ${atkResultados.map((r, i) => `<div class="die rolling border-rd-8" id="die-${atkId}-${i}">?</div>`).join('')}
+                        </div>
+                        <p class="fs-10 fw-700 m-10-t" id="atk-total-${atkId}">...</p>
+                    </div>
+                    <div class="c-xs-6 text-center">
+                        <p class="fs-6 m-10-b" style="color:var(--red)">Defensor</p>
+                        <div class="dice-pool f-justify-center">
+                            ${defResultados.map((r, i) => `<div class="die rolling border-rd-8" id="die-${defId}-${i}">?</div>`).join('')}
+                        </div>
+                        <p class="fs-10 fw-700 m-10-t" id="def-total-${defId}">...</p>
+                    </div>
+                </div>
+                <div id="combate-resultado-${atkId}"></div>
+            `;
+
+            // Animar dados
+            await Promise.all([
+                animarDados(atkId, atkResultados, 10),
+                animarDados(defId, defResultados, 10)
+            ]);
+
+            // Mostrar totais (com falhas se houver penalidade)
+            document.getElementById(`atk-total-${atkId}`).innerHTML = atkFalhas.penalidade > 0
+                ? `${atkTotalBruto} <span style="color:var(--red)">-${atkFalhas.penalidade}</span> = ${atkTotal}`
+                : `${atkTotal}`;
+            document.getElementById(`def-total-${defId}`).innerHTML = defFalhas.penalidade > 0
+                ? `${defTotalBruto} <span style="color:var(--red)">-${defFalhas.penalidade}</span> = ${defTotal}`
+                : `${defTotal}`;
+
+            // Mostrar resultado
+            let resultadoHTML = `<p class="fs-8 opacity-7">Diferença: <strong>${diff}</strong></p>`;
+
+            // Mostrar falhas se houver múltiplo (2+ uns)
+            if (atkFalhas.mult || defFalhas.mult) {
+                resultadoHTML += `<p class="fs-6 m-10-t" style="color:var(--red)">`;
+                if (atkFalhas.mult) resultadoHTML += `ATK: Falha ${atkFalhas.mult} (${atkFalhas.qtd} uns) = -${atkFalhas.penalidade} `;
+                if (defFalhas.mult) resultadoHTML += `DEF: Falha ${defFalhas.mult} (${defFalhas.qtd} uns) = -${defFalhas.penalidade}`;
+                resultadoHTML += `</p>`;
+            }
+
+            resultadoHTML += `
+                <div class="m-15-t">
+                    <span class="injury-badge ${injuriaFinal.classe} fs-9">${injuriaFinal.nome}</span>
+                </div>
+            `;
+
+            // Crítico ofensivo
+            if (criticoAtk) {
+                resultadoHTML += `
+                    <div class="crit-banner">
+                        <p class="fs-10 fw-700" style="color:#fff">CRÍTICO OFENSIVO ${criticoAtk.mult}!</p>
+                        <p class="fs-7 m-5-t" style="color:rgba(255,255,255,0.9)">${criticoAtk.bonus}</p>
+                    </div>
+                `;
+            }
+
+            // Crítico defensivo
+            if (criticoDef) {
+                resultadoHTML += `
+                    <div class="crit-banner" style="background: linear-gradient(135deg, var(--blue), var(--green));">
+                        <p class="fs-10 fw-700" style="color:#fff">CRÍTICO DEFENSIVO ${criticoDef.mult}!</p>
+                        <p class="fs-7 m-5-t" style="color:rgba(255,255,255,0.9)">Reduz ${criticoDef.reducao} nível(is) de injúria (mínimo Leve)</p>
+                    </div>
+                `;
+            }
+
+            document.getElementById(`combate-resultado-${atkId}`).innerHTML = resultadoHTML;
+
+            // Histórico
+            let extra = '';
+            if (criticoAtk) extra += `CRIT ATK ${criticoAtk.mult} `;
+            if (criticoDef) extra += `CRIT DEF ${criticoDef.mult} `;
+            if (atkFalhas.mult) extra += `Falha ATK ${atkFalhas.mult} `;
+            if (defFalhas.mult) extra += `Falha DEF ${defFalhas.mult}`;
+
+            addHistorico('Combate', `ATK ${atkTotal} vs DEF ${defTotal} (diff: ${diff})`, injuriaFinal.nome, extra.trim());
+        }
+
+        function animarDados(baseId, resultados, lados) {
+            return new Promise((resolve) => {
+                let completed = 0;
+                resultados.forEach((r, i) => {
+                    const el = document.getElementById(`die-${baseId}-${i}`);
+                    if (!el) { completed++; if (completed === resultados.length) resolve(); return; }
+                    let count = 0;
+                    const interval = setInterval(() => {
+                        el.textContent = rolar(lados);
+                        count++;
+                        if (count >= 8) {
+                            clearInterval(interval);
+                            el.textContent = r;
+                            el.classList.remove('rolling');
+                            if (r === lados) el.classList.add('max');
+                            if (r === 1) el.classList.add('min');
+                            completed++;
+                            if (completed === resultados.length) resolve();
+                        }
+                    }, 50);
+                });
+            });
+        }
+
+        // ========== TESTE DE MEDO ==========
+        async function rolarMedo() {
+            const nivel = parseInt(document.getElementById('nivel-medo').value);
+            const atributo = parseInt(document.getElementById('medo-atributo').value) || 1;
+            const dt = parseInt(document.getElementById('medo-dt').value) || 25;
+
+            const resultados = rolarMultiplos(Math.max(1, atributo), 10);
+            const total = soma(resultados);
+            const sucesso = total >= dt;
+
+            const container = document.getElementById('resultado-medo');
+            await renderDados(container, resultados);
+
+            container.innerHTML += `
+                <div class="result-total">${total}</div>
+                <p class="fs-7 m-10-t">DT: ${dt} | Nível: ${nivel}</p>
+                <div class="m-15-t">
+                    <span class="fs-11 fw-700 ${sucesso ? 'fear-success' : 'fear-fail'}">
+                        ${sucesso ? '✓ SUCESSO' : '✗ FALHA'}
+                    </span>
+                </div>
+                ${!sucesso ? `<p class="fs-6 m-10-t" style="color:var(--red)">Penalidade: -${nivel}d10 por 1 rodada</p>` : ''}
+            `;
+
+            addHistorico('Medo', `Nível ${nivel}, DT ${dt}, Rolou: ${total}`, sucesso ? 'Sucesso' : 'Falha', !sucesso ? `Penalidade: -${nivel}d10` : '');
+        }
+
+        // ========== DUELO ==========
+        function rolarDuelo() {
+            const a = [
+                parseInt(document.getElementById('duelo-a1').value) || 3,
+                parseInt(document.getElementById('duelo-a2').value) || 2,
+                parseInt(document.getElementById('duelo-a3').value) || 1
+            ];
+            const b = [
+                parseInt(document.getElementById('duelo-b1').value) || 3,
+                parseInt(document.getElementById('duelo-b2').value) || 2,
+                parseInt(document.getElementById('duelo-b3').value) || 1
+            ];
+
+            const rolagemA = a.map(attr => ({ attr, resultados: rolarMultiplos(attr, 10), total: 0 }));
+            const rolagemB = b.map(attr => ({ attr, resultados: rolarMultiplos(attr, 10), total: 0 }));
+            rolagemA.forEach(r => r.total = soma(r.resultados));
+            rolagemB.forEach(r => r.total = soma(r.resultados));
+
+            const ordA = [...rolagemA].sort((x, y) => y.total - x.total);
+            const ordB = [...rolagemB].sort((x, y) => y.total - x.total);
+
+            let vitoriasA = 0, vitoriasB = 0;
+            const rodadas = [];
+
+            for (let i = 0; i < 3; i++) {
+                if (ordA[i].total > ordB[i].total) {
+                    vitoriasA++;
+                    rodadas.push({ a: ordA[i].total, b: ordB[i].total, vencedor: 'A' });
+                } else if (ordB[i].total > ordA[i].total) {
+                    vitoriasB++;
+                    rodadas.push({ a: ordA[i].total, b: ordB[i].total, vencedor: 'B' });
+                } else {
+                    rodadas.push({ a: ordA[i].total, b: ordB[i].total, vencedor: 'Empate' });
+                }
+            }
+
+            const vencedor = vitoriasA > vitoriasB ? 'A' : (vitoriasB > vitoriasA ? 'B' : 'Empate');
+            const diffFinal = Math.abs(ordA[2].total - ordB[2].total);
+
+            let consequencia = '';
+            if (diffFinal <= 9) consequencia = 'Injúria Grave';
+            else if (diffFinal <= 19) consequencia = 'Injúria Grave + Aflição';
+            else consequencia = 'Morte ou Incapacitado';
+
+            const container = document.getElementById('resultado-duelo');
+            container.innerHTML = `
+                <div class="row gap-15 m-20-b">
+                    <div class="c-xs-6 text-center">
+                        <p class="fs-7 fw-600 m-10-b" style="color:var(--blue)">Duelista A</p>
+                        ${rolagemA.map(r => `<div class="p-8-all m-5-b" style="background:rgba(52,152,219,0.1);border-radius:4px"><span class="fs-5 opacity-6">${r.attr}d10:</span> <span class="fw-600">${r.total}</span></div>`).join('')}
+                    </div>
+                    <div class="c-xs-6 text-center">
+                        <p class="fs-7 fw-600 m-10-b" style="color:var(--red)">Duelista B</p>
+                        ${rolagemB.map(r => `<div class="p-8-all m-5-b" style="background:rgba(231,76,60,0.1);border-radius:4px"><span class="fs-5 opacity-6">${r.attr}d10:</span> <span class="fw-600">${r.total}</span></div>`).join('')}
+                    </div>
+                </div>
+                <div class="m-15-b">
+                    ${rodadas.map((r, i) => `
+                        <div class="d-flex f-justify-between p-8-all m-5-b" style="background:rgba(255,255,255,0.03)">
+                            <span>Rodada ${i+1}</span>
+                            <span>${r.a} vs ${r.b}</span>
+                            <span class="fw-600" style="color:${r.vencedor === 'A' ? 'var(--blue)' : r.vencedor === 'B' ? 'var(--red)' : 'var(--gold)'}">${r.vencedor}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="result-total" style="color:${vencedor === 'A' ? 'var(--blue)' : vencedor === 'B' ? 'var(--red)' : 'var(--gold)'}">
+                    ${vencedor === 'Empate' ? 'EMPATE' : `Duelista ${vencedor} vence!`}
+                </div>
+                ${vencedor !== 'Empate' ? `<p class="fs-7 m-10-t">Perdedor: <strong style="color:var(--red)">${consequencia}</strong></p>` : ''}
+            `;
+
+            addHistorico('Duelo', `A(${vitoriasA}) vs B(${vitoriasB})`, vencedor === 'Empate' ? 'Empate' : `${vencedor} vence`, vencedor !== 'Empate' ? consequencia : '');
+        }
+
+        // ========== LIVRE ==========
+        async function rolarLivre() {
+            const qtd = parseInt(document.getElementById('livre-qtd').value) || 1;
+            const lados = parseInt(document.getElementById('livre-lados').value) || 10;
+            const mod = parseInt(document.getElementById('livre-mod').value) || 0;
+            await rolarCustom(qtd, lados, mod);
+        }
+
+        async function rolarCustom(qtd, lados, mod) {
+            const resultados = rolarMultiplos(qtd, lados);
+            const total = soma(resultados) + mod;
+
+            const container = document.getElementById('resultado-livre');
+            await renderDados(container, resultados, lados);
+
+            container.innerHTML += `
+                <div class="result-total">${total}</div>
+                <p class="fs-6 opacity-6 m-10-t">${qtd}d${lados}${mod ? (mod > 0 ? '+' : '') + mod : ''} = [${resultados.join(', ')}]${mod ? ' ' + (mod > 0 ? '+' : '') + mod : ''}</p>
+            `;
+
+            addHistorico('Livre', `${qtd}d${lados}${mod ? (mod > 0 ? '+' : '') + mod : ''} = [${resultados.join(', ')}]`, total);
+        }
+
+        // ========== ONLINE (PeerJS) ==========
+        function setStatus(status, text) {
+            const dot = document.getElementById('online-status-dot');
+            const txt = document.getElementById('online-status-text');
+            dot.className = 'status-dot ' + status;
+            txt.textContent = text;
+        }
+
+        function addChat(msg, type = 'system') {
+            const box = document.getElementById('chat-box');
+            box.innerHTML += `<div class="chat-msg ${type} fs-6">${msg}</div>`;
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function toggleEntrar() {
+            document.getElementById('entrar-form').classList.toggle('d-none');
+        }
+
+        function mostrarSala() {
+            document.getElementById('online-lobby').classList.add('d-none');
+            document.getElementById('online-sala').classList.remove('d-none');
+        }
+
+        function mostrarLobby() {
+            document.getElementById('online-lobby').classList.remove('d-none');
+            document.getElementById('online-sala').classList.add('d-none');
+        }
+
+        function criarSala() {
+            meuNome = document.getElementById('online-nome').value.trim() || 'Jogador 1';
+
+            setStatus('waiting', 'Conectando...');
+
+            peer = new Peer();
+
+            peer.on('open', (id) => {
+                isHost = true;
+                document.getElementById('sala-codigo').textContent = id;
+                document.getElementById('player1-nome').textContent = meuNome;
+                document.getElementById('player1-box').classList.add('connected');
+
+                setStatus('waiting', 'Aguardando oponente...');
+                addChat('Sala criada! Compartilhe o código.');
+                mostrarSala();
+            });
+
+            peer.on('connection', (connection) => {
+                conn = connection;
+                setupConnection();
+            });
+
+            peer.on('error', (err) => {
+                setStatus('offline', 'Erro: ' + err.type);
+                addChat('Erro: ' + err.type, 'system');
+            });
+        }
+
+        function entrarSala() {
+            const codigo = document.getElementById('codigo-entrar').value.trim();
+            if (!codigo) return alert('Digite o código da sala');
+
+            meuNome = document.getElementById('online-nome').value.trim() || 'Jogador 2';
+
+            setStatus('waiting', 'Conectando...');
+
+            peer = new Peer();
+
+            peer.on('open', () => {
+                conn = peer.connect(codigo, { reliable: true });
+
+                conn.on('open', () => {
+                    isHost = false;
+                    document.getElementById('sala-codigo').textContent = codigo;
+                    setupConnection();
+
+                    // Envia nome para o host
+                    conn.send({ type: 'join', nome: meuNome });
+                });
+
+                conn.on('error', (err) => {
+                    setStatus('offline', 'Erro na conexão');
+                    alert('Não foi possível conectar. Verifique o código.');
+                });
+            });
+
+            peer.on('error', (err) => {
+                setStatus('offline', 'Erro: ' + err.type);
+                if (err.type === 'peer-unavailable') {
+                    alert('Sala não encontrada. Verifique o código.');
+                }
+            });
+        }
+
+        function setupConnection() {
+            conn.on('data', (data) => {
+                handleMessage(data);
+            });
+
+            conn.on('close', () => {
+                setStatus('offline', 'Desconectado');
+                addChat('Oponente desconectou.', 'system');
+                resetOnline();
+            });
+
+            if (isHost) {
+                document.getElementById('player1-nome').textContent = meuNome;
+                document.getElementById('player1-box').classList.add('connected');
+            } else {
+                document.getElementById('player2-nome').textContent = meuNome;
+                document.getElementById('player2-box').classList.add('connected');
+                mostrarSala();
+            }
+
+            setStatus('online', 'Conectado');
+        }
+
+        function handleMessage(data) {
+            switch (data.type) {
+                case 'join':
+                    oponenteNome = data.nome;
+                    document.getElementById('player2-nome').textContent = oponenteNome;
+                    document.getElementById('player2-box').classList.add('connected');
+                    addChat(`${oponenteNome} entrou na sala!`);
+                    // Envia nome de volta
+                    conn.send({ type: 'welcome', nome: meuNome });
+                    break;
+
+                case 'welcome':
+                    oponenteNome = data.nome;
+                    document.getElementById('player1-nome').textContent = oponenteNome;
+                    document.getElementById('player1-box').classList.add('connected');
+                    addChat(`Conectado com ${oponenteNome}!`);
+                    break;
+
+                case 'roll':
+                    oponenteRolagem = data;
+                    addChat(`${oponenteNome} rolou! (${data.tipo})`, 'player');
+
+                    // Atualiza status visual
+                    const oponenteBox = isHost ? 'player2-box' : 'player1-box';
+                    document.getElementById(oponenteBox).classList.add('ready');
+                    document.getElementById(isHost ? 'player2-status' : 'player1-status').textContent = '✓ Rolou';
+
+                    verificarResultado();
+                    break;
+
+                case 'reset':
+                    resetRolagens();
+                    addChat('Nova rodada iniciada!');
+                    break;
+            }
+        }
+
+        function rolarOnline() {
+            if (!conn || !conn.open) {
+                return alert('Aguarde um oponente conectar!');
+            }
+
+            const dados = parseInt(document.getElementById('online-dados').value) || 1;
+            const tipo = document.getElementById('online-tipo').value;
+            const resultados = rolarMultiplos(dados, 10);
+            const total = soma(resultados);
+
+            minhaRolagem = { tipo, dados, resultados, total };
+
+            // Envia para o oponente
+            conn.send({ type: 'roll', ...minhaRolagem });
+
+            // Atualiza UI local
+            const meuBox = isHost ? 'player1-box' : 'player2-box';
+            document.getElementById(meuBox).classList.add('ready');
+            document.getElementById(isHost ? 'player1-status' : 'player2-status').textContent = '✓ Rolou';
+
+            addChat(`Você rolou ${dados}d10 = ${total} (${tipo})`, 'player');
+            document.getElementById('btn-rolar-online').disabled = true;
+            document.getElementById('btn-rolar-online').textContent = 'Aguardando...';
+
+            verificarResultado();
+        }
+
+        function verificarResultado() {
+            if (!minhaRolagem || !oponenteRolagem) return;
+
+            // Determina atacante e defensor
+            let atacante, defensor, atkNome, defNome;
+
+            if (minhaRolagem.tipo === 'atacante' && oponenteRolagem.tipo === 'defensor') {
+                atacante = minhaRolagem;
+                defensor = oponenteRolagem;
+                atkNome = meuNome;
+                defNome = oponenteNome;
+            } else if (minhaRolagem.tipo === 'defensor' && oponenteRolagem.tipo === 'atacante') {
+                atacante = oponenteRolagem;
+                defensor = minhaRolagem;
+                atkNome = oponenteNome;
+                defNome = meuNome;
+            } else {
+                // Ambos escolheram o mesmo tipo - compara direto
+                atacante = minhaRolagem.total > oponenteRolagem.total ? minhaRolagem : oponenteRolagem;
+                defensor = minhaRolagem.total > oponenteRolagem.total ? oponenteRolagem : minhaRolagem;
+                atkNome = minhaRolagem.total > oponenteRolagem.total ? meuNome : oponenteNome;
+                defNome = minhaRolagem.total > oponenteRolagem.total ? oponenteNome : meuNome;
+            }
+
+            // Calcular falhas
+            const atkFalhas = calcularFalhas(atacante.resultados);
+            const defFalhas = calcularFalhas(defensor.resultados);
+
+            // Totais com penalidade
+            const atkTotalBruto = atacante.total;
+            const defTotalBruto = defensor.total;
+            const atkTotalFinal = atkTotalBruto - atkFalhas.penalidade;
+            const defTotalFinal = defTotalBruto - defFalhas.penalidade;
+            const diff = atkTotalFinal - defTotalFinal;
+
+            // Críticos
+            const criticoAtk = diff > 0 ? verificarCritico(atacante.resultados) : null;
+            const criticoDef = diff > 0 ? verificarCriticoDefensivo(defensor.resultados) : null;
+
+            // Calcular injúria final
+            const injuriaFinal = calcularInjuria(diff, criticoAtk, criticoDef);
+
+            // Atualiza boxes
+            const vencedor = diff > 0 ? atkNome : (diff < 0 ? defNome : null);
+
+            if (vencedor === meuNome) {
+                document.getElementById(isHost ? 'player1-box' : 'player2-box').classList.add('winner');
+                document.getElementById(isHost ? 'player2-box' : 'player1-box').classList.add('loser');
+            } else if (vencedor === oponenteNome) {
+                document.getElementById(isHost ? 'player1-box' : 'player2-box').classList.add('loser');
+                document.getElementById(isHost ? 'player2-box' : 'player1-box').classList.add('winner');
+            }
+
+            // Mostra resultado
+            const container = document.getElementById('online-resultado');
+            let html = `
+                <div class="row gap-15 m-15-b">
+                    <div class="c-xs-6 text-center">
+                        <p class="fs-6 opacity-7">${atkNome} (ATK)</p>
+                        <div class="dice-pool f-justify-center m-10-t">
+                            ${atacante.resultados.map(r => `<div class="die border-rd-6" style="width:40px;height:40px;font-size:16px;${r===10?'border-color:var(--green);color:var(--green)':r===1?'border-color:var(--red);color:var(--red)':''}">${r}</div>`).join('')}
+                        </div>
+                        <p class="fs-10 fw-700 m-10-t">${atkFalhas.penalidade > 0 ? `${atkTotalBruto} <span style="color:var(--red)">-${atkFalhas.penalidade}</span> = ${atkTotalFinal}` : atkTotalFinal}</p>
+                    </div>
+                    <div class="c-xs-6 text-center">
+                        <p class="fs-6 opacity-7">${defNome} (DEF)</p>
+                        <div class="dice-pool f-justify-center m-10-t">
+                            ${defensor.resultados.map(r => `<div class="die border-rd-6" style="width:40px;height:40px;font-size:16px;${r===10?'border-color:var(--green);color:var(--green)':r===1?'border-color:var(--red);color:var(--red)':''}">${r}</div>`).join('')}
+                        </div>
+                        <p class="fs-10 fw-700 m-10-t">${defFalhas.penalidade > 0 ? `${defTotalBruto} <span style="color:var(--red)">-${defFalhas.penalidade}</span> = ${defTotalFinal}` : defTotalFinal}</p>
+                    </div>
+                </div>
+                <p class="fs-8 m-10-b">Diferença: <strong>${diff}</strong></p>
+            `;
+
+            // Falhas (apenas se houver múltiplo = 2+ uns)
+            if (atkFalhas.mult || defFalhas.mult) {
+                html += `<p class="fs-6 m-10-b" style="color:var(--red)">`;
+                if (atkFalhas.mult) html += `ATK: Falha ${atkFalhas.mult} (${atkFalhas.qtd} uns) = -${atkFalhas.penalidade} `;
+                if (defFalhas.mult) html += `DEF: Falha ${defFalhas.mult} (${defFalhas.qtd} uns) = -${defFalhas.penalidade}`;
+                html += `</p>`;
+            }
+
+            html += `<span class="injury-badge ${injuriaFinal.classe} fs-9">${injuriaFinal.nome}</span>`;
+
+            if (vencedor) {
+                html += `<p class="fs-9 fw-700 m-15-t" style="color:var(--gold)">${vencedor} venceu!</p>`;
+            }
+
+            // Crítico ofensivo
+            if (criticoAtk) {
+                html += `
+                    <div class="crit-banner">
+                        <p class="fs-9 fw-700" style="color:#fff">CRÍTICO OFENSIVO ${criticoAtk.mult}!</p>
+                        <p class="fs-6 m-5-t" style="color:rgba(255,255,255,0.9)">${criticoAtk.bonus}</p>
+                    </div>
+                `;
+            }
+
+            // Crítico defensivo
+            if (criticoDef) {
+                html += `
+                    <div class="crit-banner" style="background: linear-gradient(135deg, var(--blue), var(--green));">
+                        <p class="fs-9 fw-700" style="color:#fff">CRÍTICO DEFENSIVO ${criticoDef.mult}!</p>
+                        <p class="fs-6 m-5-t" style="color:rgba(255,255,255,0.9)">Reduz ${criticoDef.reducao} nível(is) de injúria</p>
+                    </div>
+                `;
+            }
+
+            html += `<button class="btn btn-green border-rd-6 p-10-tb p-30-lr fs-7 m-20-t" onclick="novaRodada()">Nova Rodada</button>`;
+
+            container.innerHTML = html;
+
+            // Histórico
+            let extra = '';
+            if (criticoAtk) extra += `CRIT ATK ${criticoAtk.mult} `;
+            if (criticoDef) extra += `CRIT DEF ${criticoDef.mult} `;
+            if (atkFalhas.mult) extra += `Falha ATK ${atkFalhas.mult} `;
+            if (defFalhas.mult) extra += `Falha DEF ${defFalhas.mult}`;
+
+            addHistorico('Online', `${atkNome}(${atkTotalFinal}) vs ${defNome}(${defTotalFinal})`, injuriaFinal.nome, extra.trim());
+        }
+
+        function novaRodada() {
+            if (conn && conn.open) {
+                conn.send({ type: 'reset' });
+            }
+            resetRolagens();
+        }
+
+        function resetRolagens() {
+            minhaRolagem = null;
+            oponenteRolagem = null;
+
+            document.getElementById('player1-box').className = 'player-box border-rd-8 p-15-all text-center connected';
+            document.getElementById('player2-box').className = 'player-box border-rd-8 p-15-all text-center connected';
+            document.getElementById('player1-status').textContent = '';
+            document.getElementById('player2-status').textContent = '';
+
+            document.getElementById('online-resultado').innerHTML = '<div class="text-center"><span class="opacity-5">Aguardando rolagens...</span></div>';
+            document.getElementById('btn-rolar-online').disabled = false;
+            document.getElementById('btn-rolar-online').textContent = 'ROLAR!';
+        }
+
+        function copiarCodigo() {
+            const codigo = document.getElementById('sala-codigo').textContent;
+            navigator.clipboard.writeText(codigo).then(() => {
+                alert('Código copiado!');
+            });
+        }
+
+        function sairSala() {
+            if (conn) conn.close();
+            if (peer) peer.destroy();
+            resetOnline();
+            mostrarLobby();
+            setStatus('offline', 'Desconectado');
+        }
+
+        function resetOnline() {
+            peer = null;
+            conn = null;
+            isHost = false;
+            minhaRolagem = null;
+            oponenteRolagem = null;
+            oponenteNome = '';
+
+            document.getElementById('player1-nome').textContent = 'Aguardando...';
+            document.getElementById('player2-nome').textContent = 'Aguardando...';
+            document.getElementById('player1-status').textContent = '';
+            document.getElementById('player2-status').textContent = '';
+            document.getElementById('player1-box').className = 'player-box border-rd-8 p-15-all text-center';
+            document.getElementById('player2-box').className = 'player-box border-rd-8 p-15-all text-center';
+            document.getElementById('chat-box').innerHTML = '';
+            document.getElementById('online-resultado').innerHTML = '<div class="text-center"><span class="opacity-5">Aguardando rolagens...</span></div>';
+            document.getElementById('btn-rolar-online').disabled = false;
+            document.getElementById('btn-rolar-online').textContent = 'ROLAR!';
+        }
+    </script>
+</body>
+</html>

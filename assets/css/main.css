@@ -1,8 +1,11 @@
 /* ============================================
    SCAR RPG - Estilos Compartilhados
+   Arquivo centralizado para todos os estilos comuns
    ============================================ */
 
-/* Variaveis CSS Globais */
+/* ============================================
+   1. VARIAVEIS CSS GLOBAIS
+   ============================================ */
 :root {
     /* Cores base */
     --cor-principal: #8B0000;
@@ -16,30 +19,64 @@
     --cor-borda: #333;
     --cor-gold: #D4AF37;
 
-    /* Gradientes e sombras */
-    --gradient-blood: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #5a0000 100%);
-    --gradient-dark: linear-gradient(180deg, #0a0a0a 0%, #1a0a0a 100%);
-    --shadow-glow: 0 0 30px rgba(220,20,60,0.3);
-    --shadow-card: 0 10px 40px rgba(0,0,0,0.5);
+    /* Aliases para compatibilidade */
+    --cor-card: #141414;
+    --cor-card-hover: #1a1a1a;
+    --cor-texto-soft: #999;
 
     /* Cores especificas para aflicoes */
     --cor-fisico: #DC143C;
     --cor-fisico-soft: rgba(220, 20, 60, 0.12);
     --cor-mental: #9B59B6;
     --cor-mental-soft: rgba(155, 89, 182, 0.12);
+
+    /* Cores auxiliares */
+    --red: #DC143C;
+    --gold: #D4AF37;
+    --blue: #3498db;
+    --green: #27ae60;
+    --purple: #9b59b6;
+    --pink: #e91e63;
+
+    /* Gradientes e sombras */
+    --gradient-blood: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #5a0000 100%);
+    --gradient-dark: linear-gradient(180deg, #0a0a0a 0%, #1a0a0a 100%);
+    --shadow-glow: 0 0 30px rgba(220,20,60,0.3);
+    --shadow-card: 0 10px 40px rgba(0,0,0,0.5);
 }
 
-/* Scrollbar personalizada */
+/* ============================================
+   2. RESET E BASE
+   ============================================ */
 * {
+    box-sizing: border-box;
     scrollbar-width: thin;
     scrollbar-color: var(--cor-principal) var(--cor-fundo);
 }
 
-/* Tipografia base */
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--cor-fundo);
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--cor-principal);
+    border-radius: 4px;
+}
+
+/* ============================================
+   3. TIPOGRAFIA BASE
+   ============================================ */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: var(--cor-fundo);
     color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -47,10 +84,340 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: 2px;
 }
 
-/* Animacoes compartilhadas */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ============================================
+   4. HEADER E NAVEGACAO
+   ============================================ */
+.site-header {
+    background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transition: background 0.3s ease;
+}
+
+.site-header.scrolled {
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(10px);
+}
+
+.logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--cor-secundaria);
+    text-decoration: none;
+    letter-spacing: 4px;
+}
+
+.nav-link {
+    color: var(--cor-texto);
+    text-decoration: none;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px 15px;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--cor-accent);
+}
+
+.nav-link.active {
+    color: var(--cor-accent);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--cor-accent);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 80%;
+}
+
+/* ============================================
+   5. BOTOES
+   ============================================ */
+.btn {
+    display: inline-block;
+    padding: 15px 40px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+.btn-primary {
+    background: var(--cor-principal);
+    color: white;
+    border: 2px solid var(--cor-principal);
+}
+
+.btn-primary:hover {
+    background: var(--cor-secundaria);
+    border-color: var(--cor-secundaria);
+    box-shadow: 0 0 20px rgba(220,20,60,0.4);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--cor-texto);
+    border: 2px solid var(--cor-borda);
+}
+
+.btn-outline:hover {
+    border-color: var(--cor-accent);
+    color: var(--cor-accent);
+}
+
+.btn-secondary {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--cor-borda);
+    color: var(--cor-texto);
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--cor-texto-secundario);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   6. CARDS
+   ============================================ */
+.card {
+    background: var(--cor-fundo-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    padding: 30px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-blood);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.card:hover {
+    background: var(--cor-fundo-card-hover);
+    border-color: var(--cor-principal);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-glow), var(--shadow-card);
+}
+
+.card:hover::before {
+    transform: scaleX(1);
+}
+
+.card-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--gradient-blood);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card-icon {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+.card-title {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    color: var(--cor-texto);
+}
+
+.card-text {
+    color: var(--cor-texto-secundario);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ============================================
+   7. SECTION TITLES E DIVIDERS
+   ============================================ */
+.section-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--cor-texto);
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: var(--cor-secundaria);
+}
+
+.section-title.centered::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cor-principal), transparent);
+    margin: 0;
+    position: relative;
+}
+
+.section-divider::before {
+    content: '\25C6';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--cor-fundo);
+    padding: 0 20px;
+    color: var(--cor-principal);
+    font-size: 0.8rem;
+}
+
+/* ============================================
+   8. TABELAS
+   ============================================ */
+.table-scar {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--cor-borda);
+}
+
+.table-scar th,
+.table-scar td {
+    padding: 18px 24px;
+    text-align: left;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.table-scar th {
+    background: linear-gradient(135deg, var(--cor-fundo-card) 0%, #1a1a1a 100%);
+    color: var(--cor-secundaria);
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.table-scar th::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-blood);
+}
+
+.table-scar tbody tr {
+    transition: all 0.3s ease;
+}
+
+.table-scar tbody tr:hover td {
+    background: rgba(255,255,255,0.05);
+}
+
+.table-scar tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-scar td:first-child {
+    font-weight: 600;
+    color: var(--cor-secundaria);
+}
+
+/* ============================================
+   9. INPUTS E FORMS
+   ============================================ */
+input, select, textarea {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--cor-borda);
+    color: var(--cor-texto);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+    font-family: 'Roboto', sans-serif;
+}
+
+input:hover, select:hover, textarea:hover {
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.5);
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--cor-secundaria);
+    background: rgba(0,0,0,0.5);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 0 0 3px rgba(220, 20, 60, 0.15);
+}
+
+input::placeholder {
+    color: rgba(255,255,255,0.3);
+}
+
+select option {
+    background: var(--cor-card);
+    color: var(--cor-texto);
+}
+
+/* ============================================
+   10. ANIMACOES COMPARTILHADAS
+   ============================================ */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pageLoad {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes title-glow {
@@ -66,4 +433,150 @@ h1, h2, h3, h4, h5, h6 {
 @keyframes bounce {
     0%, 100% { transform: translateX(-50%) translateY(0); }
     50% { transform: translateX(-50%) translateY(10px); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+}
+
+/* ============================================
+   11. UTILITARIOS
+   ============================================ */
+.text-gold { color: var(--cor-gold); }
+.text-red { color: var(--cor-secundaria); }
+.text-muted { color: var(--cor-texto-secundario); }
+
+.title {
+    color: var(--cor-secundaria);
+    text-shadow: 0 0 40px rgba(220,20,60,0.4);
+}
+
+.subtitle {
+    color: var(--cor-gold);
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+/* ============================================
+   12. FOOTER
+   ============================================ */
+.site-footer {
+    background: var(--cor-fundo-card);
+    border-top: 1px solid var(--cor-borda);
+    padding: 40px 0;
+    margin-top: auto;
+}
+
+.site-footer a {
+    color: var(--cor-texto-secundario);
+    transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+    color: var(--cor-accent);
+}
+
+/* ============================================
+   13. RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    .site-header .nav-link {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        font-size: 0.85rem;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .table-scar th,
+    .table-scar td {
+        padding: 12px 16px;
+    }
+}
+
+/* ============================================
+   14. BOTAO FLUTUANTE (DICE FAB)
+   ============================================ */
+.dice-fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-blood);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 6px 25px rgba(220,20,60,0.5), 0 0 0 0 rgba(220,20,60,0.4);
+    transition: all 0.3s ease;
+    z-index: 999;
+    overflow: hidden;
+    border: 2px solid rgba(255,255,255,0.1);
+}
+
+.dice-fab:hover {
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 10px 35px rgba(220,20,60,0.6), 0 0 0 8px rgba(220,20,60,0.15);
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+}
+
+.dice-fab-icon {
+    font-size: 28px;
+    line-height: 1;
+    transition: all 0.3s ease;
+}
+
+.dice-fab:hover .dice-fab-icon {
+    font-size: 32px;
+    animation: diceShake 0.5s ease infinite;
+}
+
+.dice-fab-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0;
+    color: #fff;
+    letter-spacing: 1px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    margin-top: 0;
+}
+
+.dice-fab:hover .dice-fab-text {
+    font-size: 11px;
+    opacity: 1;
+    margin-top: 4px;
+}
+
+@keyframes diceShake {
+    0%, 100% { transform: rotate(-8deg); }
+    50% { transform: rotate(8deg); }
+}
+
+@media (max-width: 640px) {
+    .dice-fab {
+        bottom: 20px;
+        right: 20px;
+        width: 54px;
+        height: 54px;
+    }
+
+    .dice-fab:hover {
+        width: 70px;
+        height: 70px;
+    }
+
+    .dice-fab-icon {
+        font-size: 24px;
+    }
 }

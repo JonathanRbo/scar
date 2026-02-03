@@ -13,116 +13,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --cor-principal: #8B0000;
-            --cor-secundaria: #DC143C;
-            --cor-accent: #FF4444;
-            --cor-fundo: #0a0a0a;
-            --cor-card: #141414;
-            --cor-card-hover: #1a1a1a;
-            --cor-texto: #f5f5f5;
-            --cor-texto-soft: #999;
-            --cor-borda: #333;
-            --cor-gold: #D4AF37;
+        /* ============================================
+           Habilidades - Estilos Especificos da Pagina
+           Estilos comuns estao em assets/css/main.css
+           ============================================ */
 
-            --gradient-blood: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #5a0000 100%);
-            --shadow-glow: 0 0 30px rgba(220,20,60,0.3);
-        }
-
-        * {
-            box-sizing: border-box;
-            scrollbar-width: thin;
-            scrollbar-color: var(--cor-principal) var(--cor-fundo);
-        }
-
-        /* Animação suave de entrada */
-        @keyframes pageLoad {
-            from {
-                opacity: 0;
-                filter: brightness(0.8);
-            }
-            to {
-                opacity: 1;
-                filter: brightness(1);
-            }
-        }
-
+        /* Animacao de entrada da pagina */
         body {
-            background: var(--cor-fundo);
-            color: var(--cor-texto);
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            min-height: 100vh;
             animation: pageLoad 0.5s ease-out forwards;
         }
 
         body.page-exit {
             animation: pageLoad 0.3s ease-in reverse forwards;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 2px;
-        }
-
-        /* Header */
-        .site-header {
-            background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            transition: background 0.3s ease;
-        }
-
-        .site-header.scrolled {
-            background: rgba(10,10,10,0.95);
-            backdrop-filter: blur(10px);
-        }
-
-        .logo-text {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2rem;
-            color: var(--cor-secundaria);
-            text-decoration: none;
-            letter-spacing: 4px;
-        }
-
-        .nav-link {
-            color: var(--cor-texto);
-            text-decoration: none;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 10px 15px;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: var(--cor-accent);
-        }
-
-        .nav-link.active {
-            color: var(--cor-accent);
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: var(--cor-accent);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-
-        .nav-link:hover::after,
-        .nav-link.active::after {
-            width: 80%;
         }
 
         /* Hero */
@@ -3409,5 +3311,10 @@
         });
     </script>
 
+    <!-- Botão Flutuante - Rolador de Dados -->
+    <a href="dice-roller.html" class="dice-fab" title="Rolador de Dados" aria-label="Abrir Rolador de Dados">
+        <span class="dice-fab-icon">🎲</span>
+        <span class="dice-fab-text">DADOS</span>
+    </a>
 </body>
 </html>
