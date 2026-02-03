@@ -622,6 +622,87 @@
             opacity: 0.5;
             letter-spacing: 0.5px;
         }
+
+        /* ========== MOBILE RESPONSIVO - ONLINE ========== */
+        @media (max-width: 640px) {
+            #tab-online .section-box {
+                padding: 15px;
+            }
+
+            #tab-online .section-title {
+                font-size: 1.1rem;
+            }
+
+            /* Botões em coluna no mobile */
+            #online-lobby .d-flex.f-gap-15 {
+                flex-direction: column;
+            }
+
+            /* Código da sala menor */
+            .room-code {
+                font-size: 16px;
+                letter-spacing: 2px;
+                padding: 10px 14px;
+                word-break: break-all;
+            }
+
+            /* Grid de jogadores responsivo */
+            #online-sala .row.gap-20 {
+                gap: 10px;
+            }
+
+            .player-box {
+                padding: 12px !important;
+            }
+
+            .player-box .fs-9 {
+                font-size: 0.85rem;
+            }
+
+            /* Controles de combate em coluna */
+            #online-controles .d-flex {
+                flex-direction: column;
+                gap: 12px;
+                align-items: stretch !important;
+            }
+
+            #online-controles .d-flex > div {
+                width: 100%;
+            }
+
+            #online-controles input,
+            #online-controles select {
+                width: 100% !important;
+            }
+
+            #online-controles button {
+                width: 100%;
+                padding: 14px 20px;
+            }
+
+            /* Chat menor */
+            .chat-box {
+                height: 100px;
+            }
+
+            .chat-msg {
+                padding: 8px 10px;
+                margin: 5px;
+                font-size: 0.8rem;
+            }
+
+            /* Inputs mais compactos */
+            #tab-online input,
+            #tab-online select {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            /* Botão sair */
+            #online-sala > button:last-child {
+                padding: 12px;
+            }
+        }
     </style>
 </head>
 <body class="p-30-t p-30-lr xs-p-15-t xs-p-15-lr" style="overflow-x: hidden;">
@@ -900,41 +981,24 @@
                     <button class="btn btn-secondary border-rd-8 p-10-tb p-25-lr fs-7 m-15-t" onclick="copiarCodigo()">📋 Copiar Código</button>
                 </div>
 
-                <!-- Jogadores -->
+                <!-- Jogadores (renderizado dinamicamente) -->
                 <div class="section-box">
-                    <div class="section-title">Jogadores</div>
-                    <div class="row gap-20">
-                        <div class="c-xs-6">
-                            <div class="player-box border-rd-12 p-20-all text-center" id="player1-box">
-                                <span class="field-label">Host</span>
-                                <p class="fs-9 m-10-t" id="player1-nome" style="font-family: 'Bebas Neue', sans-serif;">Aguardando...</p>
-                                <p class="fs-7 m-8-t" id="player1-status" style="color: var(--green);"></p>
-                            </div>
-                        </div>
-                        <div class="c-xs-6">
-                            <div class="player-box border-rd-12 p-20-all text-center" id="player2-box">
-                                <span class="field-label">Convidado</span>
-                                <p class="fs-9 m-10-t" id="player2-nome" style="font-family: 'Bebas Neue', sans-serif;">Aguardando...</p>
-                                <p class="fs-7 m-8-t" id="player2-status" style="color: var(--green);"></p>
-                            </div>
+                    <div class="section-title">Jogadores na Sala (<span id="jogadores-count">0</span>)</div>
+                    <div class="row gap-15" id="jogadores-container">
+                        <!-- Renderizado via JavaScript -->
+                        <div class="c-xs-12 text-center p-20-all">
+                            <span class="opacity-4 fs-8">Aguardando jogadores...</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Controles de Combate -->
                 <div class="section-box" id="online-controles">
-                    <div class="section-title">Controles de Combate</div>
+                    <div class="section-title">Rolar Dados</div>
                     <div class="d-flex f-wrap f-gap-25 f-items-end f-justify-center">
                         <div>
-                            <label class="field-label">Seus Dados</label>
+                            <label class="field-label">Quantidade de Dados</label>
                             <input type="number" id="online-dados" value="3" min="1" max="10" class="border-rd-10 p-14-all w-90px text-center fs-9">
-                        </div>
-                        <div>
-                            <label class="field-label">Tipo</label>
-                            <select id="online-tipo" class="border-rd-10 p-14-all w-150px fs-8">
-                                <option value="atacante">Atacante</option>
-                                <option value="defensor">Defensor</option>
-                            </select>
                         </div>
                         <button class="btn btn-primary border-rd-10 p-15-tb p-50-lr fs-8" id="btn-rolar-online" onclick="rolarOnline()">ROLAR!</button>
                     </div>
@@ -1011,13 +1075,16 @@
     <script>
         // ========== ESTADO ==========
         let historico = [];
+
+        // ========== ESTADO ONLINE (Multi-jogador) ==========
         let peer = null;
-        let conn = null;
         let isHost = false;
+        let meuId = null;
+        let hostId = null;
         let meuNome = '';
-        let oponenteNome = '';
-        let minhaRolagem = null;
-        let oponenteRolagem = null;
+        let conns = new Map();              // Map<peerId, DataConnection>
+        let jogadores = new Map();          // Map<peerId, {nome, rolagem, status}>
+        let hostConn = null;                // Conexão com o host (se não for host)
 
         // ========== TABS ==========
         document.querySelectorAll('.tab').forEach(tab => {
@@ -1502,7 +1569,14 @@
         }
 
         function criarSala() {
-            meuNome = document.getElementById('online-nome').value.trim() || 'Jogador 1';
+            const nomeInput = document.getElementById('online-nome');
+            meuNome = nomeInput.value.trim();
+
+            if (!meuNome) {
+                alert('Digite seu nome para criar uma sala!');
+                nomeInput.focus();
+                return;
+            }
 
             setStatus('waiting', 'Conectando...');
 
@@ -1510,18 +1584,24 @@
 
             peer.on('open', (id) => {
                 isHost = true;
+                meuId = id;
+                hostId = id;
                 document.getElementById('sala-codigo').textContent = id;
-                document.getElementById('player1-nome').textContent = meuNome;
-                document.getElementById('player1-box').classList.add('connected');
 
-                setStatus('waiting', 'Aguardando oponente...');
-                addChat('Sala criada! Compartilhe o código.');
+                // Adiciona o host como primeiro jogador
+                jogadores.set(meuId, { nome: meuNome, rolagem: null, status: 'connected' });
+                renderizarJogadores();
+
+                setStatus('waiting', 'Aguardando jogadores...');
+                addChat('Sala criada! Compartilhe o código com os jogadores.');
                 mostrarSala();
             });
 
+            // Host aceita múltiplas conexões
             peer.on('connection', (connection) => {
-                conn = connection;
-                setupConnection();
+                const peerId = connection.peer;
+                conns.set(peerId, connection);
+                setupConnection(connection, peerId);
             });
 
             peer.on('error', (err) => {
@@ -1531,28 +1611,47 @@
         }
 
         function entrarSala() {
+            const nomeInput = document.getElementById('online-nome');
+            meuNome = nomeInput.value.trim();
+
+            if (!meuNome) {
+                alert('Digite seu nome para entrar na sala!');
+                nomeInput.focus();
+                return;
+            }
+
             const codigo = document.getElementById('codigo-entrar').value.trim();
             if (!codigo) return alert('Digite o código da sala');
-
-            meuNome = document.getElementById('online-nome').value.trim() || 'Jogador 2';
 
             setStatus('waiting', 'Conectando...');
 
             peer = new Peer();
 
-            peer.on('open', () => {
-                conn = peer.connect(codigo, { reliable: true });
+            peer.on('open', (id) => {
+                meuId = id;
+                hostId = codigo;
+                hostConn = peer.connect(codigo, { reliable: true });
 
-                conn.on('open', () => {
+                hostConn.on('open', () => {
                     isHost = false;
                     document.getElementById('sala-codigo').textContent = codigo;
-                    setupConnection();
 
                     // Envia nome para o host
-                    conn.send({ type: 'join', nome: meuNome });
+                    hostConn.send({ type: 'join', playerId: meuId, nome: meuNome });
                 });
 
-                conn.on('error', (err) => {
+                hostConn.on('data', (data) => {
+                    handleMessage(data, hostId);
+                });
+
+                hostConn.on('close', () => {
+                    setStatus('offline', 'Host desconectou');
+                    addChat('O host encerrou a sala.', 'system');
+                    resetOnline();
+                    mostrarLobby();
+                });
+
+                hostConn.on('error', (err) => {
                     setStatus('offline', 'Erro na conexão');
                     alert('Não foi possível conectar. Verifique o código.');
                 });
@@ -1566,57 +1665,118 @@
             });
         }
 
-        function setupConnection() {
+        function setupConnection(conn, peerId) {
             conn.on('data', (data) => {
-                handleMessage(data);
+                handleMessage(data, peerId);
             });
 
             conn.on('close', () => {
-                setStatus('offline', 'Desconectado');
-                addChat('Oponente desconectou.', 'system');
-                resetOnline();
+                // Jogador desconectou
+                const player = jogadores.get(peerId);
+                if (player) {
+                    addChat(`${player.nome} saiu da sala.`, 'system');
+                    jogadores.delete(peerId);
+                    conns.delete(peerId);
+                    renderizarJogadores();
+
+                    // Notifica outros jogadores
+                    broadcast({ type: 'playerLeft', playerId: peerId });
+                }
             });
-
-            if (isHost) {
-                document.getElementById('player1-nome').textContent = meuNome;
-                document.getElementById('player1-box').classList.add('connected');
-            } else {
-                document.getElementById('player2-nome').textContent = meuNome;
-                document.getElementById('player2-box').classList.add('connected');
-                mostrarSala();
-            }
-
-            setStatus('online', 'Conectado');
         }
 
-        function handleMessage(data) {
+        // Host envia para todos os jogadores conectados
+        function broadcast(data, excludePeerId = null) {
+            if (!isHost) return;
+
+            conns.forEach((conn, peerId) => {
+                if (peerId !== excludePeerId && conn.open) {
+                    conn.send(data);
+                }
+            });
+        }
+
+        function handleMessage(data, fromPeerId) {
             switch (data.type) {
                 case 'join':
-                    oponenteNome = data.nome;
-                    document.getElementById('player2-nome').textContent = oponenteNome;
-                    document.getElementById('player2-box').classList.add('connected');
-                    addChat(`${oponenteNome} entrou na sala!`);
-                    // Envia nome de volta
-                    conn.send({ type: 'welcome', nome: meuNome });
+                    // Novo jogador entrou (apenas host recebe)
+                    if (isHost) {
+                        jogadores.set(data.playerId, { nome: data.nome, rolagem: null, status: 'connected' });
+                        addChat(`${data.nome} entrou na sala!`);
+                        renderizarJogadores();
+
+                        // Envia lista completa de jogadores para o novo jogador
+                        const playerList = [];
+                        jogadores.forEach((p, id) => playerList.push({ playerId: id, nome: p.nome }));
+
+                        const newPlayerConn = conns.get(data.playerId);
+                        if (newPlayerConn && newPlayerConn.open) {
+                            newPlayerConn.send({ type: 'welcome', jogadores: playerList, hostId: meuId });
+                        }
+
+                        // Notifica outros jogadores sobre o novo jogador
+                        broadcast({ type: 'playerJoined', playerId: data.playerId, nome: data.nome }, data.playerId);
+                    }
                     break;
 
                 case 'welcome':
-                    oponenteNome = data.nome;
-                    document.getElementById('player1-nome').textContent = oponenteNome;
-                    document.getElementById('player1-box').classList.add('connected');
-                    addChat(`Conectado com ${oponenteNome}!`);
+                    // Jogador recebe lista de jogadores do host
+                    jogadores.clear();
+                    data.jogadores.forEach(p => {
+                        jogadores.set(p.playerId, { nome: p.nome, rolagem: null, status: 'connected' });
+                    });
+                    hostId = data.hostId;
+                    renderizarJogadores();
+                    setStatus('online', 'Conectado');
+                    addChat(`Conectado! ${jogadores.size} jogador(es) na sala.`);
+                    mostrarSala();
+                    break;
+
+                case 'playerJoined':
+                    // Notificação de novo jogador (para jogadores não-host)
+                    jogadores.set(data.playerId, { nome: data.nome, rolagem: null, status: 'connected' });
+                    addChat(`${data.nome} entrou na sala!`);
+                    renderizarJogadores();
+                    break;
+
+                case 'playerLeft':
+                    // Jogador saiu
+                    const leftPlayer = jogadores.get(data.playerId);
+                    if (leftPlayer) {
+                        addChat(`${leftPlayer.nome} saiu da sala.`, 'system');
+                        jogadores.delete(data.playerId);
+                        renderizarJogadores();
+                    }
                     break;
 
                 case 'roll':
-                    oponenteRolagem = data;
-                    addChat(`${oponenteNome} rolou! (${data.tipo})`, 'player');
+                    // Jogador rolou dados
+                    const player = jogadores.get(data.playerId);
+                    if (player) {
+                        player.rolagem = { dados: data.dados, resultados: data.resultados, total: data.total };
+                        player.status = 'ready';
+                        addChat(`${player.nome} rolou ${data.dados}d10 = ${data.total}`, 'player');
+                        renderizarJogadores();
 
-                    // Atualiza status visual
-                    const oponenteBox = isHost ? 'player2-box' : 'player1-box';
-                    document.getElementById(oponenteBox).classList.add('ready');
-                    document.getElementById(isHost ? 'player2-status' : 'player1-status').textContent = '✓ Rolou';
+                        // Se host, retransmite para todos
+                        if (isHost) {
+                            broadcast({ type: 'rollUpdate', playerId: data.playerId, nome: player.nome, ...data }, data.playerId);
+                        }
 
-                    verificarResultado();
+                        verificarResultado();
+                    }
+                    break;
+
+                case 'rollUpdate':
+                    // Atualização de rolagem (de outro jogador via host)
+                    const updatedPlayer = jogadores.get(data.playerId);
+                    if (updatedPlayer) {
+                        updatedPlayer.rolagem = { dados: data.dados, resultados: data.resultados, total: data.total };
+                        updatedPlayer.status = 'ready';
+                        addChat(`${data.nome} rolou ${data.dados}d10 = ${data.total}`, 'player');
+                        renderizarJogadores();
+                        verificarResultado();
+                    }
                     break;
 
                 case 'reset':
@@ -1626,27 +1786,71 @@
             }
         }
 
+        function renderizarJogadores() {
+            const container = document.getElementById('jogadores-container');
+            const countEl = document.getElementById('jogadores-count');
+
+            countEl.textContent = jogadores.size;
+
+            if (jogadores.size === 0) {
+                container.innerHTML = '<div class="c-xs-12 text-center p-20-all"><span class="opacity-4 fs-8">Aguardando jogadores...</span></div>';
+                return;
+            }
+
+            let html = '';
+            jogadores.forEach((player, peerId) => {
+                const isMe = peerId === meuId;
+                const isHostPlayer = peerId === hostId;
+                const statusClass = player.status || '';
+                const label = isMe ? 'Você' : (isHostPlayer ? 'Host' : 'Jogador');
+                const statusText = player.rolagem ? '✓ Rolou' : '';
+
+                html += `
+                    <div class="c-xs-6 c-sm-4 c-md-3">
+                        <div class="player-box border-rd-12 p-15-all text-center ${statusClass}" id="player-${peerId}">
+                            <span class="field-label">${label}</span>
+                            <p class="fs-9 m-8-t" style="font-family: 'Bebas Neue', sans-serif;">${player.nome}</p>
+                            <p class="fs-7 m-5-t" style="color: var(--green);">${statusText}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
         function rolarOnline() {
-            if (!conn || !conn.open) {
-                return alert('Aguarde um oponente conectar!');
+            if (jogadores.size < 2) {
+                return alert('Aguarde pelo menos 2 jogadores na sala!');
+            }
+
+            // Verifica se já rolou
+            const meuJogador = jogadores.get(meuId);
+            if (meuJogador && meuJogador.rolagem) {
+                return alert('Você já rolou nesta rodada!');
             }
 
             const dados = parseInt(document.getElementById('online-dados').value) || 1;
-            const tipo = document.getElementById('online-tipo').value;
             const resultados = rolarMultiplos(dados, 10);
             const total = soma(resultados);
 
-            minhaRolagem = { tipo, dados, resultados, total };
+            // Atualiza local
+            meuJogador.rolagem = { dados, resultados, total };
+            meuJogador.status = 'ready';
+            renderizarJogadores();
 
-            // Envia para o oponente
-            conn.send({ type: 'roll', ...minhaRolagem });
+            // Envia para host (ou broadcast se for host)
+            const rollData = { type: 'roll', playerId: meuId, dados, resultados, total };
 
-            // Atualiza UI local
-            const meuBox = isHost ? 'player1-box' : 'player2-box';
-            document.getElementById(meuBox).classList.add('ready');
-            document.getElementById(isHost ? 'player1-status' : 'player2-status').textContent = '✓ Rolou';
+            if (isHost) {
+                // Host faz broadcast para todos
+                broadcast({ type: 'rollUpdate', playerId: meuId, nome: meuNome, dados, resultados, total });
+            } else {
+                // Jogador envia para o host
+                hostConn.send(rollData);
+            }
 
-            addChat(`Você rolou ${dados}d10 = ${total} (${tipo})`, 'player');
+            addChat(`Você rolou ${dados}d10 = ${total}`, 'player');
             document.getElementById('btn-rolar-online').disabled = true;
             document.getElementById('btn-rolar-online').textContent = 'Aguardando...';
 
@@ -1654,145 +1858,112 @@
         }
 
         function verificarResultado() {
-            if (!minhaRolagem || !oponenteRolagem) return;
+            // Verifica se todos rolaram
+            let todosRolaram = true;
+            jogadores.forEach(p => {
+                if (!p.rolagem) todosRolaram = false;
+            });
 
-            // Determina atacante e defensor
-            let atacante, defensor, atkNome, defNome;
+            if (!todosRolaram || jogadores.size < 2) return;
 
-            if (minhaRolagem.tipo === 'atacante' && oponenteRolagem.tipo === 'defensor') {
-                atacante = minhaRolagem;
-                defensor = oponenteRolagem;
-                atkNome = meuNome;
-                defNome = oponenteNome;
-            } else if (minhaRolagem.tipo === 'defensor' && oponenteRolagem.tipo === 'atacante') {
-                atacante = oponenteRolagem;
-                defensor = minhaRolagem;
-                atkNome = oponenteNome;
-                defNome = meuNome;
-            } else {
-                // Ambos escolheram o mesmo tipo - compara direto
-                atacante = minhaRolagem.total > oponenteRolagem.total ? minhaRolagem : oponenteRolagem;
-                defensor = minhaRolagem.total > oponenteRolagem.total ? oponenteRolagem : minhaRolagem;
-                atkNome = minhaRolagem.total > oponenteRolagem.total ? meuNome : oponenteNome;
-                defNome = minhaRolagem.total > oponenteRolagem.total ? oponenteNome : meuNome;
-            }
+            // Cria ranking ordenado por total (maior primeiro)
+            const ranking = [];
+            jogadores.forEach((p, id) => {
+                const falhas = calcularFalhas(p.rolagem.resultados);
+                const totalFinal = p.rolagem.total - falhas.penalidade;
+                ranking.push({
+                    id,
+                    nome: p.nome,
+                    dados: p.rolagem.dados,
+                    resultados: p.rolagem.resultados,
+                    totalBruto: p.rolagem.total,
+                    totalFinal,
+                    falhas
+                });
+            });
 
-            // Calcular falhas
-            const atkFalhas = calcularFalhas(atacante.resultados);
-            const defFalhas = calcularFalhas(defensor.resultados);
+            ranking.sort((a, b) => b.totalFinal - a.totalFinal);
 
-            // Totais com penalidade
-            const atkTotalBruto = atacante.total;
-            const defTotalBruto = defensor.total;
-            const atkTotalFinal = atkTotalBruto - atkFalhas.penalidade;
-            const defTotalFinal = defTotalBruto - defFalhas.penalidade;
-            const diff = atkTotalFinal - defTotalFinal;
+            // Renderiza resultado
+            renderizarResultadoMulti(ranking);
+        }
 
-            // Críticos
-            const criticoAtk = diff > 0 ? verificarCritico(atacante.resultados) : null;
-            const criticoDef = diff > 0 ? verificarCriticoDefensivo(defensor.resultados) : null;
-
-            // Calcular injúria final
-            const injuriaFinal = calcularInjuria(diff, criticoAtk, criticoDef);
-
-            // Atualiza boxes
-            const vencedor = diff > 0 ? atkNome : (diff < 0 ? defNome : null);
-
-            if (vencedor === meuNome) {
-                document.getElementById(isHost ? 'player1-box' : 'player2-box').classList.add('winner');
-                document.getElementById(isHost ? 'player2-box' : 'player1-box').classList.add('loser');
-            } else if (vencedor === oponenteNome) {
-                document.getElementById(isHost ? 'player1-box' : 'player2-box').classList.add('loser');
-                document.getElementById(isHost ? 'player2-box' : 'player1-box').classList.add('winner');
-            }
-
-            // Mostra resultado
+        function renderizarResultadoMulti(ranking) {
             const container = document.getElementById('online-resultado');
-            let html = `
-                <div class="row gap-15 m-15-b">
-                    <div class="c-xs-6 text-center">
-                        <p class="fs-6 opacity-7">${atkNome} (ATK)</p>
-                        <div class="dice-pool f-justify-center m-10-t">
-                            ${atacante.resultados.map(r => `<div class="die border-rd-6" style="width:40px;height:40px;font-size:16px;${r===10?'border-color:var(--green);color:var(--green)':r===1?'border-color:var(--red);color:var(--red)':''}">${r}</div>`).join('')}
-                        </div>
-                        <p class="fs-10 fw-700 m-10-t">${atkFalhas.penalidade > 0 ? `${atkTotalBruto} <span style="color:var(--red)">-${atkFalhas.penalidade}</span> = ${atkTotalFinal}` : atkTotalFinal}</p>
-                    </div>
-                    <div class="c-xs-6 text-center">
-                        <p class="fs-6 opacity-7">${defNome} (DEF)</p>
-                        <div class="dice-pool f-justify-center m-10-t">
-                            ${defensor.resultados.map(r => `<div class="die border-rd-6" style="width:40px;height:40px;font-size:16px;${r===10?'border-color:var(--green);color:var(--green)':r===1?'border-color:var(--red);color:var(--red)':''}">${r}</div>`).join('')}
-                        </div>
-                        <p class="fs-10 fw-700 m-10-t">${defFalhas.penalidade > 0 ? `${defTotalBruto} <span style="color:var(--red)">-${defFalhas.penalidade}</span> = ${defTotalFinal}` : defTotalFinal}</p>
-                    </div>
-                </div>
-                <p class="fs-8 m-10-b">Diferença: <strong>${diff}</strong></p>
-            `;
 
-            // Falhas (apenas se houver múltiplo = 2+ uns)
-            if (atkFalhas.mult || defFalhas.mult) {
-                html += `<p class="fs-6 m-10-b" style="color:var(--red)">`;
-                if (atkFalhas.mult) html += `ATK: Falha ${atkFalhas.mult} (${atkFalhas.qtd} uns) = -${atkFalhas.penalidade} `;
-                if (defFalhas.mult) html += `DEF: Falha ${defFalhas.mult} (${defFalhas.qtd} uns) = -${defFalhas.penalidade}`;
-                html += `</p>`;
-            }
+            let html = '<div class="section-title m-15-b">Resultado da Rodada</div>';
 
-            html += `<span class="injury-badge ${injuriaFinal.classe} fs-9">${injuriaFinal.nome}</span>`;
+            ranking.forEach((player, index) => {
+                const posicao = index + 1;
+                const medal = posicao === 1 ? '🥇' : posicao === 2 ? '🥈' : posicao === 3 ? '🥉' : `${posicao}º`;
+                const isWinner = posicao === 1;
+                const isMe = player.id === meuId;
 
-            if (vencedor) {
-                html += `<p class="fs-9 fw-700 m-15-t" style="color:var(--gold)">${vencedor} venceu!</p>`;
-            }
-
-            // Crítico ofensivo
-            if (criticoAtk) {
                 html += `
-                    <div class="crit-banner">
-                        <p class="fs-9 fw-700" style="color:#fff">CRÍTICO OFENSIVO ${criticoAtk.mult}!</p>
-                        <p class="fs-6 m-5-t" style="color:rgba(255,255,255,0.9)">${criticoAtk.bonus}</p>
+                    <div class="p-15-all m-10-b border-rd-8" style="background: ${isWinner ? 'rgba(39,174,96,0.15)' : 'rgba(255,255,255,0.03)'}; border: 1px solid ${isWinner ? 'var(--green)' : 'var(--cor-borda)'};">
+                        <div class="d-flex f-items-center f-justify-between">
+                            <div class="d-flex f-items-center f-gap-15">
+                                <span class="fs-10">${medal}</span>
+                                <div>
+                                    <p class="fs-8 fw-600" style="${isMe ? 'color: var(--gold);' : ''}">${player.nome}${isMe ? ' (você)' : ''}</p>
+                                    <div class="dice-pool f-gap-5 m-5-t">
+                                        ${player.resultados.map(r => `<div class="die border-rd-4" style="width:28px;height:28px;font-size:12px;${r===10?'border-color:var(--green);color:var(--green)':r===1?'border-color:var(--red);color:var(--red)':''}">${r}</div>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="fs-11 fw-700" style="color: ${isWinner ? 'var(--green)' : 'var(--cor-texto)'};">
+                                    ${player.falhas.penalidade > 0 ? `<span class="fs-7" style="color:var(--red)">-${player.falhas.penalidade}</span> ` : ''}${player.totalFinal}
+                                </p>
+                                ${player.falhas.mult ? `<p class="fs-6" style="color:var(--red)">Falha ${player.falhas.mult}</p>` : ''}
+                            </div>
+                        </div>
                     </div>
                 `;
-            }
+            });
 
-            // Crítico defensivo
-            if (criticoDef) {
-                html += `
-                    <div class="crit-banner" style="background: linear-gradient(135deg, var(--blue), var(--green));">
-                        <p class="fs-9 fw-700" style="color:#fff">CRÍTICO DEFENSIVO ${criticoDef.mult}!</p>
-                        <p class="fs-6 m-5-t" style="color:rgba(255,255,255,0.9)">Reduz ${criticoDef.reducao} nível(is) de injúria</p>
-                    </div>
-                `;
+            // Botão nova rodada (apenas host)
+            if (isHost) {
+                html += `<button class="btn btn-green border-rd-6 p-10-tb p-30-lr fs-7 m-20-t" onclick="novaRodada()">Nova Rodada</button>`;
+            } else {
+                html += `<p class="fs-7 opacity-5 m-20-t text-center">Aguardando host iniciar nova rodada...</p>`;
             }
-
-            html += `<button class="btn btn-green border-rd-6 p-10-tb p-30-lr fs-7 m-20-t" onclick="novaRodada()">Nova Rodada</button>`;
 
             container.innerHTML = html;
 
             // Histórico
-            let extra = '';
-            if (criticoAtk) extra += `CRIT ATK ${criticoAtk.mult} `;
-            if (criticoDef) extra += `CRIT DEF ${criticoDef.mult} `;
-            if (atkFalhas.mult) extra += `Falha ATK ${atkFalhas.mult} `;
-            if (defFalhas.mult) extra += `Falha DEF ${defFalhas.mult}`;
-
-            addHistorico('Online', `${atkNome}(${atkTotalFinal}) vs ${defNome}(${defTotalFinal})`, injuriaFinal.nome, extra.trim());
+            const vencedor = ranking[0];
+            addHistorico('Online', `${ranking.length} jogadores`, `Vencedor: ${vencedor.nome} (${vencedor.totalFinal})`, '');
         }
 
         function novaRodada() {
-            if (conn && conn.open) {
-                conn.send({ type: 'reset' });
-            }
-            resetRolagens();
+            if (!isHost) return;
+
+            // Reseta rolagens de todos os jogadores
+            jogadores.forEach(p => {
+                p.rolagem = null;
+                p.status = 'connected';
+            });
+
+            renderizarJogadores();
+            resetRolagemUI();
+
+            // Notifica todos
+            broadcast({ type: 'reset' });
+            addChat('Nova rodada iniciada!');
         }
 
         function resetRolagens() {
-            minhaRolagem = null;
-            oponenteRolagem = null;
+            jogadores.forEach(p => {
+                p.rolagem = null;
+                p.status = 'connected';
+            });
+            renderizarJogadores();
+            resetRolagemUI();
+        }
 
-            document.getElementById('player1-box').className = 'player-box border-rd-8 p-15-all text-center connected';
-            document.getElementById('player2-box').className = 'player-box border-rd-8 p-15-all text-center connected';
-            document.getElementById('player1-status').textContent = '';
-            document.getElementById('player2-status').textContent = '';
-
-            document.getElementById('online-resultado').innerHTML = '<div class="text-center"><span class="opacity-5">Aguardando rolagens...</span></div>';
+        function resetRolagemUI() {
+            document.getElementById('online-resultado').innerHTML = '<div class="text-center p-20-all"><span class="opacity-4 fs-8">⚔ Aguardando rolagens...</span></div>';
             document.getElementById('btn-rolar-online').disabled = false;
             document.getElementById('btn-rolar-online').textContent = 'ROLAR!';
         }
@@ -1805,8 +1976,11 @@
         }
 
         function sairSala() {
-            if (conn) conn.close();
+            // Fecha todas as conexões
+            conns.forEach(conn => conn.close());
+            if (hostConn) hostConn.close();
             if (peer) peer.destroy();
+
             resetOnline();
             mostrarLobby();
             setStatus('offline', 'Desconectado');
@@ -1814,20 +1988,17 @@
 
         function resetOnline() {
             peer = null;
-            conn = null;
+            hostConn = null;
             isHost = false;
-            minhaRolagem = null;
-            oponenteRolagem = null;
-            oponenteNome = '';
+            meuId = null;
+            hostId = null;
+            conns.clear();
+            jogadores.clear();
 
-            document.getElementById('player1-nome').textContent = 'Aguardando...';
-            document.getElementById('player2-nome').textContent = 'Aguardando...';
-            document.getElementById('player1-status').textContent = '';
-            document.getElementById('player2-status').textContent = '';
-            document.getElementById('player1-box').className = 'player-box border-rd-8 p-15-all text-center';
-            document.getElementById('player2-box').className = 'player-box border-rd-8 p-15-all text-center';
+            document.getElementById('jogadores-container').innerHTML = '<div class="c-xs-12 text-center p-20-all"><span class="opacity-4 fs-8">Aguardando jogadores...</span></div>';
+            document.getElementById('jogadores-count').textContent = '0';
             document.getElementById('chat-box').innerHTML = '';
-            document.getElementById('online-resultado').innerHTML = '<div class="text-center"><span class="opacity-5">Aguardando rolagens...</span></div>';
+            document.getElementById('online-resultado').innerHTML = '<div class="text-center p-20-all"><span class="opacity-4 fs-8">⚔ Aguardando rolagens...</span></div>';
             document.getElementById('btn-rolar-online').disabled = false;
             document.getElementById('btn-rolar-online').textContent = 'ROLAR!';
         }
