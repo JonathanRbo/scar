@@ -737,50 +737,14 @@
         <div class="main-content">
             <!-- Tabs -->
             <div class="tabs d-flex f-gap-5">
-                <button class="tab active p-15-tb p-25-lr fs-7" data-tab="teste">TESTE</button>
+                <button class="tab active p-15-tb p-25-lr fs-7" data-tab="livre">LIVRE</button>
                 <button class="tab p-15-tb p-25-lr fs-7" data-tab="combate">COMBATE</button>
                 <button class="tab p-15-tb p-25-lr fs-7" data-tab="medo">MEDO</button>
                 <button class="tab p-15-tb p-25-lr fs-7" data-tab="duelo">DUELO</button>
-                <button class="tab p-15-tb p-25-lr fs-7" data-tab="livre">LIVRE</button>
                 <button class="tab p-15-tb p-25-lr fs-7" data-tab="online" style="color:var(--pink)">⚔ ONLINE</button>
             </div>
 
             <!-- TAB: Teste de Ação -->
-            <div class="tab-content active" id="tab-teste">
-                <div class="section-title">Teste de Ação (Xd10)</div>
-
-                <div class="section-box">
-                    <div class="d-flex f-wrap f-gap-25 f-items-end">
-                        <div>
-                            <label class="field-label">Atributo</label>
-                            <input type="number" id="atributo" value="3" min="0" max="10" class="border-rd-10 p-14-all w-90px text-center fs-9">
-                        </div>
-                        <div>
-                            <label class="field-label">Bônus</label>
-                            <input type="number" id="bonus" value="0" class="border-rd-10 p-14-all w-90px text-center fs-9">
-                        </div>
-                        <button class="btn btn-primary border-rd-10 p-15-tb p-50-lr fs-8" onclick="rolarTeste()">ROLAR</button>
-                    </div>
-                    <p class="fs-6 opacity-4 m-20-t" style="border-left: 3px solid var(--cor-principal); padding-left: 12px;">Atributo 0 não impede, mas falha gera +1 Stress</p>
-                </div>
-
-                <div class="section-box">
-                    <label class="field-label m-15-b">Rolagem Rápida</label>
-                    <div class="d-flex f-wrap f-gap-12">
-                        <button class="quick-btn border-rd-10 p-12-tb p-20-lr fs-7" onclick="rolarRapido(1)">1D10</button>
-                        <button class="quick-btn border-rd-10 p-12-tb p-20-lr fs-7" onclick="rolarRapido(2)">2D10</button>
-                        <button class="quick-btn border-rd-10 p-12-tb p-20-lr fs-7" onclick="rolarRapido(3)">3D10</button>
-                        <button class="quick-btn border-rd-10 p-12-tb p-20-lr fs-7" onclick="rolarRapido(4)">4D10</button>
-                        <button class="quick-btn border-rd-10 p-12-tb p-20-lr fs-7" onclick="rolarRapido(5)">5D10</button>
-                        <button class="quick-btn border-rd-10 p-12-tb p-20-lr fs-7" onclick="rolarRapido(6)">6D10</button>
-                    </div>
-                </div>
-
-                <div id="resultado-teste" class="section-box text-center p-35-all">
-                    <span class="opacity-4 fs-8">🎲 Role os dados</span>
-                </div>
-            </div>
-
             <!-- TAB: Combate -->
             <div class="tab-content" id="tab-combate">
                 <div class="section-title">Combate - Injúrias</div>
@@ -884,7 +848,7 @@
             </div>
 
             <!-- TAB: Livre -->
-            <div class="tab-content" id="tab-livre">
+            <div class="tab-content active" id="tab-livre">
                 <div class="section-title">Rolagem Livre</div>
 
                 <div class="section-box">
@@ -1755,7 +1719,6 @@
                     if (player) {
                         player.rolagem = { dados: data.dados, resultados: data.resultados, total: data.total };
                         player.status = 'ready';
-                        addChat(`${player.nome} rolou ${data.dados}d10 = ${data.total}`, 'player');
                         renderizarJogadores();
 
                         // Se host, retransmite para todos
@@ -1763,7 +1726,8 @@
                             broadcast({ type: 'rollUpdate', playerId: data.playerId, nome: player.nome, ...data }, data.playerId);
                         }
 
-                        verificarResultado();
+                        // Mostra resultado imediatamente
+                        adicionarRolagemResultado(data.playerId, player.nome, data.dados, data.resultados, data.total);
                     }
                     break;
 
@@ -1773,9 +1737,10 @@
                     if (updatedPlayer) {
                         updatedPlayer.rolagem = { dados: data.dados, resultados: data.resultados, total: data.total };
                         updatedPlayer.status = 'ready';
-                        addChat(`${data.nome} rolou ${data.dados}d10 = ${data.total}`, 'player');
                         renderizarJogadores();
-                        verificarResultado();
+
+                        // Mostra resultado imediatamente
+                        adicionarRolagemResultado(data.playerId, data.nome, data.dados, data.resultados, data.total);
                     }
                     break;
 
@@ -1820,14 +1785,9 @@
         }
 
         function rolarOnline() {
-            if (jogadores.size < 2) {
-                return alert('Aguarde pelo menos 2 jogadores na sala!');
-            }
-
-            // Verifica se já rolou
             const meuJogador = jogadores.get(meuId);
-            if (meuJogador && meuJogador.rolagem) {
-                return alert('Você já rolou nesta rodada!');
+            if (!meuJogador) {
+                return alert('Erro: você não está na sala!');
             }
 
             const dados = parseInt(document.getElementById('online-dados').value) || 1;
@@ -1850,90 +1810,77 @@
                 hostConn.send(rollData);
             }
 
-            addChat(`Você rolou ${dados}d10 = ${total}`, 'player');
-            document.getElementById('btn-rolar-online').disabled = true;
-            document.getElementById('btn-rolar-online').textContent = 'Aguardando...';
-
-            verificarResultado();
+            // Mostra resultado imediatamente
+            adicionarRolagemResultado(meuId, meuNome, dados, resultados, total);
         }
 
-        function verificarResultado() {
-            // Verifica se todos rolaram
-            let todosRolaram = true;
-            jogadores.forEach(p => {
-                if (!p.rolagem) todosRolaram = false;
-            });
-
-            if (!todosRolaram || jogadores.size < 2) return;
-
-            // Cria ranking ordenado por total (maior primeiro)
-            const ranking = [];
-            jogadores.forEach((p, id) => {
-                const falhas = calcularFalhas(p.rolagem.resultados);
-                const totalFinal = p.rolagem.total - falhas.penalidade;
-                ranking.push({
-                    id,
-                    nome: p.nome,
-                    dados: p.rolagem.dados,
-                    resultados: p.rolagem.resultados,
-                    totalBruto: p.rolagem.total,
-                    totalFinal,
-                    falhas
-                });
-            });
-
-            ranking.sort((a, b) => b.totalFinal - a.totalFinal);
-
-            // Renderiza resultado
-            renderizarResultadoMulti(ranking);
-        }
-
-        function renderizarResultadoMulti(ranking) {
+        // Adiciona uma rolagem à área de resultados em tempo real
+        function adicionarRolagemResultado(playerId, nome, dados, resultados, total) {
             const container = document.getElementById('online-resultado');
+            const isMe = playerId === meuId;
 
-            let html = '<div class="section-title m-15-b">Resultado da Rodada</div>';
+            // Calcula falhas
+            const falhas = calcularFalhas(resultados);
+            const totalFinal = total - falhas.penalidade;
 
-            ranking.forEach((player, index) => {
-                const posicao = index + 1;
-                const medal = posicao === 1 ? '🥇' : posicao === 2 ? '🥈' : posicao === 3 ? '🥉' : `${posicao}º`;
-                const isWinner = posicao === 1;
-                const isMe = player.id === meuId;
+            // Verifica crítico
+            const critico = verificarCritico(resultados);
 
-                html += `
-                    <div class="p-15-all m-10-b border-rd-8" style="background: ${isWinner ? 'rgba(39,174,96,0.15)' : 'rgba(255,255,255,0.03)'}; border: 1px solid ${isWinner ? 'var(--green)' : 'var(--cor-borda)'};">
-                        <div class="d-flex f-items-center f-justify-between">
-                            <div class="d-flex f-items-center f-gap-15">
-                                <span class="fs-10">${medal}</span>
-                                <div>
-                                    <p class="fs-8 fw-600" style="${isMe ? 'color: var(--gold);' : ''}">${player.nome}${isMe ? ' (você)' : ''}</p>
-                                    <div class="dice-pool f-gap-5 m-5-t">
-                                        ${player.resultados.map(r => `<div class="die border-rd-4" style="width:28px;height:28px;font-size:12px;${r===10?'border-color:var(--green);color:var(--green)':r===1?'border-color:var(--red);color:var(--red)':''}">${r}</div>`).join('')}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="fs-11 fw-700" style="color: ${isWinner ? 'var(--green)' : 'var(--cor-texto)'};">
-                                    ${player.falhas.penalidade > 0 ? `<span class="fs-7" style="color:var(--red)">-${player.falhas.penalidade}</span> ` : ''}${player.totalFinal}
-                                </p>
-                                ${player.falhas.mult ? `<p class="fs-6" style="color:var(--red)">Falha ${player.falhas.mult}</p>` : ''}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            // Botão nova rodada (apenas host)
-            if (isHost) {
-                html += `<button class="btn btn-green border-rd-6 p-10-tb p-30-lr fs-7 m-20-t" onclick="novaRodada()">Nova Rodada</button>`;
-            } else {
-                html += `<p class="fs-7 opacity-5 m-20-t text-center">Aguardando host iniciar nova rodada...</p>`;
+            // Se é a primeira rolagem, limpa o placeholder
+            if (container.querySelector('.opacity-4')) {
+                container.innerHTML = '<div class="section-title m-15-b">Rolagens</div><div id="rolagens-lista"></div>';
+                if (isHost) {
+                    container.innerHTML += '<button class="btn btn-secondary border-rd-6 p-10-tb p-25-lr fs-7 m-15-t" onclick="novaRodada()">Limpar Rolagens</button>';
+                }
             }
 
-            container.innerHTML = html;
+            const lista = document.getElementById('rolagens-lista');
 
-            // Histórico
-            const vencedor = ranking[0];
-            addHistorico('Online', `${ranking.length} jogadores`, `Vencedor: ${vencedor.nome} (${vencedor.totalFinal})`, '');
+            // Cria elemento da rolagem
+            const rolagemEl = document.createElement('div');
+            rolagemEl.className = 'p-15-all m-10-b border-rd-8 animated fadeInUp';
+            rolagemEl.style.cssText = `background: ${isMe ? 'rgba(212,175,55,0.1)' : 'rgba(255,255,255,0.03)'}; border: 1px solid ${isMe ? 'var(--gold)' : 'var(--cor-borda)'};`;
+
+            let html = `
+                <div class="d-flex f-items-center f-justify-between f-wrap f-gap-10">
+                    <div class="d-flex f-items-center f-gap-12">
+                        <div>
+                            <p class="fs-8 fw-600" style="${isMe ? 'color: var(--gold);' : ''}">${nome}${isMe ? ' (você)' : ''}</p>
+                            <p class="fs-6 opacity-5">${dados}d10</p>
+                        </div>
+                    </div>
+                    <div class="d-flex f-items-center f-gap-8">
+                        <div class="dice-pool f-gap-5">
+                            ${resultados.map(r => `<div class="die border-rd-4" style="width:30px;height:30px;font-size:13px;${r===10?'border-color:var(--green);color:var(--green)':r===1?'border-color:var(--red);color:var(--red)':''}">${r}</div>`).join('')}
+                        </div>
+                        <div class="text-right" style="min-width: 50px;">
+                            <p class="fs-10 fw-700">
+                                ${falhas.penalidade > 0 ? `<span class="fs-7" style="color:var(--red)">-${falhas.penalidade}</span> ` : ''}${totalFinal}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Mostra falhas e críticos
+            if (falhas.mult || critico) {
+                html += '<div class="m-10-t">';
+                if (falhas.mult) {
+                    html += `<span class="fs-6 p-5-tb p-10-lr border-rd-4 m-5-r" style="background: rgba(220,20,60,0.2); color: var(--red);">Falha ${falhas.mult}</span>`;
+                }
+                if (critico) {
+                    html += `<span class="fs-6 p-5-tb p-10-lr border-rd-4" style="background: rgba(39,174,96,0.2); color: var(--green);">Crítico ${critico.mult}x</span>`;
+                }
+                html += '</div>';
+            }
+
+            rolagemEl.innerHTML = html;
+
+            // Adiciona no topo da lista
+            lista.insertBefore(rolagemEl, lista.firstChild);
+
+            // Adiciona ao histórico
+            addHistorico('Online', `${nome}: ${dados}d10`, `Total: ${totalFinal}`, critico ? `Crítico ${critico.mult}x` : '');
         }
 
         function novaRodada() {
@@ -1950,7 +1897,7 @@
 
             // Notifica todos
             broadcast({ type: 'reset' });
-            addChat('Nova rodada iniciada!');
+            addChat('Rolagens limpas!');
         }
 
         function resetRolagens() {

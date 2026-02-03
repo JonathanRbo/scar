@@ -942,16 +942,26 @@
         /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
-            background: none;
-            border: none;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--cor-borda);
             color: var(--cor-texto);
             font-size: 1.5rem;
             cursor: pointer;
+            padding: 10px 14px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(220,20,60,0.2);
+            border-color: var(--cor-secundaria);
         }
 
         @media (max-width: 991px) {
             .mobile-menu-btn {
-                display: block;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .nav-desktop {
@@ -961,6 +971,52 @@
             .nav-sections {
                 display: none;
             }
+
+            .site-header {
+                padding: 10px 0;
+            }
+
+            .site-header .container {
+                padding: 0 15px;
+            }
+
+            .logo-text {
+                font-size: 1.6rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 1.4rem !important;
+            }
+
+            .mobile-menu-btn {
+                padding: 8px 12px;
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Mobile Navigation Links */
+        .mobile-nav-link {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            color: var(--cor-texto);
+            text-decoration: none;
+            letter-spacing: 2px;
+            padding: 12px 30px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 280px;
+            text-align: center;
+            border: 1px solid transparent;
+        }
+
+        .mobile-nav-link:hover {
+            color: var(--cor-accent);
+            background: rgba(220,20,60,0.1);
+            border-color: rgba(220,20,60,0.3);
+            transform: scale(1.02);
         }
 
         /* Modal Styling */
@@ -1124,19 +1180,26 @@
     <!-- Mobile Menu Modal -->
     <div data-modal="mobile-menu" class="modal-dialog" aria-hidden="true">
         <div class="dialog-content">
-            <div class="dialog-backdrop" data-modal-hide></div>
-            <div class="dialog-inline w-100 h-100vh" style="background: var(--cor-fundo);">
-                <button class="dialog-close" data-modal-hide style="color: white; font-size: 2rem;"></button>
-                <div class="d-flex f-col f-items-center f-justify-center h-100 f-gap-30">
-                    <a href="#sobre" class="nav-link fs-12" data-modal-hide>Sobre</a>
-                    <a href="#sistema" class="nav-link fs-12" data-modal-hide>Sistema</a>
-                    <a href="#seres" class="nav-link fs-12" data-modal-hide>Seres</a>
-                    <a href="#criacao" class="nav-link fs-12" data-modal-hide>Criar Personagem</a>
-                    <a href="#contratos" class="nav-link fs-12" data-modal-hide>Contratos</a>
-                    <a href="#combate" class="nav-link fs-12" data-modal-hide>Combate</a>
-                    <a href="habilidades.html" class="nav-link fs-12" data-modal-hide>Habilidades</a>
-                    <a href="aflicoes.html" class="nav-link fs-12" data-modal-hide>Aflicoes</a>
-                    <a href="#faq" class="nav-link fs-12" data-modal-hide>FAQ</a>
+            <div class="dialog-backdrop" data-modal-hide style="background: rgba(0,0,0,0.9);"></div>
+            <div class="dialog-inline w-100 h-100vh" style="background: linear-gradient(180deg, var(--cor-fundo) 0%, rgba(139,0,0,0.1) 100%);">
+                <button class="dialog-close" data-modal-hide style="color: white; font-size: 2rem; top: 20px; right: 20px;"></button>
+
+                <!-- Logo no menu -->
+                <div class="text-center p-40-t">
+                    <span style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--cor-secundaria); letter-spacing: 6px;">SCAR</span>
+                    <div style="width: 60px; height: 2px; background: var(--gradient-blood); margin: 15px auto;"></div>
+                </div>
+
+                <div class="d-flex f-col f-items-center f-justify-center h-100 f-gap-20 p-30-all" style="margin-top: -80px;">
+                    <a href="#sobre" class="mobile-nav-link" data-modal-hide>Sobre</a>
+                    <a href="#sistema" class="mobile-nav-link" data-modal-hide>Sistema</a>
+                    <a href="#seres" class="mobile-nav-link" data-modal-hide>Seres</a>
+                    <a href="#criacao" class="mobile-nav-link" data-modal-hide>Criar Personagem</a>
+                    <a href="#contratos" class="mobile-nav-link" data-modal-hide>Contratos</a>
+                    <a href="#combate" class="mobile-nav-link" data-modal-hide>Combate</a>
+                    <a href="habilidades.html" class="mobile-nav-link" data-modal-hide>Habilidades</a>
+                    <a href="aflicoes.html" class="mobile-nav-link" data-modal-hide>Aflições</a>
+                    <a href="#faq" class="mobile-nav-link" data-modal-hide>FAQ</a>
                 </div>
             </div>
         </div>
