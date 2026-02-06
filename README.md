@@ -52,6 +52,7 @@ Inspirado no universo sombrio de **Chainsaw Man**, o jogo coloca os jogadores em
 | **4 Naturezas Jogáveis** | Humanos, Infernais, Híbridos e Demônios |
 | **12 Estilos de Luta** | Combate personalizado para cada jogador |
 | **Aflições** | Condições que marcam permanentemente os personagens |
+| **Sistema de Sonhos** | Objetivos de vida que recompensam PM ao serem realizados (4 tiers) |
 | **Rolador de Dados Multiplayer** | Sistema de dados online com sincronização em tempo real |
 
 ---
@@ -75,6 +76,7 @@ Atributo + Habilidade + Xd10 vs Dificuldade
 | **Aflições** | Condições negativas — algumas permanentes |
 | **Vínculos** | Relações que ancoram sua humanidade |
 | **PM (Pontos de Marca)** | Custo para criar contratos e poderes |
+| **Sonhos** | Objetivos de vida — ao realizá-los, o jogador ganha PM |
 
 ### Tipos de Personagens
 
@@ -120,6 +122,7 @@ O website oficial do SCAR oferece:
 #### 📜 Páginas Principais
 - **Home** - Apresentação completa do sistema
 - **Contratos** - Sistema detalhado de contratos demoníacos
+- **Sonhos** - Sistema de objetivos de vida com 4 categorias (Comum, Pessoal, Ambicioso, Tolo)
 - **Aflições** - Lista completa de aflições físicas e mentais
 - **Habilidades** - 12 estilos de luta detalhados
 - **Criação de Personagem** - Guia passo a passo
@@ -173,6 +176,7 @@ O website oficial do SCAR oferece:
 Todos os arquivos de regras estão em [`documento/`](documento/):
 - `regras.txt` - Regras base do sistema
 - `pontos de marca.txt` - Sistema de PM
+- `sistema de sonhos.txt` - Sistema de Sonhos (objetivos de vida)
 - `aflições físicas.txt` - Aflições corporais
 - `aflições mentais.txt` - Aflições psicológicas
 - E mais 7 arquivos de referência

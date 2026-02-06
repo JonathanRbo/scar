@@ -317,23 +317,39 @@ partir do momento que crescerem eles ganham pontos sendo chamados de PONTOS DE M
 O Mestre concede PM ao final de eventos significativos e finalizações de missões 
 
 **PM INICIAL (HISTÓRIA DO PERSONAGEM)**
-- Vida comum, sem eventos extremos: 2 PM
-- Já enfrentou mortes, violência ou caos: 3 PM
-- Sobreviveu a eventos traumáticos graves: 4 PM
-- Passado extremo (massacre, contrato antigo, quase-morte): 5 PM
-- pontos totais das missões concluidas: "1d10" e a cada 3 anos de experiencia soma +1 no teste 
+- Vida comum, sem eventos extremos: 3 PM
+- Já enfrentou mortes, violência ou caos: 5 PM
+- Sobreviveu a eventos traumáticos graves: 7 PM
+- Passado extremo (massacre, contrato antigo, quase-morte): 9 PM
+- pontos totais das missões concluidas: "1d10" e a cada 3 anos de experiencia soma +1 no teste
 
 **GANHO DE PM DURANTE O JOGO**
 
-Situação    
-Missão padrão concluída: +1 PM
-Missão com risco real / trauma: +2 PM
-Evento que muda o personagem: +3 PM (raro)
+Situação
+Missão simples concluída: +2 PM
+Missão com risco real / trauma: +4 PM
+Evento que muda o personagem: +6 PM
+
+**COMBATE / FEITOS**
+Derrotar inimigo mais forte que você: +2 PM
+Derrotar inimigo muito acima do seu nível: +4 PM
+Sobreviver a grupo grande sozinho ou em desvantagem: +3 PM
+Derrotar/destruir grupo inteiro: +5 PM
+Derrotar Demônio de Medo 3+: +4 PM
+Derrotar Demônio de Medo 5 / Cavaleiro: +8 PM
+Vencer Duelo contra oponente superior: +3 PM
+Sobreviver a situação de morte certa: +2 PM
 
 **ENSINAMENTOS / TREINOS**
-Treino comum: +1 PM
-Treino perigoso ou demoníaco: +2 PM
-Ritual / conhecimento proibido: +3 PM (raro)
+Treino comum: +2 PM
+Treino perigoso ou demoníaco: +3 PM
+Ritual / conhecimento proibido: +5 PM
+
+**SONHOS (OBJETIVOS DE VIDA)**
+Sonho Comum (ex: comer uma refeição incrível, beijar alguém): +3 PM
+Sonho Pessoal (ex: fazer um amigo de verdade, ter um lar): +5 PM
+Sonho Ambicioso (ex: viver até os 60, proteger alguém até o fim): +8 PM
+Sonho Lendário (ex: derrotar um Primordial, mudar o mundo): +12 PM
 
 **REGRA FINAL**
 Sempre que um personagem atingir:

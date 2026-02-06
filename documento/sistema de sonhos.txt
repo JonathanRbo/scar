@@ -1,0 +1,93 @@
+# SISTEMA DE SONHOS
+══════════════════
+
+## O QUE SÃO SONHOS?
+> Sonhos são os **objetivos de vida** do personagem — o motivo pelo qual ele ainda respira num mundo que devora as pessoas. Não são poderes, não são contratos. São o que te mantém **humano**.
+> Denji queria pegar num peito. Aki queria vingança. Power queria proteger seu gato. Nesse mundo, até um desejo simples é um ato de resistência.
+
+---
+
+## COMO FUNCIONA
+- Na **criação do personagem**, o jogador define de 1 a 3 Sonhos
+- Novos Sonhos podem surgir durante a campanha conforme a história evolui
+- O jogador escolhe o Sonho e o **Mestre valida a dificuldade**
+- Quando o Sonho é **realizado em jogo**, o jogador ganha PM equivalente
+- O jogador decide livremente onde gastar os PM (atributo, habilidade, contrato, etc.)
+
+---
+
+## CATEGORIAS DE SONHOS
+
+### SONHO COMUM — 3 PM
+Coisas que parecem bobas, mas num mundo de demônios, até isso é difícil.
+
+**Exemplos:**
+- Comer uma refeição incrível
+- Beijar alguém
+- Ter um dia inteiro de folga
+- Assistir um filme no cinema
+- Dormir numa cama de verdade
+- Pegar num peito
+
+### SONHO PESSOAL — 5 PM
+Conexões, pertencimento, identidade. Coisas que definem quem você é.
+
+**Exemplos:**
+- Fazer um amigo de verdade
+- Ter um lar (mesmo que seja um quarto)
+- Ser reconhecido por alguém que você admira
+- Encontrar um familiar perdido
+- Ter alguém que te espera voltar
+- Conseguir um emprego normal
+
+### SONHO AMBICIOSO — 8 PM
+Objetivos que exigem anos, sacrifício e sorte pra serem alcançados.
+
+**Exemplos:**
+- Viver tranquilo depois dos 60 anos
+- Proteger alguém até o fim (e conseguir)
+- Se livrar de um contrato demoníaco
+- Criar uma família
+- Sair da Segurança Pública vivo
+- Fazer um demônio se arrepender
+
+### SONHO TOLO — 12 PM
+Quase impossível. O tipo de coisa que apenas loucos tentariam.
+
+**Exemplos:**
+- Derrotar um Primordial
+- Destruir uma facção inteira
+- Mudar o mundo (literalmente)
+- Acabar com o ciclo Terra-Inferno
+- Fazer a humanidade parar de temer algo
+- Trazer paz entre humanos e demônios
+
+---
+
+## SONHO QUEBRADO
+> Se o Sonho se torna **permanentemente impossível** — a pessoa que você queria proteger morreu, o lar que você construiu foi destruído, o amigo que você fez te traiu — o personagem sofre consequências reais.
+
+**Consequências (Mestre escolhe 1 ou mais):**
+- Aflição permanente
+- Perda de 1 ponto de Vínculo
+- +Stress equivalente à categoria do Sonho (3/5/8/12)
+- Mudança narrativa permanente no personagem (trauma, mudança de comportamento)
+
+**Regra:** Um Sonho Quebrado não pode ser "repetido". Se seu sonho era proteger alguém e essa pessoa morreu, você não pode simplesmente escolher outra pessoa como novo sonho. O que se quebrou, quebrou.
+
+---
+
+## REGRAS IMPORTANTES
+
+1. **Máximo de 3 Sonhos ativos** por personagem
+2. **Novos Sonhos** podem ser adquiridos durante a campanha (eventos narrativos)
+3. **Sonhos não são missões** — são pessoais. O Mestre não "manda" você completar um Sonho
+4. **A realização deve ser em jogo** — não basta dizer "meu personagem comeu bem". Tem que rolar na mesa
+5. **O Mestre valida a dificuldade** — se o jogador colocar algo fácil demais como "Ambicioso", o Mestre ajusta
+6. **Demônios Puros não sonham** — eles querem, desejam, cobiçam. Mas não sonham. Apenas seres com traço humano (Humanos, Infernais, Híbridos) podem ter Sonhos
+
+---
+
+## DICA PARA O MESTRE
+> Sonhos são a ferramenta narrativa mais poderosa do sistema. Use-os para criar ganchos, criar tensão e dar peso às escolhas. Se o jogador tem como Sonho "proteger alguém até o fim", coloque essa pessoa em perigo. Se o Sonho é "viver até os 60", faça cada missão parecer que pode ser a última.
+> Sonhos não são recompensas fáceis — são marcas de vitória num mundo que não quer que você vença.

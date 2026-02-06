@@ -40,6 +40,7 @@
                     <a href="#criacao" class="nav-link">Criar Personagem</a>
                     <a href="#contratos" class="nav-link">Contratos</a>
                     <a href="#combate" class="nav-link">Combate</a>
+                    <a href="#sonhos" class="nav-link">Sonhos</a>
                     <a href="habilidades.html" class="nav-link">Habilidades</a>
                     <a href="aflicoes.html" class="nav-link">Aflições</a>
                     <a href="#faq" class="nav-link">FAQ</a>
@@ -98,6 +99,10 @@
                         <a href="#combate" class="mobile-nav-link" data-modal-hide>
                             <span class="link-icon">💀</span>
                             <span class="link-text">Combate</span>
+                        </a>
+                        <a href="#sonhos" class="mobile-nav-link" data-modal-hide>
+                            <span class="link-icon">💭</span>
+                            <span class="link-text">Sonhos</span>
                         </a>
                     </nav>
 
@@ -1819,39 +1824,62 @@
                         <h4 class="fs-10 m-15-b" style="color: var(--cor-secundaria);">📈 Como Ganhar PM</h4>
                         <div class="row gap-15">
                             <div class="c-xs-12 c-md-6">
-                                <h5 class="fs-8 m-10-b" style="color: var(--cor-secundaria);">Durante Sessões e Missões</h5>
+                                <h5 class="fs-8 m-10-b" style="color: var(--cor-secundaria);">Missões</h5>
                                 <table class="table-scar" style="font-size: 0.9rem;">
                                     <tr>
                                         <th>Situação</th>
                                         <th>PM</th>
                                     </tr>
                                     <tr>
-                                        <td>Por sessão (automático)</td>
-                                        <td class="text-center">+1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Missão padrão concluída</td>
-                                        <td class="text-center">+1</td>
+                                        <td>Missão simples concluída</td>
+                                        <td class="text-center">+2</td>
                                     </tr>
                                     <tr>
                                         <td>Missão com risco real / trauma</td>
+                                        <td class="text-center">+4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Evento que muda o personagem</td>
+                                        <td class="text-center">+6</td>
+                                    </tr>
+                                </table>
+                                <h5 class="fs-8 m-10-b m-15-t" style="color: var(--cor-secundaria);">Combate / Feitos</h5>
+                                <table class="table-scar" style="font-size: 0.9rem;">
+                                    <tr>
+                                        <th>Feito</th>
+                                        <th>PM</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Derrotar inimigo mais forte que você</td>
                                         <td class="text-center">+2</td>
                                     </tr>
                                     <tr>
-                                        <td>Sobrevivência extrema</td>
-                                        <td class="text-center">+2</td>
+                                        <td>Derrotar inimigo muito acima do nível</td>
+                                        <td class="text-center">+4</td>
                                     </tr>
                                     <tr>
-                                        <td>Roleplay impactante</td>
-                                        <td class="text-center">+1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Derrotar boss/demônio importante</td>
-                                        <td class="text-center">+2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Completar arco de história</td>
+                                        <td>Sobreviver grupo grande sozinho</td>
                                         <td class="text-center">+3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Derrotar/destruir grupo inteiro</td>
+                                        <td class="text-center">+5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Derrotar Demônio Medo 3+</td>
+                                        <td class="text-center">+4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Derrotar Demônio Medo 5 / Cavaleiro</td>
+                                        <td class="text-center">+8</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vencer Duelo contra superior</td>
+                                        <td class="text-center">+3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sobreviver morte certa</td>
+                                        <td class="text-center">+2</td>
                                     </tr>
                                 </table>
                             </div>
@@ -1864,15 +1892,38 @@
                                     </tr>
                                     <tr>
                                         <td>Treino comum</td>
-                                        <td class="text-center">+1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Treino perigoso ou demoníaco</td>
                                         <td class="text-center">+2</td>
                                     </tr>
                                     <tr>
-                                        <td>Ritual / conhecimento proibido</td>
+                                        <td>Treino perigoso ou demoníaco</td>
                                         <td class="text-center">+3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ritual / conhecimento proibido</td>
+                                        <td class="text-center">+5</td>
+                                    </tr>
+                                </table>
+                                <h5 class="fs-8 m-10-b m-15-t" style="color: var(--cor-gold);">Sonhos (Objetivos de Vida)</h5>
+                                <table class="table-scar" style="font-size: 0.9rem;">
+                                    <tr>
+                                        <th>Categoria</th>
+                                        <th>PM</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Comum <span style="color:var(--cor-texto-secundario); font-size:0.8rem;">(beijar, comer bem, dia de folga)</span></td>
+                                        <td class="text-center" style="color: var(--cor-gold);">+3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pessoal <span style="color:var(--cor-texto-secundario); font-size:0.8rem;">(amigo real, ter lar, reconhecimento)</span></td>
+                                        <td class="text-center" style="color: var(--cor-gold);">+5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ambicioso <span style="color:var(--cor-texto-secundario); font-size:0.8rem;">(viver até 60, proteger alguém)</span></td>
+                                        <td class="text-center" style="color: var(--cor-gold);">+8</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tolo <span style="color:var(--cor-texto-secundario); font-size:0.8rem;">(derrotar Primordial, mudar o mundo)</span></td>
+                                        <td class="text-center" style="color: var(--cor-gold);">+12</td>
                                     </tr>
                                 </table>
                                 <div class="m-15-t p-15-all border-rd-8" style="background: rgba(139, 0, 0, 0.15); border-left: 3px solid var(--cor-secundaria);">
@@ -3844,6 +3895,166 @@ ${marca}
                 </div>
             </div>
         </section>
+
+        <!-- Sonhos Section -->
+        <div class="section-divider"></div>
+        <section id="sonhos" class="p-100-tb xs-p-60-tb blood-glow">
+            <div class="container">
+                <div class="text-center m-60-b">
+                    <h2 class="section-title centered wow fadeInUp">Sonhos</h2>
+                    <p class="fs-9 m-30-t wow fadeInUp" data-wow-delay="0.2s" style="color: var(--cor-texto-secundario); max-width: 700px; margin-left: auto; margin-right: auto;">
+                        Sonhos são os <strong style="color: var(--cor-gold);">objetivos de vida</strong> do personagem — o motivo pelo qual ele ainda respira num mundo que devora as pessoas. Ao completar um Sonho, o jogador ganha PM.
+                    </p>
+                </div>
+
+                <!-- Categorias de Sonhos -->
+                <div class="row gap-20">
+                    <!-- Sonho Comum -->
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="card wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="text-center m-10-b">
+                                <span style="font-size: 2.5rem;">💭</span>
+                            </div>
+                            <h4 class="fs-11 text-center" style="color: #5DADE2;">Comum</h4>
+                            <div class="text-center m-10-tb">
+                                <span style="font-size: 2rem; font-weight: 700; color: var(--cor-gold); font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px;">3 PM</span>
+                            </div>
+                            <p class="fs-5 text-center" style="color: var(--cor-texto-secundario); line-height: 1.6;">
+                                Coisas simples que num mundo de demônios se tornam difíceis.
+                            </p>
+                            <div class="m-15-t" style="border-top: 1px solid var(--cor-borda); padding-top: 15px;">
+                                <p class="fs-4" style="color: var(--cor-texto-secundario); line-height: 1.8;">
+                                    <span style="color: var(--cor-texto);">•</span> Comer uma refeição incrível<br>
+                                    <span style="color: var(--cor-texto);">•</span> Beijar alguém<br>
+                                    <span style="color: var(--cor-texto);">•</span> Ter um dia de folga<br>
+                                    <span style="color: var(--cor-texto);">•</span> Dormir numa cama de verdade
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sonho Pessoal -->
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="card wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="text-center m-10-b">
+                                <span style="font-size: 2.5rem;">💜</span>
+                            </div>
+                            <h4 class="fs-11 text-center" style="color: #9B59B6;">Pessoal</h4>
+                            <div class="text-center m-10-tb">
+                                <span style="font-size: 2rem; font-weight: 700; color: var(--cor-gold); font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px;">5 PM</span>
+                            </div>
+                            <p class="fs-5 text-center" style="color: var(--cor-texto-secundario); line-height: 1.6;">
+                                Conexões, pertencimento. O que define quem você é.
+                            </p>
+                            <div class="m-15-t" style="border-top: 1px solid var(--cor-borda); padding-top: 15px;">
+                                <p class="fs-4" style="color: var(--cor-texto-secundario); line-height: 1.8;">
+                                    <span style="color: var(--cor-texto);">•</span> Fazer um amigo de verdade<br>
+                                    <span style="color: var(--cor-texto);">•</span> Ter um lar<br>
+                                    <span style="color: var(--cor-texto);">•</span> Ser reconhecido por alguém<br>
+                                    <span style="color: var(--cor-texto);">•</span> Encontrar familiar perdido
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sonho Ambicioso -->
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="card wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="text-center m-10-b">
+                                <span style="font-size: 2.5rem;">🔥</span>
+                            </div>
+                            <h4 class="fs-11 text-center" style="color: var(--cor-secundaria);">Ambicioso</h4>
+                            <div class="text-center m-10-tb">
+                                <span style="font-size: 2rem; font-weight: 700; color: var(--cor-gold); font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px;">8 PM</span>
+                            </div>
+                            <p class="fs-5 text-center" style="color: var(--cor-texto-secundario); line-height: 1.6;">
+                                Exigem anos, sacrifício e sorte pra serem alcançados.
+                            </p>
+                            <div class="m-15-t" style="border-top: 1px solid var(--cor-borda); padding-top: 15px;">
+                                <p class="fs-4" style="color: var(--cor-texto-secundario); line-height: 1.8;">
+                                    <span style="color: var(--cor-texto);">•</span> Viver até os 60 anos<br>
+                                    <span style="color: var(--cor-texto);">•</span> Proteger alguém até o fim<br>
+                                    <span style="color: var(--cor-texto);">•</span> Se livrar de um contrato<br>
+                                    <span style="color: var(--cor-texto);">•</span> Criar uma família
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sonho Tolo -->
+                    <div class="c-xs-12 c-sm-6 c-lg-3">
+                        <div class="card wow fadeInUp" data-wow-delay="0.4s">
+                            <div class="text-center m-10-b">
+                                <span style="font-size: 2.5rem;">🃏</span>
+                            </div>
+                            <h4 class="fs-11 text-center" style="color: var(--cor-gold);">Tolo</h4>
+                            <div class="text-center m-10-tb">
+                                <span style="font-size: 2rem; font-weight: 700; color: var(--cor-gold); font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px;">12 PM</span>
+                            </div>
+                            <p class="fs-5 text-center" style="color: var(--cor-texto-secundario); line-height: 1.6;">
+                                Quase impossível. O tipo de coisa que apenas loucos tentariam.
+                            </p>
+                            <div class="m-15-t" style="border-top: 1px solid var(--cor-borda); padding-top: 15px;">
+                                <p class="fs-4" style="color: var(--cor-texto-secundario); line-height: 1.8;">
+                                    <span style="color: var(--cor-texto);">•</span> Derrotar um Primordial<br>
+                                    <span style="color: var(--cor-texto);">•</span> Destruir uma facção inteira<br>
+                                    <span style="color: var(--cor-texto);">•</span> Mudar o mundo<br>
+                                    <span style="color: var(--cor-texto);">•</span> Acabar com o ciclo Terra-Inferno
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sonho Quebrado -->
+                <div class="m-60-t wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="p-30-all xs-p-20-all border-rd-10" style="background: rgba(139,0,0,0.15); border: 2px solid var(--cor-principal);">
+                        <h4 class="fs-11 m-15-b text-center" style="color: var(--cor-secundaria);">Sonho Quebrado</h4>
+                        <p class="text-center fs-6" style="color: var(--cor-texto-secundario); max-width: 700px; margin: 0 auto 20px; line-height: 1.7;">
+                            Se o Sonho se torna <strong style="color: var(--cor-accent);">permanentemente impossível</strong> — a pessoa que você queria proteger morreu, o lar foi destruído, o amigo te traiu — o personagem sofre consequências reais.
+                        </p>
+                        <div class="d-flex f-justify-center f-gap-10 f-wrap">
+                            <span class="arma-stat" style="border-color: var(--cor-principal); color: var(--cor-accent);">Aflição permanente</span>
+                            <span class="arma-stat" style="border-color: var(--cor-principal); color: var(--cor-accent);">-1 Vínculo</span>
+                            <span class="arma-stat" style="border-color: var(--cor-principal); color: var(--cor-accent);">+Stress (3/5/8/12)</span>
+                            <span class="arma-stat" style="border-color: var(--cor-principal); color: var(--cor-accent);">Trauma permanente</span>
+                        </div>
+                        <p class="text-center fs-4 m-15-t" style="color: var(--cor-texto-secundario); font-style: italic;">
+                            Um Sonho Quebrado não pode ser repetido. O que se quebrou, quebrou.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Regras dos Sonhos -->
+                <div class="row gap-20 m-40-t">
+                    <div class="c-xs-12 c-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="p-25-all border-rd-10" style="background: var(--cor-fundo-card); border: 1px solid var(--cor-borda); height: 100%;">
+                            <h4 class="fs-10 m-15-b" style="color: var(--cor-gold);">Regras</h4>
+                            <div style="color: var(--cor-texto-secundario); line-height: 1.8; font-size: 0.9rem;">
+                                <p><strong style="color: var(--cor-texto);">1-3 Sonhos ativos</strong> por personagem</p>
+                                <p><strong style="color: var(--cor-texto);">Novos Sonhos</strong> podem surgir durante a campanha</p>
+                                <p><strong style="color: var(--cor-texto);">A realização deve ser em jogo</strong> — tem que rolar na mesa</p>
+                                <p><strong style="color: var(--cor-texto);">O Mestre valida</strong> a dificuldade do Sonho</p>
+                                <p><strong style="color: var(--cor-texto);">Demônios Puros</strong> não podem ter Sonhos</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="c-xs-12 c-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="p-25-all border-rd-10" style="background: var(--cor-fundo-card); border: 1px solid var(--cor-borda); height: 100%;">
+                            <h4 class="fs-10 m-15-b" style="color: var(--cor-secundaria);">Dica para o Mestre</h4>
+                            <p style="color: var(--cor-texto-secundario); line-height: 1.8; font-size: 0.9rem;">
+                                Sonhos são a ferramenta narrativa mais poderosa do sistema. Se o jogador tem como Sonho <em>"proteger alguém até o fim"</em>, coloque essa pessoa em perigo. Se o Sonho é <em>"viver até os 60"</em>, faça cada missão parecer a última.
+                            </p>
+                            <p class="m-15-t" style="color: var(--cor-gold); font-style: italic; font-size: 0.9rem;">
+                                "Sonhos não são recompensas fáceis — são marcas de vitória num mundo que não quer que você vença."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
 
         <!-- FAQ Section -->
         <section id="faq" class="p-100-tb xs-p-60-tb blood-glow-center">
