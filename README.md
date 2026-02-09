@@ -49,9 +49,10 @@ Inspirado no universo sombrio de **Chainsaw Man**, o jogo coloca os jogadores em
 | **Brutalidade Autêntica** | Sistema que captura a violência e o peso emocional de Chainsaw Man |
 | **Contratos Demoníacos** | Mecânicas detalhadas para pactos com demônios (5 tiers de poder) |
 | **Stress & Injúrias** | Sistema de dano que afeta corpo e mente |
-| **4 Naturezas Jogáveis** | Humanos, Infernais, Híbridos e Demônios |
+| **4 Naturezas Jogáveis** | Humanos, Infernais, Híbridos e Demônios — cada um com mecânicas exclusivas |
 | **12 Estilos de Luta** | Combate personalizado para cada jogador |
-| **Aflições** | Condições que marcam permanentemente os personagens |
+| **Árvores de Pré-requisito** | 97 habilidades gerais organizadas em cadeias de progressão — escolhas com peso real |
+| **Aflições** | 100 físicas + 100 mentais que marcam permanentemente os personagens |
 | **Sistema de Sonhos** | Objetivos de vida que recompensam PM ao serem realizados (4 tiers) |
 | **Rolador de Dados Multiplayer** | Sistema de dados online com sincronização em tempo real |
 
@@ -80,12 +81,12 @@ Atributo + Habilidade + Xd10 vs Dificuldade
 
 ### Tipos de Personagens
 
-| Natureza | Descrição | PM Base |
-|----------|-----------|---------|
-| **Humanos** | Mortais comuns, podem fazer contratos com demônios | 0 PM |
-| **Infernais** | Humanos fundidos permanentemente com um demônio | +2 Stress |
-| **Híbridos** | Meio humano, meio demônio — existência instável | Poderes inatos |
-| **Demônios** | Seres imortais nascidos do medo coletivo | Imortalidade |
+| Natureza | Descrição | Exclusivo |
+|----------|-----------|-----------|
+| **Humanos** | Mortais comuns, versáteis e numerosos. Brilham em equipe. | Adaptabilidade Humana + Força nos Números |
+| **Infernais** | Demônios que possuíram cadáveres. Poderes inatos, aflições permanentes. | Detecção demoníaca |
+| **Híbridos** | Meio humano, meio demônio — existência instável. Poder bruto com risco. | Grilhões + Recusa da Morte |
+| **Demônios** | Seres imortais nascidos do medo coletivo. Evoluem por nível. | Evolução por Nível de Medo (1-5) |
 
 ### Sistema de Contratos
 
@@ -120,12 +121,12 @@ Atributo + Habilidade + Xd10 vs Dificuldade
 O website oficial do SCAR oferece:
 
 #### 📜 Páginas Principais
-- **Home** - Apresentação completa do sistema
-- **Contratos** - Sistema detalhado de contratos demoníacos
-- **Sonhos** - Sistema de objetivos de vida com 4 categorias (Comum, Pessoal, Ambicioso, Tolo)
-- **Aflições** - Lista completa de aflições físicas e mentais
-- **Habilidades** - 12 estilos de luta detalhados
-- **Criação de Personagem** - Guia passo a passo
+- **Home** - Apresentação completa do sistema com modais interativos
+- **Manual Completo** - Manual navegável com visual de livro antigo (15 capítulos)
+- **Habilidades** - 97 habilidades gerais com árvores de pré-requisito + 12 estilos de luta
+- **Aflições** - 100 aflições físicas + 100 mentais com busca e filtros
+- **Ficha Padrão** - Ficha de personagem interativa (Humano/Infernal/Híbrido)
+- **Ficha Demônio** - Ficha específica para Demônios Puros
 
 #### 🎲 Ferramentas
 - **Rolador de Dados Multiplayer** - Sistema de dados online com:
@@ -155,11 +156,11 @@ O website oficial do SCAR oferece:
       <sub>Acesse o site oficial</sub>
     </td>
     <td align="center">
-      <a href="docs/MANUAL_SCAR.md">
+      <a href="docs/manual-scar.html">
         <img src="https://img.shields.io/badge/Manual_Completo-333?style=for-the-badge&logo=markdown&logoColor=white" alt="Manual">
       </a>
       <br>
-      <sub>Manual completo (16 partes)</sub>
+      <sub>Manual completo (15 capítulos)</sub>
     </td>
     <td align="center">
       <a href="dice-roller.html">
@@ -200,20 +201,24 @@ Todos os arquivos de regras estão em [`documento/`](documento/):
 
 ```
 SCAR/
-├── index.html              # Página principal (4.106 linhas)
-├── aflicoes.html           # Página de aflições (1.086 linhas)
-├── habilidades.html        # Página de habilidades (3.321 linhas)
-├── dice-roller.html        # Rolador multiplayer (1.954 linhas)
+├── index.html              # Página principal
+├── aflicoes.html           # Página de aflições (100 físicas + 100 mentais)
+├── habilidades.html        # Página de habilidades (97 habilidades com pré-requisitos)
+├── dice-roller.html        # Rolador multiplayer (PeerJS)
 ├── assets/
 │   ├── css/
-│   │   ├── main.css           # Estilos compartilhados (710 linhas)
-│   │   ├── contratos.css      # Estilos de contratos (533 linhas)
-│   │   └── page-styles.css    # Estilos específicos index (1.378 linhas)
+│   │   ├── main.css           # Estilos compartilhados
+│   │   ├── contratos.css      # Estilos de contratos
+│   │   └── page-styles.css    # Estilos específicos index
 │   ├── js/
-│   │   └── main.js            # JavaScript funcional (44 linhas)
+│   │   └── main.js            # JavaScript funcional
 │   └── images/
 ├── docs/
-│   └── MANUAL_SCAR.md      # Manual completo do jogo
+│   ├── manual-scar.html       # Manual completo navegável (15 capítulos)
+│   ├── ficha-padrao.html      # Ficha de personagem padrão
+│   ├── ficha-demonio.html     # Ficha de Demônio Puro
+│   ├── MANUAL_SCAR.md         # Manual em Markdown
+│   └── MANUAL_SCAR.pdf        # Manual em PDF
 └── documento/              # Arquivos de referência (.txt)
 ```
 
@@ -257,9 +262,10 @@ O projeto usa uma **arquitetura CSS modular**:
 - **CSS inline restante** - ~500 ocorrências para migrar para classes
 
 ### Futuras Melhorias
+- [x] ~~Adicionar sistema de busca nas habilidades~~
+- [x] ~~Árvores de pré-requisito para habilidades gerais~~
 - [ ] Dividir index.html em páginas menores
 - [ ] Implementar PWA (Progressive Web App)
-- [ ] Adicionar sistema de busca nas habilidades
 - [ ] Criar gerador de fichas PDF
 - [ ] Internacionalização (EN/ES)
 
