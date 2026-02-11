@@ -13,13 +13,10 @@
 </p>
 
 <p align="center">
-  <a href="#-sobre">Sobre</a> •
-  <a href="#-características">Características</a> •
-  <a href="#-sistema">Sistema</a> •
-  <a href="#-como-jogar">Como Jogar</a> •
-  <a href="#-website">Website</a> •
-  <a href="#-downloads">Downloads</a> •
-  <a href="#-desenvolvimento">Desenvolvimento</a>
+  <a href="#-sobre">Sobre</a> -
+  <a href="#-sistema">Sistema</a> -
+  <a href="#-como-jogar">Como Jogar</a> -
+  <a href="#-website">Website</a> -
 </p>
 
 ---
