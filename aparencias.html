@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aparencias - SCAR RPG</title>
+    <link rel="stylesheet" href="https://cdn.squeleton.dev/squeleton.v4.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <script src="https://cdn.squeleton.dev/squeleton-main.v4.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            animation: pageLoad 0.5s ease-out forwards;
+        }
+
+        body.page-exit {
+            animation: pageLoad 0.3s ease-in reverse forwards;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 120px 20px 60px;
+            background:
+                radial-gradient(ellipse at center top, rgba(139,0,0,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 50%, rgba(220,20,60,0.08) 0%, transparent 50%);
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            letter-spacing: 10px;
+            margin-bottom: 20px;
+            color: var(--cor-secundaria);
+            text-shadow: 0 0 40px rgba(220,20,60,0.4);
+        }
+
+        .hero p {
+            color: var(--cor-texto-soft);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1rem;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-tab {
+            padding: 10px 24px;
+            border-radius: 30px;
+            border: 1px solid var(--cor-borda);
+            background: var(--cor-card);
+            color: var(--cor-texto-soft);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .filter-tab:hover {
+            border-color: var(--cor-secundaria);
+            color: var(--cor-texto);
+        }
+
+        .filter-tab.active {
+            background: var(--gradient-blood);
+            border-color: transparent;
+            color: #fff;
+        }
+
+        .filter-tab[data-filter="humanos"].active {
+            background: linear-gradient(135deg, #1a3a5c, #5DADE2);
+        }
+
+        .filter-tab[data-filter="infernais"].active {
+            background: linear-gradient(135deg, #5c1a1a, #E74C3C);
+        }
+
+        .filter-tab[data-filter="hibridos"].active {
+            background: linear-gradient(135deg, #3d1a5c, #9B59B6);
+        }
+
+        .filter-tab[data-filter="demonios"].active {
+            background: linear-gradient(135deg, #1a1a1a, #555);
+        }
+
+        /* Type Section */
+        .type-section {
+            margin-bottom: 50px;
+        }
+
+        .type-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--cor-borda);
+        }
+
+        .type-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .type-icon.humanos { background: linear-gradient(135deg, #1a3a5c, #5DADE2); }
+        .type-icon.infernais { background: linear-gradient(135deg, #5c1a1a, #E74C3C); }
+        .type-icon.hibridos { background: linear-gradient(135deg, #3d1a5c, #9B59B6); }
+        .type-icon.demonios { background: linear-gradient(135deg, #1a1a1a, #555); }
+
+        .type-header h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+            margin: 0;
+        }
+
+        .type-header .type-count {
+            margin-left: auto;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .type-count.humanos { background: rgba(93,173,226,0.15); color: #5DADE2; }
+        .type-count.infernais { background: rgba(231,76,60,0.15); color: #E74C3C; }
+        .type-count.hibridos { background: rgba(155,89,182,0.15); color: #9B59B6; }
+        .type-count.demonios { background: rgba(100,100,100,0.15); color: #999; }
+
+        .type-header .type-desc {
+            color: var(--cor-texto-soft);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .type-header-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        /* Image Card */
+        .img-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--cor-borda);
+            background: var(--cor-card);
+            transition: all 0.3s ease;
+        }
+
+        .img-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .img-card img {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .img-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .img-card .img-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .img-card:hover .img-overlay {
+            opacity: 1;
+        }
+
+        .img-overlay .zoom-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        /* Type border accent */
+        .img-card.humanos { border-bottom: 3px solid #5DADE2; }
+        .img-card.infernais { border-bottom: 3px solid #E74C3C; }
+        .img-card.hibridos { border-bottom: 3px solid #9B59B6; }
+        .img-card.demonios { border-bottom: 3px solid #555; }
+
+        /* Type label */
+        .img-card .type-label {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+
+        .type-label.humanos { background: rgba(93,173,226,0.25); color: #5DADE2; }
+        .type-label.infernais { background: rgba(231,76,60,0.25); color: #E74C3C; }
+        .type-label.hibridos { background: rgba(155,89,182,0.25); color: #9B59B6; }
+        .type-label.demonios { background: rgba(100,100,100,0.25); color: #ccc; }
+
+        /* Back link */
+        .back-link {
+            display: inline-block;
+            color: var(--cor-texto-soft);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--cor-secundaria);
+        }
+
+        /* No results */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            display: none;
+        }
+
+        .no-results .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            border-left: 3px solid var(--cor-borda);
+            padding-left: 15px;
+            color: var(--cor-texto-soft);
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 639px) {
+            .type-header {
+                flex-wrap: wrap;
+            }
+
+            .type-header .type-count {
+                margin-left: 0;
+            }
+
+            .filter-tab {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header p-15-tb">
+        <div class="container">
+            <div class="d-flex f-items-center f-justify-between">
+                <a href="index.html" class="logo-text">SCAR</a>
+
+                <nav class="nav-desktop d-flex f-items-center f-gap-10">
+                    <a href="index.html#sistema" class="nav-link">Sistema</a>
+                    <a href="index.html#criacao" class="nav-link">Personagem</a>
+                    <a href="index.html#contratos" class="nav-link">Contratos</a>
+                    <a href="index.html#combate" class="nav-link">Combate</a>
+                    <a href="habilidades.html" class="nav-link">Habilidades</a>
+                    <a href="armamentos.html" class="nav-link">Armamentos</a>
+                    <a href="aflicoes.html" class="nav-link">Aflições</a>
+                    <a href="aparencias.html" class="nav-link active">Aparências</a>
+                </nav>
+
+                <button class="mobile-menu-btn" data-modal-show="mobile-menu">
+                    <span>&#9776;</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div data-modal="mobile-menu" class="modal-dialog" aria-hidden="true">
+        <div class="dialog-content">
+            <div class="dialog-backdrop" data-modal-hide style="background: rgba(0,0,0,0.95);"></div>
+            <div class="dialog-inline mobile-menu-container">
+                <div class="mobile-menu-bg"></div>
+                <div class="mobile-menu-glow"></div>
+                <button class="mobile-menu-close" data-modal-hide>&#10005;</button>
+                <div class="mobile-menu-content">
+                    <div class="mobile-menu-header">
+                        <span class="mobile-menu-logo">SCAR</span>
+                        <p class="mobile-menu-subtitle">Sacrificial Contract & Risk</p>
+                        <div class="mobile-menu-divider"></div>
+                    </div>
+                    <nav class="mobile-menu-nav">
+                        <a href="index.html#sistema" class="mobile-nav-link" data-modal-hide>
+                            <span class="link-icon">&#127922;</span>
+                            <span class="link-text">Sistema</span>
+                        </a>
+                        <a href="index.html#criacao" class="mobile-nav-link" data-modal-hide>
+                            <span class="link-icon">&#9876;&#65039;</span>
+                            <span class="link-text">Personagem</span>
+                        </a>
+                        <a href="index.html#contratos" class="mobile-nav-link" data-modal-hide>
+                            <span class="link-icon">&#128221;</span>
+                            <span class="link-text">Contratos</span>
+                        </a>
+                        <a href="index.html#combate" class="mobile-nav-link" data-modal-hide>
+                            <span class="link-icon">&#128128;</span>
+                            <span class="link-text">Combate</span>
+                        </a>
+                    </nav>
+                    <div class="mobile-menu-section-divider"></div>
+                    <nav class="mobile-menu-nav mobile-menu-nav-secondary">
+                        <a href="habilidades.html" class="mobile-nav-link secondary" data-modal-hide>
+                            <span class="link-text">Habilidades</span>
+                        </a>
+                        <a href="armamentos.html" class="mobile-nav-link secondary" data-modal-hide>
+                            <span class="link-text">Armamentos</span>
+                        </a>
+                        <a href="aflicoes.html" class="mobile-nav-link secondary" data-modal-hide>
+                            <span class="link-text">Aflições</span>
+                        </a>
+                        <a href="aparencias.html" class="mobile-nav-link secondary" data-modal-hide>
+                            <span class="link-text">Aparências</span>
+                        </a>
+                    </nav>
+                    <div class="mobile-menu-footer">
+                        <p>"Todo contrato tem um preco"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="container">
+                <a href="index.html" class="back-link wow fadeIn">&larr; Voltar ao inicio</a>
+                <h1 class="wow fadeInUp">APARENCIAS</h1>
+                <p class="wow fadeInUp" data-wow-delay="0.1s">Galeria de referencias visuais para inspirar a criacao do seu personagem em SCAR.</p>
+            </div>
+        </section>
+
+        <!-- Info + Filters -->
+        <section class="p-0-tb">
+            <div class="container p-40-tb xs-p-20-tb">
+
+                <!-- Info Box -->
+                <div class="wow fadeInUp" data-wow-delay="0.2s" style="background: var(--cor-card); border: 1px solid var(--cor-borda); border-radius: 12px; padding: 25px 30px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+                    <div class="d-flex f-gap-30 f-wrap">
+                        <div class="f-grow-1" style="min-width: 180px;">
+                            <h4 style="font-family: 'Bebas Neue', sans-serif; color: var(--cor-secundaria); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 8px; font-weight: 400;">TOTAL DE REFERENCIAS</h4>
+                            <p style="color: var(--cor-texto-soft); font-size: 0.9rem; margin: 0;">34 imagens em 4 categorias</p>
+                        </div>
+                        <div class="f-grow-1" style="min-width: 180px;">
+                            <h4 style="font-family: 'Bebas Neue', sans-serif; color: var(--cor-secundaria); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 8px; font-weight: 400;">COMO USAR</h4>
+                            <p style="color: var(--cor-texto-soft); font-size: 0.9rem; margin: 0;">Clique em qualquer imagem para ampliar. Use os filtros para navegar por tipo.</p>
+                        </div>
+                        <div class="f-grow-1" style="min-width: 180px;">
+                            <h4 style="font-family: 'Bebas Neue', sans-serif; color: var(--cor-secundaria); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 8px; font-weight: 400;">FONTE</h4>
+                            <p style="color: var(--cor-texto-soft); font-size: 0.9rem; margin: 0;">Imagens coletadas do Pinterest para uso como referencia.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filter-tabs m-30-b wow fadeInUp" data-wow-delay="0.3s">
+                    <button class="filter-tab active" data-filter="todos">Todos</button>
+                    <button class="filter-tab" data-filter="humanos">Humanos</button>
+                    <button class="filter-tab" data-filter="infernais">Infernais</button>
+                    <button class="filter-tab" data-filter="hibridos">Hibridos</button>
+                    <button class="filter-tab" data-filter="demonios">Demonios</button>
+                </div>
+
+                <!-- ============================
+                     HUMANOS (3)
+                     ============================ -->
+                <div class="type-section wow fadeInUp" data-type="humanos">
+                    <div class="type-header">
+                        <div class="type-icon humanos">&#128100;</div>
+                        <div class="type-header-text">
+                            <h2>HUMANOS</h2>
+                            <p class="type-desc">Cacadores comuns que enfrentam demonios com coragem e determinacao.</p>
+                        </div>
+                        <span class="type-count humanos">3 imagens</span>
+                    </div>
+                    <div class="row gap-15">
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/humanos/cacador-de-terno.jpg" data-gall="humanos" data-title="Cacador de Terno">
+                                <div class="img-card humanos">
+                                    <img src="assets/images/exemplos/humanos/cacador-de-terno.jpg" alt="Cacador de terno escuro" loading="lazy">
+                                    <span class="type-label humanos">Humano</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/humanos/agente-sobretudo.jpg" data-gall="humanos" data-title="Agente de Sobretudo">
+                                <div class="img-card humanos">
+                                    <img src="assets/images/exemplos/humanos/agente-sobretudo.jpg" alt="Agente misterioso de sobretudo" loading="lazy">
+                                    <span class="type-label humanos">Humano</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/humanos/cacadora-pistoleira.jpg" data-gall="humanos" data-title="Cacadora Pistoleira">
+                                <div class="img-card humanos">
+                                    <img src="assets/images/exemplos/humanos/cacadora-pistoleira.jpg" alt="Cacadora com pistola e concept sheet" loading="lazy">
+                                    <span class="type-label humanos">Humano</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================
+                     INFERNAIS (6)
+                     ============================ -->
+                <div class="type-section wow fadeInUp" data-type="infernais">
+                    <div class="type-header">
+                        <div class="type-icon infernais">&#128293;</div>
+                        <div class="type-header-text">
+                            <h2>INFERNAIS</h2>
+                            <p class="type-desc">Humanos corrompidos por contratos demoniacos, carregando marcas de seus pactos.</p>
+                        </div>
+                        <span class="type-count infernais">6 imagens</span>
+                    </div>
+                    <div class="row gap-15">
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/infernais/guerreiro-flamejante.jpg" data-gall="infernais" data-title="Guerreiro Flamejante">
+                                <div class="img-card infernais">
+                                    <img src="assets/images/exemplos/infernais/guerreiro-flamejante.jpg" alt="Guerreiro com corpo em chamas e armadura" loading="lazy">
+                                    <span class="type-label infernais">Infernal</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/infernais/corpo-fragmentado.jpg" data-gall="infernais" data-title="Corpo Fragmentado">
+                                <div class="img-card infernais">
+                                    <img src="assets/images/exemplos/infernais/corpo-fragmentado.jpg" alt="Corpo coberto de band-aids e rachaduras" loading="lazy">
+                                    <span class="type-label infernais">Infernal</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/infernais/possesso-sombrio.jpg" data-gall="infernais" data-title="Possesso Sombrio">
+                                <div class="img-card infernais">
+                                    <img src="assets/images/exemplos/infernais/possesso-sombrio.jpg" alt="Figura sombria com olhos multiplos e boca costurada" loading="lazy">
+                                    <span class="type-label infernais">Infernal</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/infernais/olhos-profanos.jpg" data-gall="infernais" data-title="Olhos Profanos">
+                                <div class="img-card infernais">
+                                    <img src="assets/images/exemplos/infernais/olhos-profanos.jpg" alt="Figura com olhos rosas e aureola dourada" loading="lazy">
+                                    <span class="type-label infernais">Infernal</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/infernais/furia-estelar.jpg" data-gall="infernais" data-title="Furia Estelar">
+                                <div class="img-card infernais">
+                                    <img src="assets/images/exemplos/infernais/furia-estelar.jpg" alt="Criatura vibrante com presas e estrelas" loading="lazy">
+                                    <span class="type-label infernais">Infernal</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/infernais/encapuzado-olho-vermelho.jpg" data-gall="infernais" data-title="Encapuzado de Olho Vermelho">
+                                <div class="img-card infernais">
+                                    <img src="assets/images/exemplos/infernais/encapuzado-olho-vermelho.jpg" alt="Figura encapuzada com olho vermelho brilhante" loading="lazy">
+                                    <span class="type-label infernais">Infernal</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================
+                     HIBRIDOS (8)
+                     ============================ -->
+                <div class="type-section wow fadeInUp" data-type="hibridos">
+                    <div class="type-header">
+                        <div class="type-icon hibridos">&#9876;</div>
+                        <div class="type-header-text">
+                            <h2>HIBRIDOS</h2>
+                            <p class="type-desc">Seres que fundiram sua essencia com um demonio, ganhando poderes sobre-humanos.</p>
+                        </div>
+                        <span class="type-count hibridos">8 imagens</span>
+                    </div>
+                    <div class="row gap-15">
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/hibridos/cacador-transformado.jpg" data-gall="hibridos" data-title="Cacador Transformado">
+                                <div class="img-card hibridos">
+                                    <img src="assets/images/exemplos/hibridos/cacador-transformado.jpg" alt="Cacador com forma humana e demonaca" loading="lazy">
+                                    <span class="type-label hibridos">Hibrido</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/hibridos/garota-olhos-carmesim.jpg" data-gall="hibridos" data-title="Garota de Olhos Carmesim">
+                                <div class="img-card hibridos">
+                                    <img src="assets/images/exemplos/hibridos/garota-olhos-carmesim.jpg" alt="Garota com olhos carmesim e corpo vermelho" loading="lazy">
+                                    <span class="type-label hibridos">Hibrido</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/hibridos/espinhos-corporais.jpg" data-gall="hibridos" data-title="Espinhos Corporais">
+                                <div class="img-card hibridos">
+                                    <img src="assets/images/exemplos/hibridos/espinhos-corporais.jpg" alt="Hibrido com espinhos e galhos brotando do corpo" loading="lazy">
+                                    <span class="type-label hibridos">Hibrido</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/hibridos/braco-demonizado.jpg" data-gall="hibridos" data-title="Braco Demonizado">
+                                <div class="img-card hibridos">
+                                    <img src="assets/images/exemplos/hibridos/braco-demonizado.jpg" alt="Homem com braco demonaco e criatura no ombro" loading="lazy">
+                                    <span class="type-label hibridos">Hibrido</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/hibridos/corpo-fungico.jpg" data-gall="hibridos" data-title="Corpo Fungico">
+                                <div class="img-card hibridos">
+                                    <img src="assets/images/exemplos/hibridos/corpo-fungico.jpg" alt="Corpo tomado por fungos e cogumelos" loading="lazy">
+                                    <span class="type-label hibridos">Hibrido</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/hibridos/flora-cadaverica.jpg" data-gall="hibridos" data-title="Flora Cadaverica">
+                                <div class="img-card hibridos">
+                                    <img src="assets/images/exemplos/hibridos/flora-cadaverica.jpg" alt="Corpo com flores e costelas expostas" loading="lazy">
+                                    <span class="type-label hibridos">Hibrido</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/hibridos/rosto-decomposto.jpg" data-gall="hibridos" data-title="Rosto Decomposto">
+                                <div class="img-card hibridos">
+                                    <img src="assets/images/exemplos/hibridos/rosto-decomposto.jpg" alt="Cabelo branco com metade do rosto decomposto" loading="lazy">
+                                    <span class="type-label hibridos">Hibrido</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/hibridos/dupla-bandagens.jpg" data-gall="hibridos" data-title="Dupla de Bandagens">
+                                <div class="img-card hibridos">
+                                    <img src="assets/images/exemplos/hibridos/dupla-bandagens.jpg" alt="Dupla com bandagens e aparencia sobrenatural" loading="lazy">
+                                    <span class="type-label hibridos">Hibrido</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================
+                     DEMONIOS (17)
+                     ============================ -->
+                <div class="type-section wow fadeInUp" data-type="demonios">
+                    <div class="type-header">
+                        <div class="type-icon demonios">&#128123;</div>
+                        <div class="type-header-text">
+                            <h2>DEMONIOS</h2>
+                            <p class="type-desc">Entidades sobrenaturais nascidas dos medos e desejos da humanidade.</p>
+                        </div>
+                        <span class="type-count demonios">17 imagens</span>
+                    </div>
+                    <div class="row gap-15">
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/rei-dos-cranios.jpg" data-gall="demonios" data-title="Rei dos Cranios">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/rei-dos-cranios.jpg" alt="Entidade com coroa de espinhos e colares de cranios" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/anjo-esqueletico.jpg" data-gall="demonios" data-title="Anjo Esqueletico">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/anjo-esqueletico.jpg" alt="Esqueleto alado com aureola e anjos" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/besta-espinhosa.jpg" data-gall="demonios" data-title="Besta Espinhosa">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/besta-espinhosa.jpg" alt="Criatura com espinhos e dentes afiados" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/urso-mecanico.jpg" data-gall="demonios" data-title="Urso Mecanico">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/urso-mecanico.jpg" alt="Urso com serra circular mecanica" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/criatura-costurada.jpg" data-gall="demonios" data-title="Criatura Costurada">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/criatura-costurada.jpg" alt="Criatura com corpo costurado de pregos" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/predador-sombrio.jpg" data-gall="demonios" data-title="Predador Sombrio">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/predador-sombrio.jpg" alt="Criatura sombria com chifres e sino" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/colossus-abissal.jpg" data-gall="demonios" data-title="Colossus Abissal">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/colossus-abissal.jpg" alt="Gigante com manto rasgado e runas" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/entidade-das-cruzes.jpg" data-gall="demonios" data-title="Entidade das Cruzes">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/entidade-das-cruzes.jpg" alt="Massa sombria com cruzes e olho central" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/esfera-ocular.jpg" data-gall="demonios" data-title="Esfera Ocular">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/esfera-ocular.jpg" alt="Esfera coberta de olhos com coroa" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/legiao-ossea.jpg" data-gall="demonios" data-title="Legiao Ossea">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/legiao-ossea.jpg" alt="Demonio de ossos com multiplos corpos fundidos" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/sacerdote-monolito.jpg" data-gall="demonios" data-title="Sacerdote Monolito">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/sacerdote-monolito.jpg" alt="Sacerdote com cabeca de monolito e olhos orbitantes" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/ceifador-carmesim.jpg" data-gall="demonios" data-title="Ceifador Carmesim">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/ceifador-carmesim.jpg" alt="Esqueleto alado em ceu vermelho sangrento" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/passaro-seringa.jpg" data-gall="demonios" data-title="Passaro Seringa">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/passaro-seringa.jpg" alt="Passaro com bico de seringa" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/coelho-abissal.jpg" data-gall="demonios" data-title="Coelho Abissal">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/coelho-abissal.jpg" alt="Coelho com orelha transformada em boca de dentes" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/toupeira-serra.jpg" data-gall="demonios" data-title="Toupeira Serra">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/toupeira-serra.jpg" alt="Toupeira com serra mecanica acoplada" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/enfermeira-macabra.jpg" data-gall="demonios" data-title="Enfermeira Macabra">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/enfermeira-macabra.jpg" alt="Enfermeira com mascara de gas e instrumentos cirurgicos" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="c-xs-6 c-sm-4 c-md-3">
+                            <a class="open-gallery" href="assets/images/exemplos/demonios/demonio-manico.jpg" data-gall="demonios" data-title="Demonio Manico">
+                                <div class="img-card demonios">
+                                    <img src="assets/images/exemplos/demonios/demonio-manico.jpg" alt="Criatura de camisa de forca com olho brilhante" loading="lazy">
+                                    <span class="type-label demonios">Demonio</span>
+                                    <div class="img-overlay"><span class="zoom-icon">&#128269;</span></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No results -->
+                <div class="no-results" id="noResults">
+                    <div class="icon">&#128269;</div>
+                    <h3 style="color: var(--cor-texto-secundario);">Nenhuma referencia encontrada</h3>
+                    <p style="color: var(--cor-texto-soft);">Tente selecionar outro filtro.</p>
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="disclaimer m-40-t wow fadeInUp">
+                    <p>As imagens desta galeria foram coletadas do Pinterest e sao utilizadas apenas como referencias visuais para fins de inspiracao na criacao de personagens. Todos os direitos pertencem aos seus respectivos autores.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-brand">
+            <a href="index.html">SCAR</a>
+            <span>Sacrificial Contract & Risk</span>
+        </div>
+
+        <div class="footer-links">
+            <a href="index.html#sobre">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                Sobre
+            </a>
+            <a href="https://github.com/JonathanRbo" target="_blank" rel="noopener">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                GitHub
+            </a>
+            <a href="https://www.instagram.com/jonathan.rbo/" target="_blank" rel="noopener">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                Instagram
+            </a>
+        </div>
+
+        <div class="footer-divider-line"></div>
+        <p class="footer-copy">&copy; 2026 SCAR RPG &bull; Feito com &#129656; por fas, para fas</p>
+    </footer>
+
+    <!-- Squeleton JS -->
+    <script src="https://cdn.squeleton.dev/squeleton-scripts.v4.min.js"></script>
+
+    <!-- SCAR JS -->
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        // Filter tabs
+        document.querySelectorAll('.filter-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tab').forEach(function(t) { t.classList.remove('active'); });
+                tab.classList.add('active');
+
+                var filter = tab.dataset.filter;
+                var sections = document.querySelectorAll('.type-section');
+                var visible = 0;
+
+                sections.forEach(function(section) {
+                    if (filter === 'todos' || section.dataset.type === filter) {
+                        section.style.display = '';
+                        visible++;
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+
+                document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+            });
+        });
+    </script>
+
+</body>
+</html>
