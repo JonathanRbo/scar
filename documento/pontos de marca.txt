@@ -549,7 +549,7 @@ Marca: Cicatriz de katana nas costas
 
 **DEMÔNIO DO PESADELO**
 Categoria: Maior
-Poder: Todos inimigos em área média fazem teste de Medo 3 (DT 30)
+Poder: Todos inimigos em área média fazem teste de Medo (DT 30)
 Atributo: Autoridade
 Custo: 7 Stress + não pode dormir por 2 dias após uso
 Aflição: Insônia crônica
@@ -1058,7 +1058,7 @@ Efeito: Converte toda falha em falha simples (nunca crítica) enquanto no limite
 Custo: Colapso automático ao fim da cena
 
 **Ignorar o Medo**
-Requisito: Autoridade 4, já ter enfrentado Medo 3+
+Requisito: Autoridade 4, já ter enfrentado demônio Veterano+
 Efeito: Ignore penalidades de Medo por 1 cena
 Custo: 2 Stress + risco de Aflição
 
@@ -1320,7 +1320,7 @@ Passivo
 
 **Intimidação Natural**
 Requisito: Autoridade 5
-Efeito: Inimigos humanos comuns ou Medo 1(demonios) podem fugir ao vê-lo
+Efeito: Inimigos humanos comuns ou demônios Recém-Nascidos podem fugir ao vê-lo
 Custo: 2 Stress
 
 **Leitor de Pessoas**
@@ -1335,7 +1335,7 @@ Custo: 2 Stress (dura a cena)
 
 **Presença Dominante** (CUSTO: 3 PM)
 Requisito: Autoridade 6
-Efeito: Todos inimigos de Nível de Medo 2 ou menos sofrem -1d10 em sua presença
+Efeito: Todos demônios de categoria Maduro ou inferior sofrem -1d10 em sua presença
 Passivo
 
 **Manipulador Mestre**
@@ -1364,12 +1364,12 @@ Passivo
 
 **Presença Aterrorizante**
 Requisito: Autoridade 7
-Efeito: Inimigos de Medo 3(Demonios) ou menos fazem teste de medo (DT 35) ao vê-lo
+Efeito: Demônios de categoria Veterano ou inferior fazem teste de medo (DT 35) ao vê-lo
 Custo: 3 Stress (1 vez por cena)
 
 **Mente de Aço**
 Requisito: Investigação 5, Autoridade 5
-Efeito: Imune a efeitos mentais de Nível de Medo 3 ou menos
+Efeito: Imune a efeitos mentais de demônios de categoria Veterano ou inferior
 Passivo
 
 **Sobrevivente Lendário**

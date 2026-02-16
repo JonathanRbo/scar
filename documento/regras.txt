@@ -39,12 +39,26 @@ Quando uma ação é arriscada:
 **Se positivo, causa Injúria:**
 - 1-9: Leve
 - 10-19: Grave
-- 20+: Crítica
+- 20-39: Crítica
+- 40+: **Morte Instantânea** — a diferença de poder é tão absurda que o corpo simplesmente para. Não existe Injúria, apenas fim.
 
 **Cálculo de Injúrias:**
 - Leves = 2 + ⌊Vigor / 2⌋
 - Graves = 1 + ⌊Vigor / 3⌋
 - Críticas = 1 (fixo)
+
+---
+
+### EMBOSCADA / ATAQUE SEM REAÇÃO
+Quando o alvo **não sabe que vai ser atacado** (emboscada, assassinato, ataque durante sono), ele **não rola defesa**. O atacante rola seus dados e o resultado bruto determina a Injúria:
+
+**Escala sem rolagem de defesa:**
+- 1-20: Leve
+- 21-40: Grave
+- 41-59: Crítica
+- 60+: **Morte Instantânea**
+
+**Nota:** O ataque de emboscada usa o atributo mais coerente com a situação (Malandragem para assassinato furtivo, Coordenação para tiro à distância, Força para golpe direto, etc.)
 
 ---
 
@@ -76,12 +90,19 @@ Diminui 1 grau da maior injúria no momento. Se todas as injúrias estiverem qua
 
 ### TESTE DE MEDO
 
-**Níveis de Medo (causados por Demônios):**
-- Medo 1 – Perturbador (DT 20-25)
-- Medo 2 – Amedrontador (DT 25-30)
-- Medo 3 – Horripilante (DT 30-35)
-- Medo 4 – Aterrorizante (DT 35-40)
-- Medo 5 – Incompreendido (DT 40+)
+**DT do Teste de Medo:**
+Determinado pela Idade do demônio + Escala de Medo atual.
+
+| Idade | DT Base |
+|-------|---------|
+| Recém-Nascido | 15 |
+| Jovem | 20 |
+| Maduro | 25 |
+| Veterano | 30 |
+| Ancião | 35 |
+| Primevo | 40 |
+
+**DT Final = DT Base + Modificador da Escala de Medo (-5 a +5)**
 
 **O jogador escolhe qual atributo usa para resistir:**
 
@@ -155,21 +176,82 @@ Demônios deixam marcas em:
 ---
 
 ═════════════════════════════════
-## **EVOLUÇÃO DEMONÍACA: NÍVEIS DE MEDO**
+## **PROGRESSÃO DEMONÍACA: IDADE + ESCALA DE MEDO**
 ═════════════════════════════════
-### **Como Subir de Nível de Medo:**
+
+Demônios possuem dois eixos de poder:
+- **Idade** — progressão permanente (Força, Resistência, Sabedoria)
+- **Escala de Medo** — buff/debuff dinâmico (-5 a +5)
+
+---
+
+### **IDADE (PROGRESSÃO PERMANENTE)**
+
+| Idade | Categoria | Pontos de Idade | DT Base (Teste de Medo) |
+|-------|-----------|-----------------|------------------------|
+| 0–10 anos | Recém-Nascido | 0 | 15 |
+| 11–50 anos | Jovem | 1 | 20 |
+| 51–200 anos | Maduro | 2 | 25 |
+| 201–500 anos | Veterano | 3 | 30 |
+| 501–1000 anos | Ancião | 4 | 35 |
+| 1000+ anos | Primevo | 5 | 40 |
+
+Pontos distribuídos entre **Força**, **Resistência** e **Sabedoria**:
+
+**FORÇA** (combate, poder bruto) — cada ponto:
+- +1 em Força ou Vigor (atributo)
+- +1 Ferimento Leve máximo
+- 2 pontos: +1 Poder Demoníaco de combate
+
+**RESISTÊNCIA** (sobrevivência, durabilidade) — cada ponto:
+- +2 Stress máximo
+- +1 Ferimento Leve máximo
+- 2 pontos: +1 Ferimento Grave máximo
+- 2 pontos: Regeneração passiva (1 Leve por cena)
+
+**SABEDORIA** (conhecimento, controle) — cada ponto:
+- +1 em Malandragem, Tecnologia ou Autoridade (atributo)
+- -1 custo de Stress em 1 poder
+- 2 pontos: +1 Poder Demoníaco de utilidade
+- 2 pontos: +1 Habilidade Geral
+
+> **Regra do Mestre:** A distribuição deve ser coerente com a lore do demônio. O Mestre tem palavra final.
+
+---
+
+### **ESCALA DE MEDO (BUFF/DEBUFF DINÂMICO)**
+
+Todo demônio começa em **0 (Neutro)**. Sobe e desce conforme suas ações.
+
+**Como Subir na Escala:**
 - Causa Injúria Grave ou Crítica
 - Provoca falhas em Testes de Medo
 - Mata alguém importante
 - Age de forma coerente e cruel com seu conceito
 - É temido, cultuado ou comentado publicamente
 
-### **Como Descer de Nível:**
+**Como Descer na Escala:**
 - Protege humanos contra seu próprio conceito
 - Age com empatia contrária à sua natureza
 - É ridicularizado ou ignorado
 - Tem seu conceito superado (ex: fogo controlado, vigilância quebrada)
 - Sofre derrota pública humilhante
+
+| Medo | Nome | Efeito no Demônio | Mod. DT |
+|------|------|-------------------|---------|
+| -5 | Esquecido | -2d10 em todos os testes, poderes custam +2 Stress | -5 |
+| -4 | Patético | -2d10 em testes de Autoridade/Vínculo | -4 |
+| -3 | Ridicularizado | -1d10 em todos os testes | -3 |
+| -2 | Ignorado | -1d10 em testes de Autoridade/Vínculo | -2 |
+| -1 | Diminuído | -1d10 em testes de medo que impõe | -1 |
+| 0 | Neutro | Sem modificador | 0 |
+| +1 | Inquietante | +1d10 em testes de medo que impõe | +1 |
+| +2 | Temido | +1d10 em testes de Autoridade/Vínculo | +2 |
+| +3 | Assombroso | +1d10 em todos os testes | +3 |
+| +4 | Aterrorizante | +2d10 em testes de Autoridade/Vínculo | +4 |
+| +5 | Incompreensível | +2d10 em todos os testes, poderes custam -2 Stress | +5 |
+
+**DT Final = DT Base (Idade) + Modificador da Escala de Medo**
 
 ---
 
@@ -362,15 +444,16 @@ Sempre que um personagem atingir:
 ------------------------
 
 # CRÍTICO OFENSIVO (Atacante)
-Quando o atacante rola múltiplos dados com valor 10:
+Quando o atacante rola múltiplos dados com valor 10, causa Injúria extra além da normal:
 
 | Dados com 10 | Efeito |
 |--------------|--------|
-| 2x (2 dados) | +1 nível de Injúria + 1 Aflição |
-| 3x (3 dados) | +2 níveis de Injúria + 1 Aflição |
-| 4x+ (4+ dados) | +3 níveis de Injúria OU Aflição permanente |
+| 2x (2 dados) | +1 Injúria Leve extra + 1 Aflição |
+| 3x (3 dados) | +1 Injúria Grave extra + 1 Aflição |
+| 4x+ (4+ dados) | +1 Injúria Crítica extra OU Aflição permanente |
 
 **Nota:** O crítico só é verificado se o atacante acertou (diferença > 0).
+**Nota:** A Injúria extra é aplicada ALÉM da Injúria normal do ataque. Se os slots estiverem cheios, a Injúria transborda normalmente.
 
 ---
 

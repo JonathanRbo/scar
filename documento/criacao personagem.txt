@@ -162,14 +162,16 @@ Demônios não escolhem existir. Eles simplesmente **são**. Sua natureza é def
 **Todo Demônio Puro possui:**
 - 18 pontos de atributo base (+4 da origem = 22 total)
 - 2 Poderes Demoníacos (ligados ao conceito)
-- Medo Nível 1 inicial
+- Escala de Medo inicial: 0 (Neutro)
+- Pontos de Idade (conforme a idade do demônio)
 - Stress calculado pela origem
 - Uma Falha Central obrigatória
 
 **Regras:**
 - Demônios podem pertencer a múltiplas categorias
 - Forma física varia: humanóide, monstruosa ou abstrata
-- Evolução acontece aumentando o Nível de Medo através da história
+- Progressão permanente acontece pela Idade (Força, Resistência, Sabedoria)
+- Buffs/debuffs dinâmicos acontecem pela Escala de Medo (-5 a +5)
 
 
 ## **PASSO 2:**
@@ -289,69 +291,99 @@ Os medos mais antigos. Você é inevitável.
 ---
 
 
-## **PASSO 3:**
+## **PASSO 3: IDADE (PROGRESSÃO PERMANENTE)**
 
-> Todo demônio começa no Nível 1. Conforme espalha terror, o nível sobe.
+> A idade de um demônio representa quanto tempo ele existe e o quanto acumulou de experiência. Quanto mais velho, mais poderoso — mas a distribuição deve fazer sentido com a história do demônio.
 
-### **NÍVEL 1 — PERTURBADOR** (DT 20-25)
-Ponto de partida. Sem bônus adicionais.
+### **FAIXAS DE IDADE**
 
----
+| Idade | Categoria | Pontos de Idade |
+|-------|-----------|-----------------|
+| 0–10 anos | Recém-Nascido | 0 |
+| 11–50 anos | Jovem | 2 |
+| 51–200 anos | Maduro | 3 |
+| 201–500 anos | Veterano | 4 |
+| 501–1000 anos | Ancião | 5 |
+| 1000+ anos | Primevo | 6 |
 
-### **NÍVEL 2 — AMEDRONTADOR** (DT 25-30)
+Os Pontos de Idade são distribuídos entre três categorias: **Força**, **Resistência** e **Sabedoria**.
 
-**Escolha 1 buff:**
-- +1 atributo relevante ao conceito
-- +1 Injúria máxima (Leve ou Grave)
-- -1 Stress em custo de poder
-- Aumento de alcance de poder
-
-**Escolha 1 ganho único:**
-- Novo Poder Demoníaco Menor
-- Habilidade Geral (custa PM)
-- Evolução de Poder existente
-- +1 Injúria Leve Máxima
+> **Regra do Mestre:** A distribuição deve ser coerente com a lore do demônio. Um demônio que ficou séculos observando em silêncio não deveria ter tudo em Força. Um demônio preguiçoso que dormiu por 500 anos deveria ter mais Resistência ou Sabedoria. O Mestre tem palavra final.
 
 ---
 
-### **NÍVEL 3 — HORRIPILANTE** (DT 30-35)
+### **FORÇA** (combate, poder bruto)
+Cada ponto gasto em Força concede 1 das opções:
+- +1 em Força ou Vigor (atributo)
+- +1 injuria Leve máximo
+- 2 pontos: +1 Poder Demoníaco de combate
 
-**Escolha 1 buff:**
-- +1 atributo relevante
-- +1 Injúria máxima (Leve ou Grave)
-- -1 Stress em custo de poder
-- Aumento de alcance/efeito
+### **RESISTÊNCIA** (sobrevivência, durabilidade)
+Cada ponto gasto em Resistência concede 1 das opções:
+- +2 Stress máximo
+- +1 injuria Leve máximo
+- 2 pontos: +1 injuria Grave máximo
+- 2 pontos: Regeneração passiva (1 Leve por cena)
 
-**Escolha 1 ganho único:**
-- Novo Poder Demoníaco
-- Transformação Parcial (muda parte do corpo, bônus em combate)
-- Passiva do conceito (efeito sempre ativo)
-- +1 Injúria Grave Máxima
-- +1 atributo (pode ultrapassar limite)
-
----
-
-
-### **NÍVEL 4 — ATERRORIZANTE** (DT 35-40)
-
-**Escolha 1 buff:**
-- +2 atributos relevantes
-- +1 Injúria máxima (Grave ou Crítica)
-- -2 Stress em custo de poder
-- Poder afeta área/múltiplos alvos
-
-**Escolha 1 ganho único:**
-- Novo Poder Demoníaco Maior
-- Transformação Completa (forma verdadeira)
-- Marca Permanente (deixa efeito duradouro no mundo)
-- +2 atributos (ignora limite)
-- Imortalidade Limitada (só morre de forma específica)
+### **SABEDORIA** (conhecimento, controle, manipulação)
+Cada ponto gasto em Sabedoria concede 1 das opções:
+- +1 em Malandragem, Tecnologia ou Autoridade (atributo)
+- -1 custo de Stress em 1 poder
+- 2 pontos: +1 Poder Demoníaco de utilidade
+- 2 pontos: +1 Habilidade Geral
 
 ---
 
+## **PASSO 4: ESCALA DE MEDO (BUFF/DEBUFF DINÂMICO)**
 
-### **NÍVEL 5 — INCOMPREENDIDO** (DT 40+)
-Reservado para Primordiais e demônios de campanha. Consulte o Mestre.
+> A Escala de Medo representa o quanto o demônio é temido AGORA. Vai de -5 a +5. Todo demônio começa em 0 (Neutro). Sobe quando espalha terror, desce quando é humilhado ou ignorado.
+
+### **Como Subir na Escala:**
+- Causa Injúria Grave ou Crítica
+- Provoca falhas em Testes de Medo
+- Mata alguém importante
+- Age de forma coerente e cruel com seu conceito
+- É temido, cultuado ou comentado publicamente
+
+### **Como Descer na Escala:**
+- Protege humanos contra seu próprio conceito
+- Age com empatia contrária à sua natureza
+- É ridicularizado ou ignorado
+- Tem seu conceito superado (ex: fogo controlado, vigilância quebrada)
+- Sofre derrota pública humilhante
+
+### **TABELA DE ESCALA DE MEDO**
+
+| Medo | Nome | Efeito no Demônio | Modificador no DT |
+|------|------|-------------------|-------------------|
+| -5 | Esquecido | -2d10 em todos os testes, poderes custam +2 Stress | -5 |
+| -4 | Patético | -2d10 em testes de Autoridade/Vínculo | -4 |
+| -3 | Ridicularizado | -1d10 em todos os testes | -3 |
+| -2 | Ignorado | -1d10 em testes de Autoridade/Vínculo | -2 |
+| -1 | Diminuído | -1d10 em testes de medo que o demônio impõe | -1 |
+| 0 | Neutro | Sem modificador | 0 |
+| +1 | Inquietante | +1d10 em testes de medo que o demônio impõe | +1 |
+| +2 | Temido | +1d10 em testes de Autoridade/Vínculo | +2 |
+| +3 | Assombroso | +1d10 em todos os testes | +3 |
+| +4 | Aterrorizante | +2d10 em testes de Autoridade/Vínculo | +4 |
+| +5 | Incompreensível | +2d10 em todos os testes, poderes custam -2 Stress | +5 |
+
+### **DT DO TESTE DE MEDO**
+
+O DT que os inimigos precisam superar para resistir ao medo do demônio é determinado pela Idade + Escala de Medo:
+
+| Idade | DT Base |
+|-------|---------|
+| Recém-Nascido | 15 |
+| Jovem | 20 |
+| Maduro | 25 |
+| Veterano | 30 |
+| Ancião | 35 |
+| Primevo | 40 |
+
+**DT Final = DT Base + Modificador da Escala de Medo**
+
+> Exemplo: Um demônio Veterano (DT 30) com Escala de Medo +3 (Assombroso) tem DT 33. Se cair para Medo -2 (Ignorado), o DT vira 28.
 
 ---
 
@@ -363,10 +395,10 @@ FICHA DO CONCEITO DO DEMÔNIO PURO
 ════════════════════════
 
 # ___***FICHA FODA***___
-> __**NOME: (Não obrigatorio) **__ 
-> __**IDADE: (Não obrigatorio) **__ 
-> __**APARÊNCIA:  **__ 
-> __**CONCEITO(TIPO DO DEMONIO) E HISTORIA:**__  
+> __**NOME: (Não obrigatorio) **__
+> __**IDADE: (Obrigatório — define os Pontos de Idade) **__
+> __**APARÊNCIA:  **__
+> __**CONCEITO(TIPO DO DEMONIO) E HISTORIA:**__
 > __**FALHA(DEFICIENCIA E ETC): **__
 
 
@@ -376,33 +408,41 @@ FICHA DO DEMÔNIO PURO
 
 NOME: (raro)
 IDADE: /
+CATEGORIA DE IDADE: (Recém-Nascido / Jovem / Maduro / Veterano / Ancião / Primevo)
 CONCEITO/RESUMO:
 LIGAÇÃO COM DEMONIOS:
 FALHA CENTRAL: (OBRIGATORIO)
 
-ATRIBUTOS 18 + ORIGEM 
+ATRIBUTOS 18 + ORIGEM
 
 ### __Físicos__
-> __Força__ 
-> __Vigor__ 
-> __Coordenação__ 
+> __Força__
+> __Vigor__
+> __Coordenação__
 
 ### __Táticos / Técnicos__
-> __Malandragem__ 
-> __Tecnologia__ 
-> __Percepção__ 
+> __Malandragem__
+> __Tecnologia__
+> __Percepção__
 
 ### __Mentais / Sociais__
-> __Investigação__ 
-> __Negociação__ 
+> __Investigação__
+> __Negociação__
 > __Autoridade__
 > __Vínculo__
 
-STRESS: 6 + (1 atributo aleatório(roll 1d10)/condizente) + vigor 
+PONTOS DE IDADE: ( /  )
+> __Força:__
+> __Resistência:__
+> __Sabedoria:__
+
+ESCALA DE MEDO: 0 (Neutro)
+
+STRESS: 6 + (1 atributo aleatório(roll 1d10)/condizente) + vigor
 
 INJÚRIAS
-Leve:     
-Grave: 
+Leve:
+Grave:
 Crítica:
 
 ARMAMENTO

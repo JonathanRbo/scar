@@ -29,7 +29,7 @@
 # __**ARMAS PESADAS**__
 > - Armaduras não reduzem dano
 > - Injúrias Graves causadas criam Aflição física automática
-> Alvos menores testam Medo 1 ao serem atacados
+> Alvos menores fazem teste de Medo (DT 20) ao serem atacados
 
 # __**CAÇADOR**__
 > - Por cada rodada observando, ignora 1d10 defensivo por rodada observada, não tendo limite.

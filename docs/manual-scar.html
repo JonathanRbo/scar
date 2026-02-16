@@ -948,17 +948,24 @@
 
                 <p class="lead">Demonios nao sao apenas perigosos fisicamente - sua presenca causa terror. Quando voce encontra um demonio, pode precisar fazer um Teste de Medo para nao entrar em panico.</p>
 
-                <h2 class="section-heading">Niveis de Medo</h2>
+                <h2 class="section-heading">Idade do Demonio (DT Base)</h2>
                 <table class="scar-table">
-                    <thead><tr><th>Nivel</th><th>Classificacao</th><th>DT</th></tr></thead>
+                    <thead><tr><th>Idade</th><th>Categoria</th><th>DT Base</th></tr></thead>
                     <tbody>
-                        <tr><td>1</td><td>Perturbador</td><td>20-25</td></tr>
-                        <tr><td>2</td><td>Amedrontador</td><td>25-30</td></tr>
-                        <tr><td>3</td><td>Horripilante</td><td>30-35</td></tr>
-                        <tr><td>4</td><td>Aterrorizante</td><td>35-40</td></tr>
-                        <tr><td>5</td><td>Incompreendido (Primordiais)</td><td>40+</td></tr>
+                        <tr><td>0-10 anos</td><td>Recem-Nascido</td><td>15</td></tr>
+                        <tr><td>11-50 anos</td><td>Jovem</td><td>20</td></tr>
+                        <tr><td>51-200 anos</td><td>Maduro</td><td>25</td></tr>
+                        <tr><td>201-500 anos</td><td>Veterano</td><td>30</td></tr>
+                        <tr><td>501-1000 anos</td><td>Anciao</td><td>35</td></tr>
+                        <tr><td>1000+ anos</td><td>Primevo</td><td>40</td></tr>
                     </tbody>
                 </table>
+
+                <h2 class="section-heading">Escala de Medo (Modificador Dinamico)</h2>
+                <p>A Escala de Medo vai de <strong>-5</strong> a <strong>+5</strong>, comecando em <strong>0</strong>. Ela modifica o DT Base do demonio.</p>
+                <div class="info-box gold">
+                    <strong style="color:var(--gold);">DT Final</strong> = DT Base (pela Idade) + Escala de Medo
+                </div>
 
                 <h2 class="section-heading">Atributos e Efeitos</h2>
                 <p>O jogador escolhe qual atributo usar para resistir:</p>
@@ -976,7 +983,7 @@
                 </table>
 
                 <div class="info-box gold">
-                    <strong style="color:var(--gold);">X</strong> = Nivel de Medo do demonio (1 a 5)
+                    <strong style="color:var(--gold);">X</strong> = Escala de Medo do demonio (-5 a +5)
                 </div>
 
                 <h3 class="sub-heading">Bonus de Vinculo</h3>
@@ -1135,24 +1142,39 @@
                         <p style="margin:0;"><strong style="color:var(--blood-bright);">Fraquezas:</strong> 1 acao por rodada apenas &bull; Extremamente lento &bull; Presenca causa distorcoes</p>
                     </div>
 
-                    <h4 class="mini-heading" style="color:var(--blood-bright);">Evolucao Demoniaca por Nivel</h4>
-                    <p>Todo demonio comeca no Nivel 1. Conforme espalha terror, o nivel sobe.</p>
+                    <h4 class="mini-heading" style="color:var(--blood-bright);">Evolucao Demoniaca por Idade</h4>
+                    <p>A progressao de um demonio e determinada pela sua idade. Quanto mais velho, mais poderoso e temido.</p>
 
-                    <div class="info-box">
-                        <p style="margin:0 0 8px;"><strong>Como Subir:</strong> Causar Injuria Grave/Critica &bull; Provocar falhas em Testes de Medo &bull; Matar alguem importante &bull; Ser temido publicamente</p>
-                        <p style="margin:0;"><strong>Como Descer:</strong> Proteger humanos &bull; Agir com empatia &bull; Ser ridicularizado &bull; Sofrer derrota publica</p>
-                    </div>
-
+                    <h3 class="sub-heading">Categorias de Idade</h3>
+                    <p>A idade do demonio determina sua categoria, seus pontos de evolucao e o DT Base do teste de Medo. Cada ponto pode ser gasto em <strong>Forca</strong>, <strong>Resistencia</strong> ou <strong>Sabedoria</strong> do demonio.</p>
                     <table class="scar-table">
-                        <thead><tr><th>Nivel</th><th>Classificacao</th><th>Escolha 1 Buff</th><th>Escolha 1 Ganho Unico</th></tr></thead>
+                        <thead><tr><th>Idade</th><th>Categoria</th><th>Pontos</th><th>DT Base</th></tr></thead>
                         <tbody>
-                            <tr><td>1</td><td>Perturbador (DT 20-25)</td><td colspan="2">Ponto de partida. Sem bonus adicionais.</td></tr>
-                            <tr><td>2</td><td>Amedrontador (DT 25-30)</td><td>+1 atributo, ou +1 Injuria max, ou -1 Stress em poder, ou aumento de alcance</td><td>Poder Menor, ou Hab. Geral (PM), ou Evolucao de Poder, ou +1 Leve Max</td></tr>
-                            <tr><td>3</td><td>Horripilante (DT 30-35)</td><td>+1 atributo, ou +1 Injuria max, ou -1 Stress em poder, ou aumento efeito</td><td>Poder Demoniaco, ou Transformacao Parcial, ou Passiva do conceito, ou +1 Grave Max, ou +1 atrib. (pode ultrapassar limite)</td></tr>
-                            <tr><td>4</td><td>Aterrorizante (DT 35-40)</td><td>+2 atributos, ou +1 Injuria (Grave/Critica), ou -2 Stress em poder, ou Area</td><td>Poder Maior, ou Transformacao Completa, ou Marca Permanente, ou +2 atrib. (ignora limite), ou Imortalidade Limitada</td></tr>
-                            <tr><td>5</td><td>Incompreensivel (DT 40+)</td><td colspan="2">Reservado para Primordiais e demonios de campanha. Consulte o Mestre.</td></tr>
+                            <tr><td>0-10 anos</td><td>Recem-Nascido</td><td>0</td><td>15</td></tr>
+                            <tr><td>11-50 anos</td><td>Jovem</td><td>1</td><td>20</td></tr>
+                            <tr><td>51-200 anos</td><td>Maduro</td><td>2</td><td>25</td></tr>
+                            <tr><td>201-500 anos</td><td>Veterano</td><td>3</td><td>30</td></tr>
+                            <tr><td>501-1000 anos</td><td>Anciao</td><td>4</td><td>35</td></tr>
+                            <tr><td>1000+ anos</td><td>Primevo</td><td>5</td><td>40</td></tr>
                         </tbody>
                     </table>
+
+                    <div class="info-box">
+                        <p style="margin:0 0 8px;"><strong>Pontos de Evolucao:</strong> Cada ponto pode ser investido em:</p>
+                        <p style="margin:0 0 4px;">&bull; <strong>Forca:</strong> +1 atributo fisico, +1 Injuria max, aumento de dano ou area de poder</p>
+                        <p style="margin:0 0 4px;">&bull; <strong>Resistencia:</strong> +1 Injuria max (Grave/Critica), reducao de Stress em poderes, regeneracao</p>
+                        <p style="margin:0;">&bull; <strong>Sabedoria:</strong> Novo poder, evolucao de poder existente, passiva do conceito, transformacao</p>
+                    </div>
+
+                    <h3 class="sub-heading">Escala de Medo (Modificador Dinamico)</h3>
+                    <p>A Escala de Medo e um modificador dinamico que vai de <strong>-5</strong> a <strong>+5</strong>, comecando em <strong>0</strong>. Ela altera o DT Base conforme as acoes do demonio.</p>
+                    <div class="info-box gold">
+                        <strong style="color:var(--gold);">DT Final</strong> = DT Base (pela Idade) + Escala de Medo
+                    </div>
+                    <div class="info-box">
+                        <p style="margin:0 0 8px;"><strong>Como Subir (+):</strong> Causar Injuria Grave/Critica &bull; Provocar falhas em Testes de Medo &bull; Matar alguem importante &bull; Ser temido publicamente</p>
+                        <p style="margin:0;"><strong>Como Descer (-):</strong> Proteger humanos &bull; Agir com empatia &bull; Ser ridicularizado &bull; Sofrer derrota publica</p>
+                    </div>
                 </div>
 
                 <h2 class="section-heading">Comparativo Geral</h2>
@@ -1359,7 +1381,7 @@
 
                 <div class="race-card demon">
                     <h4 class="mini-heading">Demonio do Pesadelo</h4>
-                    <p><strong>Poder:</strong> Todos inimigos em area media fazem teste de Medo 3 (DT 30)<br>
+                    <p><strong>Poder:</strong> Todos inimigos em area media fazem teste de Medo (DT 30)<br>
                     <strong>Atributo:</strong> Autoridade &bull; <strong>Custo:</strong> 7 Stress + nao pode dormir por 2 dias<br>
                     <strong>Aflicao:</strong> Insonia cronica<br>
                     <strong>Restricao:</strong> Nao pode despertar quem esta dormindo<br>
@@ -1562,7 +1584,7 @@
                         <tr><td>Luta Livre</td><td>Usa Forca/Vigor para agarrar; pode drenar +2 Stress ao inves de injuria</td></tr>
                         <tr><td>Judo</td><td>Contra-ataque quando inimigo erra (1x/rodada); +1d10 defesa vs Forca maior</td></tr>
                         <tr><td>Spetsnaz</td><td>1o ataque +1 grau injuria se acertar; ignora reducao de defesa em alvos vulneraveis</td></tr>
-                        <tr><td>Armas Pesadas</td><td>Armadura nao reduz dano; terror causa Teste Medo 1 em alvos menores</td></tr>
+                        <tr><td>Armas Pesadas</td><td>Armadura nao reduz dano; alvos menores fazem teste de Medo (DT 20)</td></tr>
                         <tr><td>Cacador</td><td>Cada rodada observando ignora 1d10 defesa (sem limite); troca dano por condicoes</td></tr>
                         <tr><td>Instintivo</td><td>Causar injuria = +2 Stress no alvo; ataca usando Percepcao/Investigacao</td></tr>
                         <tr><td>Executor</td><td>+1d10 vs Autoridade maior; injuria grave impede lideranca; troca dano por Aflicao</td></tr>
@@ -2273,7 +2295,7 @@
                         <tr><td>Ultimo Folego</td><td>Vigor 5, ja ter sofrido Colapso | <em style="color:var(--gold);">Requer: Ficar de Pe</em></td><td>Evite Colapso iminente</td><td>Sofre 1 Injuria Grave automatica (1 vez por missao)</td></tr>
                         <tr><td>Instinto de Sobrevivencia</td><td>Vinculo 3, Vigor 2 | <em style="color:var(--gold);">Requer: Respiracao Controlada</em></td><td>Ao chegar a 0 Stress, recupere 1d5 imediatamente</td><td>Passivo (1 vez por sessao)</td></tr>
                         <tr><td>Nada a Perder</td><td>Vigor 4, Stress no maximo | <em style="color:var(--gold);">Requer: Instinto de Sobrevivencia</em></td><td>Converte toda falha em falha simples (nunca critica) enquanto no limite</td><td>Colapso automatico ao fim da cena</td></tr>
-                        <tr><td>Ignorar o Medo</td><td>Autoridade 4, ja ter enfrentado Medo 3+</td><td>Ignore penalidades de Medo por 1 cena</td><td>2 Stress + risco de Aflicao</td></tr>
+                        <tr><td>Ignorar o Medo</td><td>Autoridade 4, ja ter enfrentado demonio Veterano+</td><td>Ignore penalidades de Medo por 1 cena</td><td>2 Stress + risco de Aflicao</td></tr>
                         <tr><td>Pele Dura</td><td>Vigor 4 | <em style="color:var(--gold);">Requer: Postura de Impacto</em></td><td>Primeira Injuria Leve da cena e reduzida a 0</td><td>Passivo (1 vez por cena)</td></tr>
                         <tr><td>Adrenalina Pura</td><td>Vigor 4 | <em style="color:var(--gold);">Requer: Dor Conhecida</em></td><td>Ao sofrer Injuria Grave, ganha +1d10 em testes fisicos por 2 rodadas</td><td>Passivo</td></tr>
                         <tr><td>Forca de Vontade</td><td>Vinculo 4, Vigor 3</td><td>Pode usar Vinculo no lugar de Vigor para resistir a dor/fadiga</td><td>Passivo</td></tr>
@@ -2355,10 +2377,10 @@
                         <tr><td>Odio Direcionado</td><td>Investigacao 3 | <em style="color:var(--gold);">Requer: Furia Contida</em></td><td>Escolha 1 grupo (demonios, hibridos, pessoa especifica etc): +1d10 em acoes contra eles</td><td>Passivo</td></tr>
                         <tr><td>Repulsa</td><td>Investigacao 4, ja ter sofrido Aflicao | <em style="color:var(--gold);">Requer: Odio Direcionado</em></td><td>Contra alvo do odio, +10 em testes ofensivos</td><td>+1 Stress sempre que nao atacar esse alvo na rodada</td></tr>
                         <tr><td>Negociador Experiente</td><td>Negociacao 4</td><td>+1d10 em testes de persuasao/barganha fora de combate</td><td>Passivo</td></tr>
-                        <tr><td>Intimidacao Natural</td><td>Autoridade 5 | <em style="color:var(--gold);">Requer: Olhar que Quebra</em></td><td>Inimigos humanos comuns ou Medo 1 (demonios) podem fugir ao ve-lo</td><td>2 Stress</td></tr>
+                        <tr><td>Intimidacao Natural</td><td>Autoridade 5 | <em style="color:var(--gold);">Requer: Olhar que Quebra</em></td><td>Inimigos humanos comuns ou demonios Recem-Nascidos podem fugir ao ve-lo</td><td>2 Stress</td></tr>
                         <tr><td>Leitor de Pessoas</td><td>Percepcao 4, Vinculo 3</td><td>Detecta mentiras obvias automaticamente</td><td>Passivo</td></tr>
                         <tr><td>Carisma de Lider</td><td>Autoridade 5, Vinculo 4 | <em style="color:var(--gold);">Requer: Negociador Experiente</em></td><td>Aliados sob comando ignoram primeira penalidade de Stress social/mental da cena</td><td>2 Stress (dura a cena)</td></tr>
-                        <tr><td>Presenca Dominante <span class="tag tag-red">3 PM</span></td><td>Autoridade 6 | <em style="color:var(--gold);">Requer: Intimidacao Natural</em></td><td>Todos inimigos de Nivel de Medo 2 ou menos sofrem -1d10 em sua presenca</td><td>Passivo</td></tr>
+                        <tr><td>Presenca Dominante <span class="tag tag-red">3 PM</span></td><td>Autoridade 6 | <em style="color:var(--gold);">Requer: Intimidacao Natural</em></td><td>Todos demonios de categoria Maduro ou inferior sofrem -1d10 em sua presenca</td><td>Passivo</td></tr>
                         <tr><td>Manipulador Mestre</td><td>Malandragem 5, Negociacao 4 | <em style="color:var(--gold);">Requer: Mentira Convincente</em></td><td>Pode plantar ideia na mente do alvo (teste oposto)</td><td>3 Stress</td></tr>
                         <tr><td>Aura de Protecao</td><td>Vinculo 6, Autoridade 4 | <em style="color:var(--gold);">Requer: Carisma de Lider + Lacos Inquebraveis</em></td><td>Aliados proximos recebem -2 Stress de fontes mentais</td><td>Passivo</td></tr>
                     </tbody>
@@ -2374,8 +2396,8 @@
                     <tbody>
                         <tr><td>Reflexo de Batalha</td><td>Coordenacao 7, Percepcao 6 | <em style="color:var(--gold);">Requer: Reflexos Sobre-Humanos</em></td><td>Pode reagir a qualquer ataque visivel sem custo adicional</td><td>Passivo</td></tr>
                         <tr><td>Senhor da Guerra</td><td>Autoridade 7, Forca 5, Vigor 5 | <em style="color:var(--gold);">Requer: Mestre Estrategista</em></td><td>Aliados ganham +1d10 em testes enquanto voce estiver de pe e visivel</td><td>Passivo</td></tr>
-                        <tr><td>Presenca Aterrorizante</td><td>Autoridade 7 | <em style="color:var(--gold);">Requer: Presenca Dominante</em></td><td>Inimigos de Medo 3 (Demonios) ou menos fazem teste de medo (DT 35) ao ve-lo</td><td>3 Stress (1 vez por cena)</td></tr>
-                        <tr><td>Mente de Aco</td><td>Investigacao 5, Autoridade 5 | <em style="color:var(--gold);">Requer: Frieza Profissional + Ignorar o Medo</em></td><td>Imune a efeitos mentais de Nivel de Medo 3 ou menos</td><td>Passivo</td></tr>
+                        <tr><td>Presenca Aterrorizante</td><td>Autoridade 7 | <em style="color:var(--gold);">Requer: Presenca Dominante</em></td><td>Demonios de categoria Veterano ou inferior fazem teste de medo (DT 35) ao ve-lo</td><td>3 Stress (1 vez por cena)</td></tr>
+                        <tr><td>Mente de Aco</td><td>Investigacao 5, Autoridade 5 | <em style="color:var(--gold);">Requer: Frieza Profissional + Ignorar o Medo</em></td><td>Imune a efeitos mentais de demonios de categoria Veterano ou inferior</td><td>Passivo</td></tr>
                         <tr><td>Sobrevivente Lendario</td><td>Vigor 7, Vinculo 5 | <em style="color:var(--gold);">Requer: Indestrutivel</em></td><td>Pode sobreviver a qualquer ataque sofrendo 0 de injuria</td><td>1 vez por missao</td></tr>
                         <tr><td>Assassino Silencioso</td><td>Malandragem 7, Coordenacao 6 | <em style="color:var(--gold);">Requer: Passo Fantasma + Golpe Perfurante</em></td><td>Ataques furtivos causam +2 estagios de Injuria automaticamente</td><td>Passivo</td></tr>
                         <tr><td>Imortal de Combate</td><td>Vigor 7, Forca 6 | <em style="color:var(--gold);">Requer: Tanque Humano</em></td><td>Nao pode ser incapacitado por Injurias Graves (apenas Criticas)</td><td>Passivo</td></tr>
@@ -3105,9 +3127,9 @@
                         <tr><td>5</td><td>Lidera organizacao (100+ pessoas)<br>Intimidacao funciona em veteranos de combate<br>Presenca causa desconforto em inimigos<br>Lealdade de subordinados e inquestionavel</td></tr>
                         <tr><td>6</td><td>Intimidacao faz demonios menores hesitarem<br>Presenca sentida ao entrar em area<br>Comanda lealdade absoluta de humanos<br>Inimigos evitam confronto direto</td></tr>
                         <tr><td>7</td><td>Demonios medios sentem pressao<br>Presenca causa medo instintivo em fracos<br>Olhar direto paralisa pessoas normais<br>Hibridos/Infernais respeitam por instinto</td></tr>
-                        <tr><td>8</td><td>Demonios fortes evitam confronto<br>Presenca equivale a teste de Medo 2<br>Comando aceito por criaturas nao-aliadas<br>Lealdade transcende razao (morreriam por voce)</td></tr>
-                        <tr><td>9</td><td>Primordiais reconhecem como igual<br>Presenca equivale a teste de Medo 3-4<br>Comando sobre demonios por direito natural<br>Palavra e lei para inferiores</td></tr>
-                        <tr><td>10</td><td>Comando absoluto sobre seres inferiores<br>Presenca equivale a teste de Medo 5<br>Ninguem desobedece, fisicamente impossivel<br>Autoridade e conceito encarnado</td></tr>
+                        <tr><td>8</td><td>Demonios fortes evitam confronto<br>Presenca equivale a teste de Medo (DT 25)<br>Comando aceito por criaturas nao-aliadas<br>Lealdade transcende razao (morreriam por voce)</td></tr>
+                        <tr><td>9</td><td>Primordiais reconhecem como igual<br>Presenca equivale a teste de Medo (DT 30-35)<br>Comando sobre demonios por direito natural<br>Palavra e lei para inferiores</td></tr>
+                        <tr><td>10</td><td>Comando absoluto sobre seres inferiores<br>Presenca equivale a teste de Medo (DT 40)<br>Ninguem desobedece, fisicamente impossivel<br>Autoridade e conceito encarnado</td></tr>
                     </tbody>
                 </table>
 

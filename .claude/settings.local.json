@@ -6,7 +6,9 @@
       "Bash(cd:*)",
       "Bash(wc:*)",
       "Bash(dir:*)",
-      "Bash(del \"c:\\\\Users\\\\Jonathan Ribeiro\\\\Desktop\\\\GITHUB\\\\SCAR\\\\nul\")"
+      "Bash(del \"c:\\\\Users\\\\Jonathan Ribeiro\\\\Desktop\\\\GITHUB\\\\SCAR\\\\nul\")",
+      "Bash(powershell -Command:*)",
+      "Bash(python -c:*)"
     ]
   }
 }

@@ -793,13 +793,14 @@
                 <div class="section-box">
                     <div class="d-flex f-wrap f-gap-25 f-items-end">
                         <div>
-                            <label class="field-label">Nível de Medo</label>
+                            <label class="field-label">Categoria de Idade</label>
                             <select id="nivel-medo" class="border-rd-10 p-14-all w-200px fs-7">
-                                <option value="1">1 - Perturbador</option>
-                                <option value="2">2 - Amedrontador</option>
-                                <option value="3">3 - Horripilante</option>
-                                <option value="4">4 - Aterrorizante</option>
-                                <option value="5">5 - Incompreendido</option>
+                                <option value="0">Recém-Nascido (DT 15)</option>
+                                <option value="1">Jovem (DT 20)</option>
+                                <option value="2">Maduro (DT 25)</option>
+                                <option value="3">Veterano (DT 30)</option>
+                                <option value="4">Ancião (DT 35)</option>
+                                <option value="5">Primevo (DT 40)</option>
                             </select>
                         </div>
                         <div>
@@ -1381,8 +1382,15 @@
         }
 
         // ========== TESTE DE MEDO ==========
+        const idadeDTs = {0:15, 1:20, 2:25, 3:30, 4:35, 5:40};
+        const idadeNomes = {0:'Recém-Nascido', 1:'Jovem', 2:'Maduro', 3:'Veterano', 4:'Ancião', 5:'Primevo'};
+        document.getElementById('nivel-medo').addEventListener('change', function() {
+            document.getElementById('medo-dt').value = idadeDTs[parseInt(this.value)] || 25;
+        });
+
         async function rolarMedo() {
-            const nivel = parseInt(document.getElementById('nivel-medo').value);
+            const idadeVal = parseInt(document.getElementById('nivel-medo').value);
+            const categoria = idadeNomes[idadeVal] || 'Desconhecido';
             const atributo = parseInt(document.getElementById('medo-atributo').value) || 1;
             const dt = parseInt(document.getElementById('medo-dt').value) || 25;
 
@@ -1395,16 +1403,16 @@
 
             container.innerHTML += `
                 <div class="result-total">${total}</div>
-                <p class="fs-7 m-10-t">DT: ${dt} | Nível: ${nivel}</p>
+                <p class="fs-7 m-10-t">DT: ${dt} | ${categoria}</p>
                 <div class="m-15-t">
                     <span class="fs-11 fw-700 ${sucesso ? 'fear-success' : 'fear-fail'}">
                         ${sucesso ? '✓ SUCESSO' : '✗ FALHA'}
                     </span>
                 </div>
-                ${!sucesso ? `<p class="fs-6 m-10-t" style="color:var(--red)">Penalidade: -${nivel}d10 por 1 rodada</p>` : ''}
+                ${!sucesso ? `<p class="fs-6 m-10-t" style="color:var(--red)">Penalidade aplicada por 1 rodada</p>` : ''}
             `;
 
-            addHistorico('Medo', `Nível ${nivel}, DT ${dt}, Rolou: ${total}`, sucesso ? 'Sucesso' : 'Falha', !sucesso ? `Penalidade: -${nivel}d10` : '');
+            addHistorico('Medo', `${categoria}, DT ${dt}, Rolou: ${total}`, sucesso ? 'Sucesso' : 'Falha', !sucesso ? 'Penalidade aplicada' : '');
         }
 
         // ========== DUELO ==========

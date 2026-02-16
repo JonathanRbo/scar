@@ -761,32 +761,66 @@
                         </div>
                     </div>
 
-                    <!-- NIVEL DE EVOLUCAO -->
+                    <!-- CATEGORIA DE IDADE -->
                     <div style="margin-top:15px;">
-                        <span class="field-label" style="display:block;margin-bottom:8px;">Nivel de Evolucao:</span>
+                        <span class="field-label" style="display:block;margin-bottom:8px;">Categoria de Idade:</span>
                         <div class="evo-track">
-                            <div class="evo-level active" onclick="setEvo(1, this)">
+                            <div class="evo-level active" onclick="setIdade(0, this)">
+                                <span class="evo-num">0</span>
+                                Recém-Nascido
+                            </div>
+                            <div class="evo-level" onclick="setIdade(1, this)">
                                 <span class="evo-num">1</span>
-                                Perturbador
+                                Jovem
                             </div>
-                            <div class="evo-level" onclick="setEvo(2, this)">
+                            <div class="evo-level" onclick="setIdade(2, this)">
                                 <span class="evo-num">2</span>
-                                Amedrontador
+                                Maduro
                             </div>
-                            <div class="evo-level" onclick="setEvo(3, this)">
+                            <div class="evo-level" onclick="setIdade(3, this)">
                                 <span class="evo-num">3</span>
-                                Horripilante
+                                Veterano
                             </div>
-                            <div class="evo-level" onclick="setEvo(4, this)">
+                            <div class="evo-level" onclick="setIdade(4, this)">
                                 <span class="evo-num">4</span>
-                                Aterrorizante
+                                Ancião
                             </div>
-                            <div class="evo-level" onclick="setEvo(5, this)">
+                            <div class="evo-level" onclick="setIdade(5, this)">
                                 <span class="evo-num">5</span>
-                                Incompreensivel
+                                Primevo
                             </div>
                         </div>
-                        <input type="hidden" id="nivelEvo" value="1">
+                        <input type="hidden" id="categoriaIdade" value="0">
+                    </div>
+
+                    <!-- PONTOS DE IDADE -->
+                    <div style="margin-top:15px;">
+                        <span class="field-label" style="display:block;margin-bottom:8px;">Pontos de Idade: <strong id="pontosIdadeDisplay" style="color:var(--blood-bright);">0</strong></span>
+                        <div style="display:flex;gap:15px;flex-wrap:wrap;">
+                            <div style="flex:1;min-width:100px;">
+                                <label style="font-size:0.75rem;color:var(--text-muted);display:block;margin-bottom:4px;">Força</label>
+                                <input type="number" class="field-input" id="pontosIdadeForca" value="0" min="0" style="width:100%;text-align:center;">
+                            </div>
+                            <div style="flex:1;min-width:100px;">
+                                <label style="font-size:0.75rem;color:var(--text-muted);display:block;margin-bottom:4px;">Resistência</label>
+                                <input type="number" class="field-input" id="pontosIdadeResistencia" value="0" min="0" style="width:100%;text-align:center;">
+                            </div>
+                            <div style="flex:1;min-width:100px;">
+                                <label style="font-size:0.75rem;color:var(--text-muted);display:block;margin-bottom:4px;">Sabedoria</label>
+                                <input type="number" class="field-input" id="pontosIdadeSabedoria" value="0" min="0" style="width:100%;text-align:center;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ESCALA DE MEDO -->
+                    <div style="margin-top:15px;">
+                        <span class="field-label" style="display:block;margin-bottom:8px;">Escala de Medo: <strong id="escalaMedoDisplay" style="color:var(--blood-bright);">0 (Neutro)</strong></span>
+                        <input type="range" id="escalaMedo" min="-5" max="5" value="0" style="width:100%;accent-color:var(--blood-bright);">
+                        <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--text-muted);">
+                            <span>-5 Esquecido</span>
+                            <span>0 Neutro</span>
+                            <span>+5 Incompreensível</span>
+                        </div>
                     </div>
                 </div>
 
@@ -968,15 +1002,28 @@
             document.getElementById('origemSelecionada').value = value;
         }
 
-        // === EVOLUTION ===
-        let currentEvo = 1;
-        function setEvo(level, el) {
-            currentEvo = level;
-            document.getElementById('nivelEvo').value = level;
+        // === IDADE + ESCALA DE MEDO ===
+        const idadeNomes = ['Recém-Nascido','Jovem','Maduro','Veterano','Ancião','Primevo'];
+        const idadePontos = [0,1,2,3,4,5];
+        const medoNomes = {'-5':'Esquecido','-4':'Patético','-3':'Ridicularizado','-2':'Ignorado','-1':'Diminuído','0':'Neutro','1':'Inquietante','2':'Temido','3':'Assombroso','4':'Aterrorizante','5':'Incompreensível'};
+        let currentIdade = 0;
+
+        function setIdade(level, el) {
+            currentIdade = level;
+            document.getElementById('categoriaIdade').value = level;
+            document.getElementById('pontosIdadeDisplay').textContent = idadePontos[level];
             document.querySelectorAll('.evo-level').forEach(function(e, i) {
-                e.classList.toggle('active', i < level);
+                e.classList.toggle('active', i <= level);
             });
         }
+
+        // Escala de Medo slider
+        document.getElementById('escalaMedo').addEventListener('input', function() {
+            var val = parseInt(this.value);
+            var nome = medoNomes[val.toString()] || 'Neutro';
+            var prefix = val > 0 ? '+' : '';
+            document.getElementById('escalaMedoDisplay').textContent = prefix + val + ' (' + nome + ')';
+        });
 
         // === PHOTO ===
         function loadPhoto(event) {
@@ -1000,7 +1047,7 @@
             });
             data._stress = stressAtual;
             data._injuries = injuries;
-            data._evo = currentEvo;
+            data._idade = currentIdade;
             data._photo = document.getElementById('photoPreview').src;
             data._origem = document.getElementById('origemSelecionada').value;
             localStorage.setItem('scar-ficha-demonio', JSON.stringify(data));
@@ -1020,7 +1067,11 @@
                 injuries.grave = data._injuries.grave || 0;
                 injuries.critica = data._injuries.critica || 0;
             }
-            if (data._evo) setEvo(data._evo);
+            if (data._idade !== undefined) setIdade(data._idade);
+            if (data.escalaMedo !== undefined) {
+                document.getElementById('escalaMedo').value = data.escalaMedo;
+                document.getElementById('escalaMedo').dispatchEvent(new Event('input'));
+            }
             if (data._origem) {
                 document.querySelectorAll('.origin-card').forEach(function(c) {
                     if (c.onclick.toString().includes(data._origem)) {
@@ -1050,7 +1101,9 @@
             injuries.grave = 0;
             injuries.critica = 0;
             document.querySelectorAll('.origin-card').forEach(function(c) { c.classList.remove('selected'); });
-            setEvo(1);
+            setIdade(0);
+            document.getElementById('escalaMedo').value = 0;
+            document.getElementById('escalaMedo').dispatchEvent(new Event('input'));
             document.getElementById('photoPreview').style.display = 'none';
             document.getElementById('photoPlaceholder').style.display = 'block';
             calcularStatus();

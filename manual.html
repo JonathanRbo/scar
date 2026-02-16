@@ -787,12 +787,13 @@
     <h2>Teste de Medo</h2>
 
     <table>
-        <tr><th>Nível</th><th>Nome</th><th>DT</th></tr>
-        <tr><td class="td-red">1</td><td>Perturbador</td><td>20-25</td></tr>
-        <tr><td class="td-red">2</td><td>Amedrontador</td><td>25-30</td></tr>
-        <tr><td class="td-red">3</td><td>Horripilante</td><td>30-35</td></tr>
-        <tr><td class="td-red">4</td><td>Aterrorizante</td><td>35-40</td></tr>
-        <tr><td class="td-red">5</td><td>Incompreendido</td><td>40+</td></tr>
+        <tr><th>Idade</th><th>Categoria</th><th>DT Base</th></tr>
+        <tr><td class="td-red">0-10</td><td>Recém-Nascido</td><td>15</td></tr>
+        <tr><td class="td-red">11-50</td><td>Jovem</td><td>20</td></tr>
+        <tr><td class="td-red">51-200</td><td>Maduro</td><td>25</td></tr>
+        <tr><td class="td-red">201-500</td><td>Veterano</td><td>30</td></tr>
+        <tr><td class="td-red">501-1000</td><td>Ancião</td><td>35</td></tr>
+        <tr><td class="td-red">1000+</td><td>Primevo</td><td>40</td></tr>
     </table>
 
     <p>O jogador escolhe qual atributo usa para resistir:</p>
@@ -1005,15 +1006,18 @@
     <h4>Medo Primordial <em style="color: var(--cor-texto-sec);">— Morte, extinção, trevas absolutas, o fim</em></h4>
     <p>Inevitável. Não pode ser destruído permanentemente. Precisa de avatar/hospedeiro. 1 ação por rodada apenas.</p>
 
-    <h3>Níveis de Medo (Evolução)</h3>
+    <h3>Progressão por Idade</h3>
     <table>
-        <tr><th>Nível</th><th>Nome</th><th>DT</th><th>Buffs</th></tr>
-        <tr><td class="td-red">1</td><td>Perturbador</td><td>20-25</td><td>Ponto de partida</td></tr>
-        <tr><td class="td-red">2</td><td>Amedrontador</td><td>25-30</td><td>+1 buff + 1 ganho único</td></tr>
-        <tr><td class="td-red">3</td><td>Horripilante</td><td>30-35</td><td>+1 buff + 1 ganho único</td></tr>
-        <tr><td class="td-red">4</td><td>Aterrorizante</td><td>35-40</td><td>+2 atributos + ganho maior</td></tr>
-        <tr><td class="td-red">5</td><td>Incompreendido</td><td>40+</td><td>Reservado para Primordiais</td></tr>
+        <tr><th>Idade</th><th>Categoria</th><th>Pontos</th><th>DT Base</th></tr>
+        <tr><td class="td-red">0–10</td><td>Recém-Nascido</td><td>0</td><td>15</td></tr>
+        <tr><td class="td-red">11–50</td><td>Jovem</td><td>1</td><td>20</td></tr>
+        <tr><td class="td-red">51–200</td><td>Maduro</td><td>2</td><td>25</td></tr>
+        <tr><td class="td-red">201–500</td><td>Veterano</td><td>3</td><td>30</td></tr>
+        <tr><td class="td-red">501–1000</td><td>Ancião</td><td>4</td><td>35</td></tr>
+        <tr><td class="td-red">1000+</td><td>Primevo</td><td>5</td><td>40</td></tr>
     </table>
+    <p>Pontos podem ser distribuídos em <strong>Força</strong>, <strong>Resistência</strong> ou <strong>Sabedoria</strong>.</p>
+    <p><strong>Escala de Medo:</strong> Varia de -5 a +5, começa em 0. Modifica a DT dinamicamente. <em>DT Final = DT Base + Escala de Medo.</em></p>
 
     <h2>Ficha do Demônio Puro</h2>
     <div class="info-box" style="border-left: 3px solid var(--cor-sangue);">
@@ -1092,7 +1096,7 @@
         <ul>
             <li>Armaduras não reduzem dano</li>
             <li>Injúrias Graves criam Aflição física automática</li>
-            <li>Alvos menores testam Medo 1 ao serem atacados</li>
+            <li>Alvos menores fazem teste de Medo (DT 20) ao serem atacados</li>
         </ul>
     </div>
 

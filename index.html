@@ -618,50 +618,58 @@
                         <h4 class="fs-10 m-15-b" style="color: #666;">📈 Níveis de Evolução</h4>
                         <p style="color: var(--cor-texto-secundario); margin-bottom: 15px; font-size: 0.9rem;">Conforme espalha terror, o demônio sobe de nível e ganha escolhas.</p>
 
+                        <h5 class="fs-8 m-10-b" style="color: var(--cor-gold);">Faixas de Idade</h5>
                         <table class="table-scar" style="font-size: 0.85rem;">
                             <tr>
-                                <th>Nível</th>
-                                <th>Nome</th>
-                                <th>DT Medo</th>
-                                <th>Ganhos</th>
+                                <th>Idade</th>
+                                <th>Categoria</th>
+                                <th>Pontos</th>
+                                <th>DT Base</th>
                             </tr>
                             <tr>
+                                <td>0–10</td>
+                                <td>Recém-Nascido</td>
+                                <td>0</td>
+                                <td>15</td>
+                            </tr>
+                            <tr>
+                                <td>11–50</td>
+                                <td>Jovem</td>
                                 <td>1</td>
-                                <td>Perturbador</td>
-                                <td>20-25</td>
-                                <td style="color: var(--cor-texto-secundario);">Ponto de partida</td>
+                                <td>20</td>
                             </tr>
                             <tr>
+                                <td>51–200</td>
+                                <td>Maduro</td>
                                 <td>2</td>
-                                <td>Amedrontador</td>
-                                <td>25-30</td>
-                                <td style="color: var(--cor-texto-secundario);">+1 buff + 1 ganho único</td>
+                                <td>25</td>
                             </tr>
                             <tr>
+                                <td>201–500</td>
+                                <td>Veterano</td>
                                 <td>3</td>
-                                <td>Horripilante</td>
-                                <td>30-35</td>
-                                <td style="color: var(--cor-texto-secundario);">+1 buff + Transformação Parcial</td>
+                                <td>30</td>
                             </tr>
                             <tr>
+                                <td>501–1000</td>
+                                <td>Ancião</td>
                                 <td>4</td>
-                                <td>Aterrorizante</td>
-                                <td>35-40</td>
-                                <td style="color: var(--cor-texto-secundario);">+2 buffs + Forma Verdadeira</td>
+                                <td>35</td>
                             </tr>
                             <tr style="background: rgba(255,255,255,0.08);">
+                                <td style="color: var(--cor-secundaria);">1000+</td>
+                                <td style="color: var(--cor-secundaria);">Primevo</td>
                                 <td style="color: var(--cor-secundaria);">5</td>
-                                <td style="color: var(--cor-secundaria);">Incompreendido</td>
-                                <td style="color: var(--cor-secundaria);">40+</td>
-                                <td style="color: var(--cor-secundaria);">Reservado para Primordiais</td>
+                                <td style="color: var(--cor-secundaria);">40</td>
                             </tr>
                         </table>
 
-                        <div class="m-15-t p-15-all border-rd-8" style="background: rgba(255,255,255,0.02); font-size: 0.8rem;">
-                            <strong style="color: #666;">Opções de Buff:</strong>
-                            <span style="color: var(--cor-texto-secundario);">+1 atributo • +1 Injúria máx • -1 Stress em poder • Aumento de alcance</span><br>
-                            <strong style="color: #666;">Ganhos Únicos:</strong>
-                            <span style="color: var(--cor-texto-secundario);">Novo Poder • Evolução de Poder • Transformação • Passiva do conceito</span>
+                        <div class="m-15-t p-15-all border-rd-8" style="background: rgba(255,255,255,0.04); font-size: 0.8rem; line-height: 1.8;">
+                            <strong style="color: var(--cor-gold);">Pontos distribuídos entre 3 categorias:</strong><br>
+                            <strong style="color: var(--cor-secundaria);">Força</strong> <span style="color: var(--cor-texto-secundario);">— +1 atributo físico (Força/Vigor) · +1 Ferimento Leve máx · 2 pts: +1 Poder de combate</span><br>
+                            <strong style="color: var(--cor-secundaria);">Resistência</strong> <span style="color: var(--cor-texto-secundario);">— +2 Stress máx · +1 Ferimento Leve máx · 2 pts: +1 Ferimento Grave máx · 2 pts: Regeneração passiva</span><br>
+                            <strong style="color: var(--cor-secundaria);">Sabedoria</strong> <span style="color: var(--cor-texto-secundario);">— +1 atributo mental (Malandragem/Tecnologia/Autoridade) · -1 Stress em 1 poder · 2 pts: +1 Poder de utilidade · 2 pts: +1 Habilidade Geral</span><br><br>
+                            <span style="color: #666; font-size: 0.75rem;">⚠ O Mestre controla a distribuição — deve ser coerente com a lore do demônio.</span>
                         </div>
                     </div>
 
@@ -943,7 +951,7 @@
                             <div class="estilo-card" style="height: auto;">
                                 <div class="estilo-nome">🔨 Armas Pesadas</div>
                                 <div class="estilo-beneficio"><strong>Devastador:</strong> Armaduras não reduzem dano</div>
-                                <div class="estilo-beneficio"><strong>Terror:</strong> Alvos menores testam Medo 1</div>
+                                <div class="estilo-beneficio"><strong>Terror:</strong> Alvos menores fazem teste de Medo (DT 20)</div>
                             </div>
                         </div>
                         <div class="c-xs-12 c-sm-6 c-lg-4">
@@ -1298,6 +1306,19 @@
                         &nbsp;&nbsp;<span class="comment">Autoridade:</span> [ ]<br>
                         &nbsp;&nbsp;<span class="comment">Vínculo:</span> [ ]<br><br>
 
+                        <span class="highlight">═══ IDADE (PROGRESSÃO PERMANENTE) ═══</span><br><br>
+
+                        <span class="comment">CATEGORIA:</span> <span class="highlight">____</span> <span style="color: #666;">(Recém-Nascido / Jovem / Maduro / Veterano / Ancião / Primevo)</span><br>
+                        <span class="comment">PONTOS DE IDADE:</span> <span class="highlight">__</span><br><br>
+                        &nbsp;&nbsp;<span style="color: var(--cor-secundaria);">Força:</span> [ ] <span style="color: #666;">— atributo físico, ferimento, poder de combate</span><br>
+                        &nbsp;&nbsp;<span style="color: var(--cor-secundaria);">Resistência:</span> [ ] <span style="color: #666;">— stress, ferimento, regeneração</span><br>
+                        &nbsp;&nbsp;<span style="color: var(--cor-secundaria);">Sabedoria:</span> [ ] <span style="color: #666;">— atributo mental, redução stress, poder utilidade</span><br><br>
+
+                        <span class="highlight">═══ ESCALA DE MEDO (DINÂMICO) ═══</span><br><br>
+
+                        <span class="comment">ESCALA:</span> <span class="highlight">0</span> <span style="color: #666;">(Neutro) — varia de -5 a +5</span><br>
+                        <span class="comment">DT FINAL:</span> <span style="color: #666;">DT Base (da Idade) + Escala de Medo = ____</span><br><br>
+
                         <span class="highlight">═══ RECURSOS ═══</span><br><br>
 
                         <span class="comment">STRESS:</span> 6 + Vigor + <span style="color: #666;">[atributo relevante]</span> = ____<br><br>
@@ -1306,8 +1327,6 @@
                         &nbsp;&nbsp;Leve: ☐ ☐ ☐ ☐<br>
                         &nbsp;&nbsp;Grave: ☐ ☐<br>
                         &nbsp;&nbsp;Crítica: ☐<br><br>
-
-                        <span class="comment">NÍVEL DE MEDO:</span> <span class="highlight">1</span> <span style="color: #666;">(Perturbador)</span><br><br>
 
                         <span class="highlight">═══ PODERES DEMONÍACOS ═══</span><br><br>
 
@@ -1435,11 +1454,11 @@
                                         <td class="text-center">+5</td>
                                     </tr>
                                     <tr>
-                                        <td>Derrotar Demônio Medo 3+</td>
+                                        <td>Derrotar Demônio Veterano+</td>
                                         <td class="text-center">+4</td>
                                     </tr>
                                     <tr>
-                                        <td>Derrotar Demônio Medo 5 / Cavaleiro</td>
+                                        <td>Derrotar Demônio Primevo / Cavaleiro</td>
                                         <td class="text-center">+8</td>
                                     </tr>
                                     <tr>
@@ -2547,77 +2566,152 @@
             </p>
         </div>
 
-        <!-- Classificação de Contratos - Minimalista -->
-        <div class="m-80-b wow fadeInUp">
-            <h3 class="fs-11 m-40-b text-center" style="color: var(--cor-secundaria);">Classificação de Contratos</h3>
+        <!-- Classificação de Contratos - Cards -->
+        <div class="m-80-b">
+            <h3 class="fs-11 m-40-b text-center wow fadeInUp" style="color: var(--cor-secundaria);">Classificação de Contratos</h3>
 
-            <!-- Tabela Minimalista -->
-            <div class="card" style="background: var(--cor-fundo-card); border: 1px solid var(--cor-borda); overflow-x: auto;">
-                <table class="table-scar">
-                    <thead>
-                        <tr>
-                            <th>Tier</th>
-                            <th>Poder</th>
-                            <th>Injúria Mínima</th>
-                            <th>Aflição / Preço</th>
-                            <th>Custo PM</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="color: var(--cor-secundaria); font-weight: 600;">Menor</td>
-                            <td>Limitado, utilitário</td>
-                            <td>—</td>
-                            <td style="font-size: 0.85rem;">
-                                <strong>Escolha 1:</strong> Aflição Leve • Preço simbólico • Restrição comportamental
-                            </td>
-                            <td style="font-weight: 600;">2 PM</td>
-                        </tr>
-                        <tr>
-                            <td style="color: var(--cor-secundaria); font-weight: 600;">Médio</td>
-                            <td>Forte, combate efetivo</td>
-                            <td><strong>Leve (1-9)</strong></td>
-                            <td style="font-size: 0.85rem;">
-                                <strong>Escolha 1:</strong> Rola 2x Aflição • Potencializa existente • Preço físico
-                            </td>
-                            <td style="font-weight: 600;">3 PM</td>
-                        </tr>
-                        <tr>
-                            <td style="color: var(--cor-secundaria); font-weight: 600;">Maior</td>
-                            <td>Destruidor, game-changer</td>
-                            <td><strong>Grave (10-19)</strong></td>
-                            <td style="font-size: 0.85rem;">
-                                <strong>Obrigatório:</strong> Aflição Severa + Marca visível + Preço recorrente
-                            </td>
-                            <td style="font-weight: 600;">4 PM</td>
-                        </tr>
-                        <tr>
-                            <td style="color: var(--cor-secundaria); font-weight: 600;">Invocação</td>
-                            <td>Invoca entidade aliada</td>
-                            <td>Varia</td>
-                            <td style="font-size: 0.85rem;">
-                                <strong>Escolha 1:</strong> Aflição proporcional • Manter criatura • Vínculo emocional
-                            </td>
-                            <td style="font-weight: 600;">3 PM</td>
-                        </tr>
-                        <tr style="background: rgba(0,0,0,0.2);">
-                            <td style="color: var(--cor-secundaria); font-weight: 600;">Restrição</td>
-                            <td>Poder absoluto</td>
-                            <td><strong style="color: var(--cor-secundaria);">Crítica (20+)</strong></td>
-                            <td style="font-size: 0.85rem; color: var(--cor-secundaria);">
-                                <strong>☠️ Morte Instantânea</strong> se violar condição
-                            </td>
-                            <td style="font-weight: 600;">Mestre</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <!-- Nota explicativa -->
-                <div class="m-20-t p-15-all" style="background: rgba(220,20,60,0.05); border-top: 1px solid var(--cor-borda);">
-                    <p class="fs-4" style="color: var(--cor-texto-secundario); text-align: center; margin: 0;">
-                        <strong style="color: var(--cor-texto);">Injúria Mínima:</strong> Dano base que o poder causa ao alvo em combate. Poderes não-ofensivos não causam injúria.
-                    </p>
+            <div class="row gap-20">
+                <!-- MENOR -->
+                <div class="c-xs-12 c-sm-6 c-lg-4 wow fadeInUp">
+                    <div class="contrato-card menor">
+                        <div class="contrato-header">
+                            <h4 class="contrato-nome">Contrato Menor</h4>
+                            <span class="contrato-categoria">MENOR</span>
+                        </div>
+                        <div class="contrato-body">
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">⚡</span> PODER</div>
+                                <p>Limitado, utilitário. Efeitos pequenos mas práticos.</p>
+                            </div>
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">🩸</span> INJÚRIA MÍNIMA</div>
+                                <p>Nenhuma</p>
+                            </div>
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">⚠️</span> PREÇO</div>
+                                <p><strong>Escolha 1:</strong> Aflição Leve, Preço simbólico ou Restrição comportamental</p>
+                            </div>
+                        </div>
+                        <div class="contrato-footer">
+                            <div class="contrato-pm-cost">2 <span>PM</span></div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- MÉDIO -->
+                <div class="c-xs-12 c-sm-6 c-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="contrato-card medio">
+                        <div class="contrato-header">
+                            <h4 class="contrato-nome">Contrato Médio</h4>
+                            <span class="contrato-categoria">MÉDIO</span>
+                        </div>
+                        <div class="contrato-body">
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">⚡</span> PODER</div>
+                                <p>Forte, combate efetivo. Impacto real em batalha.</p>
+                            </div>
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">🩸</span> INJÚRIA MÍNIMA</div>
+                                <p><strong>Leve (1-9)</strong></p>
+                            </div>
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">⚠️</span> PREÇO</div>
+                                <p><strong>Escolha 1:</strong> Rola 2x Aflição, Potencializa existente ou Preço físico</p>
+                            </div>
+                        </div>
+                        <div class="contrato-footer">
+                            <div class="contrato-pm-cost">3 <span>PM</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAIOR -->
+                <div class="c-xs-12 c-sm-6 c-lg-4 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="contrato-card maior">
+                        <div class="contrato-header">
+                            <h4 class="contrato-nome">Contrato Maior</h4>
+                            <span class="contrato-categoria">MAIOR</span>
+                        </div>
+                        <div class="contrato-body">
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">⚡</span> PODER</div>
+                                <p>Destruidor, game-changer. Muda a narrativa.</p>
+                            </div>
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">🩸</span> INJÚRIA MÍNIMA</div>
+                                <p><strong>Grave (10-19)</strong></p>
+                            </div>
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">⚠️</span> PREÇO</div>
+                                <p><strong>Obrigatório:</strong> Aflição Severa + Marca visível + Preço recorrente</p>
+                            </div>
+                        </div>
+                        <div class="contrato-footer">
+                            <div class="contrato-pm-cost">4 <span>PM</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INVOCAÇÃO -->
+                <div class="c-xs-12 c-sm-6 c-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="contrato-card invocacao">
+                        <div class="contrato-header">
+                            <h4 class="contrato-nome">Contrato de Invocação</h4>
+                            <span class="contrato-categoria">INVOCAÇÃO</span>
+                        </div>
+                        <div class="contrato-body">
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">⚡</span> PODER</div>
+                                <p>Invoca entidade aliada. Poder varia conforme a criatura.</p>
+                            </div>
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">🩸</span> INJÚRIA MÍNIMA</div>
+                                <p>Varia conforme a invocação</p>
+                            </div>
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">⚠️</span> PREÇO</div>
+                                <p><strong>Escolha 1:</strong> Aflição proporcional, Manter criatura ou Vínculo emocional</p>
+                            </div>
+                        </div>
+                        <div class="contrato-footer">
+                            <div class="contrato-pm-cost">3 <span>PM</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RESTRIÇÃO -->
+                <div class="c-xs-12 c-sm-6 c-lg-6 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="contrato-card restricao">
+                        <div class="contrato-header">
+                            <h4 class="contrato-nome">Contrato de Restrição</h4>
+                            <span class="contrato-categoria">RESTRIÇÃO</span>
+                        </div>
+                        <div class="contrato-body">
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">⚡</span> PODER</div>
+                                <p>Poder absoluto. O mais perigoso dos contratos.</p>
+                            </div>
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">🩸</span> INJÚRIA MÍNIMA</div>
+                                <p><strong style="color: var(--cor-secundaria);">Crítica (20+)</strong></p>
+                            </div>
+                            <div class="contrato-item">
+                                <div class="contrato-label"><span class="contrato-label-icon">☠️</span> PREÇO</div>
+                                <p><strong style="color: var(--cor-secundaria);">Morte Instantânea</strong> se violar a condição do contrato</p>
+                            </div>
+                        </div>
+                        <div class="contrato-footer">
+                            <div class="contrato-pm-cost">Mestre <span>decide</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nota explicativa -->
+            <div class="m-20-t p-15-all border-rd-8 wow fadeInUp" style="background: rgba(220,20,60,0.05); border: 1px solid var(--cor-borda);">
+                <p class="fs-5 text-center" style="color: var(--cor-texto-secundario); margin: 0;">
+                    <strong style="color: var(--cor-texto);">Injúria Mínima:</strong> Dano base que o poder causa ao alvo em combate. Poderes não-ofensivos não causam injúria.
+                </p>
             </div>
         </div>
 
@@ -2632,7 +2726,7 @@
                 "Todo contrato tem um preço. Você está disposto a pagar?"
             </p>
             <button data-modal-show="modal-criar-contrato" class="btn btn-primary" style="background: var(--cor-secundaria); border-color: var(--cor-secundaria); padding: 15px 35px; font-size: 1.1rem;">
-                Ver contratos →
+                Criar Contrato →
             </button>
         </div>
 
@@ -2883,38 +2977,49 @@ ${marca}
                     <p style="color: var(--cor-texto-secundario);" class="m-20-b">
                         Demônios causam terror. Ao encontrar um, você pode precisar resistir ao medo.
                     </p>
+                    <p style="color: var(--cor-texto-secundario); font-size: 0.85rem;" class="m-10-b">
+                        O DT é determinado pela <strong style="color: var(--cor-gold);">Idade</strong> do demônio + <strong style="color: var(--cor-gold);">Escala de Medo</strong> atual (-5 a +5).
+                    </p>
                     <table class="table-scar">
                         <tr>
-                            <th>Nível</th>
-                            <th>Classificação</th>
-                            <th>DT</th>
+                            <th>Idade</th>
+                            <th>Categoria</th>
+                            <th>DT Base</th>
                         </tr>
                         <tr>
-                            <td>1</td>
-                            <td>Perturbador</td>
-                            <td>20-25</td>
+                            <td>0–10</td>
+                            <td>Recém-Nascido</td>
+                            <td>15</td>
                         </tr>
                         <tr>
-                            <td>2</td>
-                            <td>Amedrontador</td>
-                            <td>25-30</td>
+                            <td>11–50</td>
+                            <td>Jovem</td>
+                            <td>20</td>
                         </tr>
                         <tr>
-                            <td>3</td>
-                            <td>Horripilante</td>
-                            <td>30-35</td>
+                            <td>51–200</td>
+                            <td>Maduro</td>
+                            <td>25</td>
                         </tr>
                         <tr>
-                            <td>4</td>
-                            <td>Aterrorizante</td>
-                            <td>35-40</td>
+                            <td>201–500</td>
+                            <td>Veterano</td>
+                            <td>30</td>
                         </tr>
                         <tr>
-                            <td>5</td>
-                            <td>Incompreendido (Primordiais)</td>
-                            <td>40+</td>
+                            <td>501–1000</td>
+                            <td>Ancião</td>
+                            <td>35</td>
+                        </tr>
+                        <tr>
+                            <td>1000+</td>
+                            <td>Primevo</td>
+                            <td>40</td>
                         </tr>
                     </table>
+                    <p style="color: var(--cor-texto-secundario); font-size: 0.8rem;" class="m-10-t">
+                        <strong>DT Final</strong> = DT Base + Modificador da Escala de Medo
+                    </p>
                 </div>
             </div>
         </section>

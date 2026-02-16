@@ -493,17 +493,17 @@ Pts | Feito Mensurável
     | Híbridos/Infernais respeitam por instinto
 ────┼──────────────────────────────────────────────────────────
  8  | Demônios fortes evitam confronto
-    | Presença equivale a teste de Medo 2
+    | Presença equivale a teste de Medo (DT 25)
     | Comando aceito por criaturas não-aliadas
     | Lealdade transcende razão (morreriam por você)
 ────┼──────────────────────────────────────────────────────────
  9  | Primordiais reconhecem como igual
-    | Presença equivale a teste de Medo 3-4
+    | Presença equivale a teste de Medo (DT 30-35)
     | Comando sobre demônios por direito natural
     | Palavra é lei para inferiores
 ────┼──────────────────────────────────────────────────────────
 10  | Comando absoluto sobre seres inferiores
-    | Presença equivale a teste de Medo 5
+    | Presença equivale a teste de Medo (DT 40)
     | Ninguém desobedece, fisicamente impossível
     | Autoridade é conceito encarnado
 
